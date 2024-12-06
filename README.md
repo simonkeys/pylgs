@@ -15,10 +15,18 @@ pyLGS uses the CVODE library from the [SUNDIALS
 package](https://computing.llnl.gov/projects/sundials), with
 [scikits.odes](https://scikits-odes.readthedocs.io/en/latest/installation.html)
 as the Python interface. Before installing pyLGS you may need to install
-SUNDIALS, as described in the
-[scikits.odes](https://scikits-odes.readthedocs.io/en/latest/installation.html)
-and [SUNDIALS](https://computing.llnl.gov/projects/sundials)
-documentation. pyLGS is tested with SUNDIALS version 6.5.1.
+SUNDIALS and the scikits.odes dependencies. On Ubuntu/Debian-based
+distributions this can be done with `apt-get`:
+
+``` sh
+sudo apt-get install python3-dev gcc gfortran libsundials-dev
+```
+
+(Note that at least SUNDIALS version 6 is required – this is supplied by
+Ubuntu 24.04/Debian 12 and later.)
+
+Once the above dependencies are installed, pyLGS can be installed with
+`pip`:
 
 ``` sh
 pip install pylgs
