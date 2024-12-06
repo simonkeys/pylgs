@@ -35,12 +35,47 @@ from pylgs.lgssystem import LGSSystem
 List available atomic systems for an LGS model:
 
 ``` python
-LGSSystem.names()
+LGSSystem.builtins()
 ```
 
     ['NaD1', 'Na330', 'NaD2', 'NaD2_Repump', 'NaD1_Toy']
 
-Choose an atomic system and set values for parameters that will not be
+Show a level diagram for one of the atomic systems:
+
+``` python
+LGSSystem.diagram("NaD2_Repump", "ToScale")
+```
+
+![](index_files/figure-commonmark/cell-4-output-1.svg)
+
+Print some information about the system:
+
+``` python
+LGSSystem.info("NaD2_Repump")
+```
+
+#### Atomic levels
+
+$\text{3S}_{\frac{1}{2}}$, $\text{3P}_{\frac{3}{2}}$ \#### Pump
+transitions 1.
+$\text{3S}_{\frac{1}{2}}\land F=1\to \text{3P}_{\frac{3}{2}}$ 1.
+$\text{3S}_{\frac{1}{2}}\land F=2\to \text{3P}_{\frac{3}{2}}$ \####
+Transition wavelengths -
+$\text{3P}_{\frac{3}{2}}\to \text{3S}_{\frac{1}{2}}$: 589.158 nm \####
+Substructure - Hyperfine structure included - Zeeman structure
+included - 24 total sublevels \#### Density matrix elements - All
+populations included - All Zeeman coherences (between same level and
+same F) included - All hyperfine coherences (between same level and
+different F) neglected - Optical coherences (between different levels)
+included for pump transitions only - 374 density matrix elements total
+\#### Input parameters - BeamTransitRatePerS - BFieldG -
+MagneticAzimuthDegrees - MagneticZenithDegrees - RecoilParameter -
+SDampingCollisionRatePerS - TemperatureK - VccRatePerS - DetuningHz1 -
+DetuningHz2 - EllipticityDegrees1 - EllipticityDegrees2 - IntensitySI1 -
+IntensitySI2 - LaserWidthHz1 - LaserWidthHz2 -
+PolarizationAngleDegrees1 - PolarizationAngleDegrees2
+
+Load the atomic system and set values for parameters that will not be
 varied:
 
 ``` python
@@ -91,7 +126,7 @@ Find the total return flux:
 model.total_flux(sol).item()
 ```
 
-    7709.051827675756
+    7709.051827676873
 
 Plot the return flux as a function of atomic velocity:
 
@@ -99,7 +134,7 @@ Plot the return flux as a function of atomic velocity:
 model.flux_distribution(sol).visualize()
 ```
 
-![](index_files/figure-commonmark/cell-9-output-1.png)
+![](index_files/figure-commonmark/cell-11-output-1.svg)
 
 Plot the ground and excited state populations as a function of atomic
 velocity:
@@ -108,7 +143,7 @@ velocity:
 model.level_population_distribution(sol).visualize()
 ```
 
-![](index_files/figure-commonmark/cell-10-output-1.png)
+![](index_files/figure-commonmark/cell-12-output-1.svg)
 
 Plot the real and imaginary parts of all density-matrix elements:
 
@@ -116,4 +151,4 @@ Plot the real and imaginary parts of all density-matrix elements:
 model.velocity_normalize(sol).visualize(line_width=1)
 ```
 
-![](index_files/figure-commonmark/cell-11-output-1.png)
+![](index_files/figure-commonmark/cell-13-output-1.svg)
