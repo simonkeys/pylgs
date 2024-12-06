@@ -1,0 +1,10 @@
+%A_rec
+%RecoilParameter	TemperatureK
+%1	4	4
+%coefficients
+%0.0010940527084413523 * RecoilParameter * (TemperatureK)**(-1/2)
+%Density matrix (range)
+%ρ<sub>Re, 3S<sub>1/2</sub>, 3S<sub>1/2</sub></sub>	ρ<sub>Re, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Im, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Re, 3P<sub>1/2</sub>, 3P<sub>1/2</sub></sub>
+%Density matrix (source)
+%ρ<sub>Re, 3S<sub>1/2</sub>, 3S<sub>1/2</sub></sub>	ρ<sub>Re, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Im, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Re, 3P<sub>1/2</sub>, 3P<sub>1/2</sub></sub>
+0	0	3	-6.14e7

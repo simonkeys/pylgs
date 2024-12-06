@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "pylgs"
+  site-url: "https://simonkeys.github.io/pylgs"
+  description: "Modeling atomic physics of laser guide stars"
+  repo-branch: main
+  repo-url: "https://github.com/simonkeys/pylgs"

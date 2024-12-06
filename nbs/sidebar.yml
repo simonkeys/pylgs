@@ -1,0 +1,35 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - section: Tutorials
+        contents:
+          - tutorials/sodium_lgs.ipynb
+          - tutorials/polychromatic_lgs.ipynb
+          - tutorials/technical_background.ipynb
+        href: tutorials/index.qmd
+      - section: API
+        contents:
+          - api/velocitygroups.ipynb
+          - api/lgssystem.ipynb
+          - api/dmelements.ipynb
+          - section: pymor
+            contents:
+              - api/pymor/vectorarrays.ipynb
+              - api/pymor/parameters.ipynb
+              - api/pymor/operators.ipynb
+              - api/pymor/grids.ipynb
+              - api/pymor/timestepping.ipynb
+              - api/pymor/models.ipynb
+            href: api/pymor/index.qmd
+          - section: utilities
+            contents:
+              - api/utilities/basic.ipynb
+              - api/utilities/testing.ipynb
+              - api/utilities/numpy.ipynb
+              - api/utilities/sparse.ipynb
+              - api/utilities/nbdev.ipynb
+              - api/utilities/xarray.ipynb
+              - api/utilities/formatting.ipynb
+            href: api/utilities/index.qmd
+        href: api/index.qmd
