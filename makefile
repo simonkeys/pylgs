@@ -1,6 +1,6 @@
 SHELL = /bin/zsh
 
-pylgsversion = 0.0.1
+pylgsversion = 0.1.0
 pythonversion = 3.10
 envname = conda-$(pythonversion)-pylgs
 
