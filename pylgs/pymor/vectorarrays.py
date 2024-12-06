@@ -27,6 +27,11 @@ from ..utilities.xarray import Coordinates
 from ..utilities.formatting import prefix_format
 
 # %% ../../nbs/api/pymor/vectorarrays.ipynb
+import pandas as pd
+import plotly.express as px
+import plotly
+
+# %% ../../nbs/api/pymor/vectorarrays.ipynb
 class XarrayVectorArrayImpl(VectorArrayImpl):
 
     def __init__(self, _array, space_array):
@@ -408,11 +413,6 @@ def axpy_copy(self:XarrayVectorArrayImpl, alpha, x, ind, xind):
         elif alpha == -1:
             return type(self)(self._array - B, self.space_array)
     return type(self)(self._array + B * alpha, self.space_array)
-
-# %% ../../nbs/api/pymor/vectorarrays.ipynb
-import pandas as pd
-import plotly.express as px
-import plotly
 
 # %% ../../nbs/api/pymor/vectorarrays.ipynb
 plotly.io.templates.default = "plotly_white"
