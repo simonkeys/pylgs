@@ -1,0 +1,11 @@
+_docs/
+_proc/
+.jupyter/
+build/
+dist/
+mma/
+nbs/
+pylgs/
+pylgs.egg-info/
+.gitattributes
+.gitconfig

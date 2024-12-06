@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="description" content="Extended functionality for pyMOR operators">
 
-<title>pymor.operators – pylgs</title>
+<title>pylgs - pymor.operators</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -70,10 +70,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-7c6d40aa23c779922b80e0578a9e8972.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -136,10 +136,10 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="pymor.operators – pylgs">
+<meta property="og:title" content="pylgs - pymor.operators">
 <meta property="og:description" content="Extended functionality for pyMOR operators">
 <meta property="og:site_name" content="pylgs">
-<meta name="twitter:title" content="pymor.operators – pylgs">
+<meta name="twitter:title" content="pylgs - pymor.operators">
 <meta name="twitter:description" content="Extended functionality for pyMOR operators">
 <meta name="twitter:card" content="summary">
 </head>
@@ -155,18 +155,18 @@ window.Quarto = {
     <span class="navbar-title">pylgs</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools tools-end">
+        <div class="quarto-navbar-tools">
 </div>
           <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">pymor.operators</li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../api/index.html">API</a></li><li class="breadcrumb-item"><a href="../../api/pymor/index.html">pymor</a></li><li class="breadcrumb-item"><a href="../../api/pymor/operators.html">pymor.operators</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
@@ -185,101 +185,158 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../tutorials/index.qmd" class="sidebar-item-text sidebar-link">
+            <a href="../../tutorials/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tutorials</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">tutorials/sodium_lgs.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/sodium_lgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sodium LGS</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">tutorials/polychromatic_lgs.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/polychromatic_lgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polychromatic LGS</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">tutorials/technical_background.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/technical_background.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Technical background</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../api/index.qmd" class="sidebar-item-text sidebar-link">
+            <a href="../../api/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">API</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">api/velocitygroups.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/velocitygroups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">velocitygroups</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/lgssystem.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/lgssystem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lgssystem</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/dmelements.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/dmelements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">dmelements</span></a>
+  </div>
+</li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../api/pymor/index.qmd" class="sidebar-item-text sidebar-link">
+            <a href="../../api/pymor/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pymor</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
- <span class="menu-text">api/pymor/vectorarrays.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/pymor/vectorarrays.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pymor.vectorarrays</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/pymor/parameters.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/pymor/parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pymor.parameters</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/pymor/operators.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/pymor/operators.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">pymor.operators</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/pymor/grids.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/pymor/grids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pymor.grids</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/pymor/timestepping.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/pymor/timestepping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pymor.timestepping</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/pymor/models.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/pymor/models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pymor.models</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../api/utilities/index.qmd" class="sidebar-item-text sidebar-link">
+            <a href="../../api/utilities/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">utilities</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
- <span class="menu-text">api/utilities/basic.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/utilities/basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utilities.basic</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/utilities/testing.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/utilities/testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utilities.testing</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/utilities/numpy.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/utilities/numpy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utilities.numpy</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/utilities/sparse.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/utilities/sparse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utilities.sparse</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/utilities/nbdev.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/utilities/nbdev.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utilities.nbdev</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/utilities/xarray.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/utilities/xarray.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utilities.xarray</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">api/utilities/formatting.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../api/utilities/formatting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utilities.formatting</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -343,7 +400,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../api/index.html">API</a></li><li class="breadcrumb-item"><a href="../../api/pymor/index.html">pymor</a></li><li class="breadcrumb-item"><a href="../../api/pymor/operators.html">pymor.operators</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">pymor.operators</h1>
 </div>
@@ -382,7 +439,7 @@ window.Quarto = {
                        |str=None, solver_options:dict=None, name:str=None)</code></pre>
 </blockquote>
 <p><em>An <code>Operator</code> backed by an xarray <code>DataArray</code>.</em></p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -1282,7 +1339,7 @@ XarrayMatrixOperator_adjoint{ra(4)} → {so(5)}
 <pre><code> XarrayMatrixOperator.apply (U, mu=None)</code></pre>
 </blockquote>
 <p><em>Apply the operator to an <a href="https://simonkeys.github.io/pylgs/api/pymor/vectorarrays.html#xarrayvectorarray"><code>XarrayVectorArray</code></a> in the source vector space.</em></p>
-<table class="caption-top table">
+<table class="table">
 <thead>
 <tr class="header">
 <th></th>
@@ -1321,7 +1378,7 @@ XarrayMatrixOperator_adjoint{ra(4)} → {so(5)}
 <pre><code> XarrayMatrixOperator.apply_adjoint (V, mu=None)</code></pre>
 </blockquote>
 <p><em>Apply the adjoint of the operator to an <a href="https://simonkeys.github.io/pylgs/api/pymor/vectorarrays.html#xarrayvectorarray"><code>XarrayVectorArray</code></a> in the range vector space.</em></p>
-<table class="caption-top table">
+<table class="table">
 <thead>
 <tr class="header">
 <th></th>
@@ -1394,7 +1451,7 @@ XarrayMatrixOperator_adjoint{ra(4)} → {so(5)}
           ator)</code></pre>
 </blockquote>
 <p><em>Convert sparse operators to dense.</em></p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 9%">
 <col style="width: 38%">
@@ -1458,7 +1515,7 @@ XarrayMatrixOperator_adjoint{ra(4)} → {so(5)}
 <pre><code> SumOperator (source_coords:Coordinates|dict, name=None)</code></pre>
 </blockquote>
 <p><em>An <code>Operator</code> that sums over one or more dimensions of a <a href="https://simonkeys.github.io/pylgs/api/pymor/vectorarrays.html#xarrayvectorspace"><code>XarrayVectorSpace</code></a>.</em></p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -3466,7 +3523,7 @@ Coordinates:
   * third dim    (third dim) &lt;U3 48B '$a$' '$b$' '$c$' '$d$'
 Attributes:
     parameters:  ['A', 'B']</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name">'test'</div><ul class="xr-dim-list"><li><span class="xr-has-index">dim_1</span>: 2</li><li><span class="xr-has-index">another dim</span>: 3</li><li><span class="xr-has-index">third dim</span>: 4</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-60bf3c90-aa63-4871-a1b7-740176e87c8a" class="xr-array-in" type="checkbox" checked=""><label for="section-60bf3c90-aa63-4871-a1b7-740176e87c8a" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>&lt;COO: nnz=2, fill_value=0.0&gt;</span></div><div class="xr-array-data">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <tbody>
 <tr class="odd">
 <td style="text-align: left;" data-quarto-table-cell-role="th">Format</td>
@@ -3888,7 +3945,7 @@ Coordinates:
   * Density matrix (source)  (Density matrix (source)) &lt;U50 800B 'ρ&lt;sub&gt;Re, 3...
 Attributes:
     parameters:  ['']</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name">'Flux'</div><ul class="xr-dim-list"><li><span class="xr-has-index">coefficients</span>: 1</li><li><span class="xr-has-index">Transition</span>: 1</li><li><span class="xr-has-index">Density matrix (source)</span>: 4</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-a2d0c11c-55c9-4402-854f-ad9106abe2cd" class="xr-array-in" type="checkbox" checked=""><label for="section-a2d0c11c-55c9-4402-854f-ad9106abe2cd" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>&lt;COO: nnz=1, fill_value=0.0&gt;</span></div><div class="xr-array-data">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <tbody>
 <tr class="odd">
 <td style="text-align: left;" data-quarto-table-cell-role="th">Format</td>
@@ -3944,7 +4001,7 @@ Attributes:
                             name=None)</code></pre>
 </blockquote>
 <p><em>Read a <code>LincombOperator</code> (list of sparse arrays and corresponding <code>ExpressionParameterFunctionals</code>) from a .mtxn file.</em></p>
-<table class="caption-top table">
+<table class="table">
 <thead>
 <tr class="header">
 <th></th>
@@ -4018,7 +4075,7 @@ Flux{DM(4)} → {Tr(1)}
                                                  .base.Mu)</code></pre>
 </blockquote>
 <p><em>Substitute parameter values, returning a new <code>ExpressionParameterFunctional</code> if expression does not evaluate to a number.</em></p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 9%">
 <col style="width: 38%">
@@ -4067,7 +4124,7 @@ Flux{DM(4)} → {Tr(1)}
                                                 Mu)</code></pre>
 </blockquote>
 <p><em>Substitute parameter values into linear coefficients, returning a new <code>ExpressionParameterFunctional</code> if expression does not evaluate to a number.</em></p>
-<table class="caption-top table">
+<table class="table">
 <thead>
 <tr class="header">
 <th></th>
@@ -4098,7 +4155,7 @@ Flux{DM(4)} → {Tr(1)}
 <pre><code> LincombOperator.partial_assemble (mu=None)</code></pre>
 </blockquote>
 <p><em>Substitute parameter values into the linear coefficients, returning a new operator with fewer (or no) parameters.</em></p>
-<table class="caption-top table">
+<table class="table">
 <thead>
 <tr class="header">
 <th></th>
@@ -4187,7 +4244,7 @@ test{TD(4)} → {AD(3)}
 <pre><code> ProductOperator (operators, name=None)</code></pre>
 </blockquote>
 <p><em>An Operator given by the direct product of operators <code>operators</code>.</em></p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -5147,7 +5204,7 @@ Wall time: 76.7 ms</code></pre>
 <pre><code> ProductOperator.apply (U, mu=None)</code></pre>
 </blockquote>
 <p><em>Apply the operator to a |VectorArray|.</em></p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -5275,7 +5332,7 @@ XarrayMatrixOperator_adjoint{RA(3)} → {SA(2)} ⨂ XarrayMatrixOperator_adjoint
 <p>For any given linear |Operator| <code>op</code>, |parameter values| <code>mu</code> and |VectorArrays| <code>U</code>, <code>V</code> in the :attr:<code>~pymor.operators.interface.Operator.source</code> resp. :attr:<code>~pymor.operators.interface.Operator.range</code> we have::</p>
 <pre><code>op.apply_adjoint(V, mu).dot(U) == V.inner(op.apply(U, mu))</code></pre>
 <p>Thus, when <code>op</code> is represented by a matrix <code>M</code>, <code>apply_adjoint</code> is given by left-multiplication of (the complex conjugate of) <code>M</code> with <code>V</code>.*</p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -5327,7 +5384,7 @@ XarrayMatrixOperator_adjoint{RA(3)} → {SA(2)} ⨂ XarrayMatrixOperator_adjoint
 </blockquote>
 <p>*Assemble the operator for given |parameter values|.</p>
 <p>The result of the method strongly depends on the given operator. For instance, a matrix-based operator will assemble its matrix, a |LincombOperator| will try to form the linear combination of its operators, whereas an arbitrary operator might simply return a :class:<code>~pymor.operators.constructions.FixedParameterOperator</code>. The only assured property of the assembled operator is that it no longer depends on a |Parameter|.*</p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -5415,7 +5472,7 @@ X{SA(2)} → {RA(3)} ⨂ X{SB(5)} → {RB(4)}
 <p>In the case of a linear operator with |NumpyVectorSpace| as :attr:<code>~pymor.operators.interface.Operator.range</code>, this method returns for given |parameter values| <code>mu</code> a |VectorArray| <code>V</code> in the operator’s :attr:<code>~pymor.operators.interface.Operator.source</code>, such that ::</p>
 <pre><code>self.range.make_array(V.inner(U).T) == self.apply(U, mu)</code></pre>
 <p>for all |VectorArrays| <code>U</code>.*</p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -5469,7 +5526,7 @@ X{SA(2)} → {RA(3)} ⨂ X{SB(5)} → {RB(4)}
 <p>In the case of a linear operator with |NumpyVectorSpace| as :attr:<code>~pymor.operators.interface.Operator.source</code>, this method returns for given |parameter values| <code>mu</code> a |VectorArray| <code>V</code> in the operator’s :attr:<code>~pymor.operators.interface.Operator.range</code>, such that ::</p>
 <pre><code>V.lincomb(U.to_numpy()) == self.apply(U, mu)</code></pre>
 <p>for all |VectorArrays| <code>U</code>.*</p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 25%">
@@ -5552,7 +5609,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -5584,45 +5652,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/simonkeys\.github\.io\/pylgs");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -5657,11 +5687,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -5709,6 +5735,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

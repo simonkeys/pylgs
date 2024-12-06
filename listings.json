@@ -1,56 +1,56 @@
 [
   {
-    "listing": "/Tutorials/index.html",
+    "listing": "/api/utilities/index.html",
     "items": [
-      "/Tutorials/polychromatic_lgs.html",
-      "/Tutorials/sodium_lgs.html",
-      "/Tutorials/technical_background.html"
+      "/api/utilities/basic.html",
+      "/api/utilities/formatting.html",
+      "/api/utilities/nbdev.html",
+      "/api/utilities/numpy.html",
+      "/api/utilities/sparse.html",
+      "/api/utilities/testing.html",
+      "/api/utilities/xarray.html"
     ]
   },
   {
-    "listing": "/API/pyMOR/index.html",
+    "listing": "/api/index.html",
     "items": [
-      "/API/pyMOR/grids.html",
-      "/API/pyMOR/models.html",
-      "/API/pyMOR/operators.html",
-      "/API/pyMOR/parameters.html",
-      "/API/pyMOR/timestepping.html",
-      "/API/pyMOR/vectorarrays.html"
+      "/api/dmelements.html",
+      "/api/lgssystem.html",
+      "/api/pymor/index.html",
+      "/api/pymor/grids.html",
+      "/api/pymor/models.html",
+      "/api/pymor/operators.html",
+      "/api/pymor/parameters.html",
+      "/api/pymor/timestepping.html",
+      "/api/pymor/vectorarrays.html",
+      "/api/utilities/index.html",
+      "/api/utilities/basic.html",
+      "/api/utilities/formatting.html",
+      "/api/utilities/nbdev.html",
+      "/api/utilities/numpy.html",
+      "/api/utilities/sparse.html",
+      "/api/utilities/testing.html",
+      "/api/utilities/xarray.html",
+      "/api/velocitygroups.html"
     ]
   },
   {
-    "listing": "/API/index.html",
+    "listing": "/api/pymor/index.html",
     "items": [
-      "/API/dmelements.html",
-      "/API/lgssystem.html",
-      "/API/pyMOR/index.html",
-      "/API/pyMOR/grids.html",
-      "/API/pyMOR/models.html",
-      "/API/pyMOR/operators.html",
-      "/API/pyMOR/parameters.html",
-      "/API/pyMOR/timestepping.html",
-      "/API/pyMOR/vectorarrays.html",
-      "/API/utilities/index.html",
-      "/API/utilities/basic.html",
-      "/API/utilities/formatting.html",
-      "/API/utilities/nbdev.html",
-      "/API/utilities/numpy.html",
-      "/API/utilities/sparse.html",
-      "/API/utilities/testing.html",
-      "/API/utilities/xarray.html",
-      "/API/velocitygroups.html"
+      "/api/pymor/grids.html",
+      "/api/pymor/models.html",
+      "/api/pymor/operators.html",
+      "/api/pymor/parameters.html",
+      "/api/pymor/timestepping.html",
+      "/api/pymor/vectorarrays.html"
     ]
   },
   {
-    "listing": "/API/utilities/index.html",
+    "listing": "/tutorials/index.html",
     "items": [
-      "/API/utilities/basic.html",
-      "/API/utilities/formatting.html",
-      "/API/utilities/nbdev.html",
-      "/API/utilities/numpy.html",
-      "/API/utilities/sparse.html",
-      "/API/utilities/testing.html",
-      "/API/utilities/xarray.html"
+      "/tutorials/polychromatic_lgs.html",
+      "/tutorials/sodium_lgs.html",
+      "/tutorials/technical_background.html"
     ]
   }
 ]
