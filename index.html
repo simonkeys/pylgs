@@ -350,6 +350,9 @@ window.Quarto = {
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
   <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link" data-scroll-target="#how-to-use">How to use</a></li>
+  <li><a href="#lgs-systems" id="toc-lgs-systems" class="nav-link" data-scroll-target="#lgs-systems">LGS systems</a></li>
+  <li><a href="#development" id="toc-development" class="nav-link" data-scroll-target="#development">Development</a></li>
+  <li><a href="#copyright" id="toc-copyright" class="nav-link" data-scroll-target="#copyright">Copyright</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/simonkeys/pylgs/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -386,27 +389,27 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <p>pyLGS uses the CVODE library from the <a href="https://computing.llnl.gov/projects/sundials">SUNDIALS package</a>, with <a href="https://scikits-odes.readthedocs.io/en/latest/installation.html">scikits.odes</a> as the Python interface. Before installing pyLGS you may need to install SUNDIALS and the scikits.odes dependencies. On Ubuntu/Debian-based distributions this can be done with <code>apt-get</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install python3-dev gcc gfortran libsundials-dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>(Note that at least SUNDIALS version 6 is required – this is supplied by Ubuntu 24.04/Debian 12 and later.)</p>
+<p>(Note that at SUNDIALS version 6 or later is required – this is supplied by Ubuntu 24.04/Debian 12 and later.)</p>
 <p>Once the above dependencies are installed, pyLGS can be installed with <code>pip</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pylgs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="how-to-use" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use">How to use</h2>
 <p>Import the package:</p>
-<div id="cell-11" class="cell">
+<div id="cell-11" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:14.737857Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:14.737766Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:18.028769Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:18.028411Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:14.737847Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylgs.lgssystem <span class="im">import</span> LGSSystem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>List available atomic systems for an LGS model:</p>
-<div id="cell-13" class="cell">
+<div id="cell-13" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:18.030498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:18.030243Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:18.039884Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:18.039348Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:18.030480Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.builtins()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>['NaD1', 'Na330', 'NaD2', 'NaD2_Repump', 'NaD1_Toy']</code></pre>
 </div>
 </div>
 <p>Show a level diagram for one of the atomic systems:</p>
-<div id="cell-15" class="cell">
+<div id="cell-15" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:18.040896Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:18.040687Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:18.048895Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:18.048506Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:18.040877Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.diagram(<span class="st">"NaD2_Repump"</span>, <span class="st">"ToScale"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img"></p>
@@ -415,9 +418,9 @@ window.Quarto = {
 </div>
 </div>
 <p>Print some information about the system:</p>
-<div id="cell-17" class="cell">
+<div id="cell-17" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:18.049644Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:18.049527Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:18.057253Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:18.056927Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:18.049633Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.info(<span class="st">"NaD2_Repump"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="6">
 <section id="atomic-levels" class="level4">
 <h4 class="anchored" data-anchor-id="atomic-levels">Atomic levels</h4>
 <p><span class="math inline">\(\text{3S}_{\frac{1}{2}}\)</span>, <span class="math inline">\(\text{3P}_{\frac{3}{2}}\)</span></p>
@@ -479,7 +482,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Load the atomic system and set values for parameters that will not be varied:</p>
-<div id="cell-19" class="cell">
+<div id="cell-19" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:18.057772Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:18.057667Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:20.467905Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:20.467608Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:18.057760Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lgs <span class="op">=</span> LGSSystem(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NaD2_Repump'</span>, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    {</span>
@@ -502,26 +505,26 @@ window.Quarto = {
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Define sample values for the varying parameters:</p>
-<div id="cell-21" class="cell">
+<div id="cell-21" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:20.468530Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:20.468388Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:20.473402Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:20.473018Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:20.468505Z&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">'IntensitySI1'</span>: <span class="fl">5.</span>, <span class="st">'IntensitySI2'</span>: <span class="fl">46.</span>, <span class="st">'BFieldG'</span>: <span class="fl">0.5</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Build a steady-state model with adaptively refined velocity groups based on the sample parameters:</p>
-<div id="cell-23" class="cell">
+<div id="cell-23" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:20.474116Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:20.474019Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:25.111646Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:25.110722Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:20.474106Z&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> lgs.adaptive_stationary_model(params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Solve the model for the steady state using the sample parameters:</p>
-<div id="cell-25" class="cell">
+<div id="cell-25" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:25.122003Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:25.121261Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:25.805891Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:25.795516Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:25.121971Z&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> model.solve(params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Find the total return flux:</p>
-<div id="cell-27" class="cell">
+<div id="cell-27" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:25.822624Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:25.817447Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:25.847375Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:25.846605Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:25.822610Z&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model.total_flux(sol).item()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>7709.054844667825</code></pre>
 </div>
 </div>
 <p>Plot the return flux as a function of atomic velocity:</p>
-<div id="cell-29" class="cell">
+<div id="cell-29" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:25.858526Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:25.858406Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:26.619085Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:26.618694Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:25.858515Z&quot;}" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model.flux_distribution(sol).visualize()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -532,7 +535,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Plot the ground and excited state populations as a function of atomic velocity:</p>
-<div id="cell-31" class="cell">
+<div id="cell-31" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:26.619991Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:26.619734Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:26.675319Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:26.674915Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:26.619975Z&quot;}" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model.level_population_distribution(sol).visualize()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -543,7 +546,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Plot the real and imaginary parts of all density-matrix elements:</p>
-<div id="cell-33" class="cell">
+<div id="cell-33" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-12-06T22:58:26.675832Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-12-06T22:58:26.675700Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-12-06T22:58:29.704388Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-12-06T22:58:29.703801Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2024-12-06T22:58:26.675820Z&quot;}" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model.velocity_normalize(sol).visualize(line_width<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -553,6 +556,18 @@ window.Quarto = {
 </div>
 </div>
 </div>
+</section>
+<section id="lgs-systems" class="level2">
+<h2 class="anchored" data-anchor-id="lgs-systems">LGS systems</h2>
+<p>The LGS system models are based on systems of equations generated using the <a href="https://www.rochesterscientific.com/ADM/">AtomicDensityMatrix</a> package for Mathematica, together with an add-on package that has not yet been released, but will be available in the near future. If you are interested in modeling an LGS scheme that is not currently available as a built-in system, you can <a href="https://github.com/simonkeys/pylgs/issues/new">create an issue</a> describing it and I will consider adding it as a built-in.</p>
+</section>
+<section id="development" class="level2">
+<h2 class="anchored" data-anchor-id="development">Development</h2>
+<p>pyLGS is developed with the <a href="https://nbdev.fast.ai/">nbdev</a> system for development using Jupyter notebooks. The source code, documentation source, and tests are co-mingled in Jupyter notebooks (.ipynb files) contained in the <code>nb</code> directory. The source code is exported to create the module (.py) files in the <code>pylgs</code> directory.</p>
+</section>
+<section id="copyright" class="level2">
+<h2 class="anchored" data-anchor-id="copyright">Copyright</h2>
+<p>Copyright © 2023 onward Simon Rochester (Rochester Scientific, LLC). Licensed under the GNU General Public License - Version 3 (the “License”); you may not use this project’s files except in compliance with the License. A copy of the License is provided in the LICENSE file in this repository.</p>
 
 
 </section>
