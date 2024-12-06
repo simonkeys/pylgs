@@ -13,5 +13,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install SUNDIALS
-        run: sudo apt-get update & sudo apt-get -y install python3-dev gcc gfortran libsundials-dev
+        run: sudo apt-get update && sudo apt-get -y install python3-dev gcc gfortran libsundials-dev
       - uses: fastai/workflows/quarto-ghp@master
