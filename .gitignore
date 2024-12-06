@@ -2,11 +2,8 @@ _publish.yml
 _quarto.yml
 _proc/
 idx/
-conda/
 _site/
 _docs/
-
-_scratch
 
 *.bak
 .gitattributes
