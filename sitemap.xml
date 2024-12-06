@@ -2,98 +2,98 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://simonkeys.github.io/pylgs/index.html</loc>
-    <lastmod>2024-12-06T08:30:23.087Z</lastmod>
+    <lastmod>2024-12-06T09:45:48.402Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/tutorials/technical_background.html</loc>
-    <lastmod>2024-12-06T05:44:08.039Z</lastmod>
+    <lastmod>2024-12-06T09:45:50.046Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/tutorials/sodium_lgs.html</loc>
-    <lastmod>2024-12-06T08:30:23.347Z</lastmod>
+    <lastmod>2024-12-06T10:03:14.228Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/pymor/vectorarrays.html</loc>
-    <lastmod>2024-12-06T05:44:08.282Z</lastmod>
+    <lastmod>2024-12-06T10:03:13.908Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/pymor/grids.html</loc>
-    <lastmod>2024-12-06T05:44:07.465Z</lastmod>
+    <lastmod>2024-12-06T09:45:49.856Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/pymor/models.html</loc>
-    <lastmod>2024-12-06T05:44:08.418Z</lastmod>
+    <lastmod>2024-12-06T09:45:50.688Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/dmelements.html</loc>
-    <lastmod>2024-12-06T05:44:08.463Z</lastmod>
+    <lastmod>2024-12-06T09:45:50.583Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/sparse.html</loc>
-    <lastmod>2024-12-06T05:44:07.992Z</lastmod>
+    <lastmod>2024-12-06T09:45:49.978Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/index.html</loc>
-    <lastmod>2023-12-18T04:23:28.095Z</lastmod>
+    <lastmod>2024-12-06T09:30:40.070Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/basic.html</loc>
-    <lastmod>2024-12-06T05:44:06.306Z</lastmod>
+    <lastmod>2024-12-06T09:45:48.476Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/nbdev.html</loc>
-    <lastmod>2024-12-06T05:44:06.269Z</lastmod>
+    <lastmod>2024-12-06T09:45:48.527Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/index.html</loc>
-    <lastmod>2023-11-25T06:56:41.327Z</lastmod>
+    <lastmod>2024-12-06T09:30:40.056Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/velocitygroups.html</loc>
-    <lastmod>2024-12-06T05:44:08.397Z</lastmod>
+    <lastmod>2024-12-06T09:45:50.655Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/lgssystem.html</loc>
-    <lastmod>2024-12-06T05:44:08.536Z</lastmod>
+    <lastmod>2024-12-06T10:03:13.769Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/formatting.html</loc>
-    <lastmod>2024-12-06T05:44:06.216Z</lastmod>
+    <lastmod>2024-12-06T09:45:48.463Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/testing.html</loc>
-    <lastmod>2024-12-06T05:44:06.707Z</lastmod>
+    <lastmod>2024-12-06T09:45:49.213Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/numpy.html</loc>
-    <lastmod>2024-12-06T05:44:06.283Z</lastmod>
+    <lastmod>2024-12-06T09:45:48.538Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/utilities/xarray.html</loc>
-    <lastmod>2024-12-06T05:44:06.815Z</lastmod>
+    <lastmod>2024-12-06T09:45:49.308Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/pymor/operators.html</loc>
-    <lastmod>2024-12-06T05:44:08.525Z</lastmod>
+    <lastmod>2024-12-06T09:45:50.756Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/pymor/timestepping.html</loc>
-    <lastmod>2024-12-06T05:44:08.467Z</lastmod>
+    <lastmod>2024-12-06T09:45:50.657Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/pymor/index.html</loc>
-    <lastmod>2024-05-08T07:56:30.225Z</lastmod>
+    <lastmod>2024-12-06T09:30:40.065Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/api/pymor/parameters.html</loc>
-    <lastmod>2024-12-06T05:44:08.055Z</lastmod>
+    <lastmod>2024-12-06T09:45:50.328Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/tutorials/index.html</loc>
-    <lastmod>2023-11-25T06:55:06.144Z</lastmod>
+    <lastmod>2024-12-06T09:30:40.071Z</lastmod>
   </url>
   <url>
     <loc>https://simonkeys.github.io/pylgs/tutorials/polychromatic_lgs.html</loc>
-    <lastmod>2024-12-06T05:44:08.355Z</lastmod>
+    <lastmod>2024-12-06T10:03:14.525Z</lastmod>
   </url>
 </urlset>
