@@ -22,8 +22,8 @@ distributions this can be done with `apt-get`:
 sudo apt-get install python3-dev gcc gfortran libsundials-dev
 ```
 
-(Note that at least SUNDIALS version 6 is required – this is supplied by
-Ubuntu 24.04/Debian 12 and later.)
+(Note that at SUNDIALS version 6 or later is required – this is supplied
+by Ubuntu 24.04/Debian 12 and later.)
 
 Once the above dependencies are installed, pyLGS can be installed with
 `pip`:
@@ -189,3 +189,30 @@ model.velocity_normalize(sol).visualize(line_width=1)
 ```
 
 ![](index_files/figure-commonmark/cell-13-output-1.svg)
+
+## LGS systems
+
+The LGS system models are based on systems of equations generated using
+the [AtomicDensityMatrix](https://www.rochesterscientific.com/ADM/)
+package for Mathematica, together with an add-on package that has not
+yet been released, but will be available in the near future. If you are
+interested in modeling an LGS scheme that is not currently available as
+a built-in system, you can [create an
+issue](https://github.com/simonkeys/pylgs/issues/new) describing it and
+I will consider adding it as a built-in.
+
+## Development
+
+pyLGS is developed with the [nbdev](https://nbdev.fast.ai/) system for
+development using Jupyter notebooks. The source code, documentation
+source, and tests are co-mingled in Jupyter notebooks (.ipynb files)
+contained in the `nb` directory. The source code is exported to create
+the module (.py) files in the `pylgs` directory.
+
+## Copyright
+
+Copyright © 2023 onward Simon Rochester (Rochester Scientific, LLC).
+Licensed under the GNU General Public License - Version 3 (the
+“License”); you may not use this project’s files except in compliance
+with the License. A copy of the License is provided in the LICENSE file
+in this repository.
