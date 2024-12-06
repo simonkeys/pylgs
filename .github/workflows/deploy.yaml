@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Install SUNDIALS
-        run: sudo apt-get update && sudo apt-get -y install python3-dev gcc gfortran libsundials-dev
+        run: sudo apt-get -y install libsundials-dev
       - uses: fastai/workflows/quarto-ghp@master
