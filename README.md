@@ -207,7 +207,7 @@ pyLGS is developed with the [nbdev](https://nbdev.fast.ai/) system for
 [“literate”](https://en.wikipedia.org/wiki/Literate_programming)
 programming[^1] using Jupyter notebooks. The source code, documentation
 source, and tests are co-mingled in Jupyter notebooks (.ipynb files)
-contained in the `nb` directory. The source code is exported to create
+contained in the `nbs` directory. The source code is exported to create
 the module (.py) files in the `pylgs` directory. Documentation is
 generated from the Jupyter notebooks using the
 [Quarto](https://quarto.org/) publishing system. Tests are run by batch
