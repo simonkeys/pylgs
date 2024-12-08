@@ -22,8 +22,8 @@ distributions this can be done with `apt-get`:
 sudo apt-get install python3-dev gcc gfortran libsundials-dev
 ```
 
-(Note that at SUNDIALS version 6 or later is required – this is supplied
-by Ubuntu 24.04/Debian 12 and later.)
+(Note that SUNDIALS version 6 or later is required – this is supplied by
+Ubuntu 24.04/Debian 12 and later.)
 
 Once the above dependencies are installed, pyLGS can be installed with
 `pip`:
@@ -64,16 +64,16 @@ LGSSystem.info("NaD2_Repump")
 
 #### Atomic levels
 
-$\text{3S}_{\frac{1}{2}}$, $\text{3P}_{\frac{3}{2}}$
+$\text{3S} _{1/2}$, $\text{3P} _{3/2}$
 
 #### Pump transitions
 
-1.  $\text{3S}_{\frac{1}{2}}\land F=1\to \text{3P}_{\frac{3}{2}}$
-2.  $\text{3S}_{\frac{1}{2}}\land F=2\to \text{3P}_{\frac{3}{2}}$
+1.  $\text{3S} _{1/2}\land F=1\to \text{3P} _{3/2}$
+2.  $\text{3S} _{1/2}\land F=2\to \text{3P} _{3/2}$
 
 #### Transition wavelengths
 
-- $\text{3P}_{\frac{3}{2}}\to \text{3S}_{\frac{1}{2}}$: 589.158 nm
+- $\text{3P} _{3/2}\to \text{3S} _{1/2}$: 589.158 nm
 
 #### Substructure
 
@@ -204,10 +204,14 @@ I will consider adding it as a built-in.
 ## Development
 
 pyLGS is developed with the [nbdev](https://nbdev.fast.ai/) system for
-development using Jupyter notebooks. The source code, documentation
+[“literate”](https://en.wikipedia.org/wiki/Literate_programming)
+programming[^1] using Jupyter notebooks. The source code, documentation
 source, and tests are co-mingled in Jupyter notebooks (.ipynb files)
 contained in the `nb` directory. The source code is exported to create
-the module (.py) files in the `pylgs` directory.
+the module (.py) files in the `pylgs` directory. Documentation is
+generated from the Jupyter notebooks using the
+[Quarto](https://quarto.org/) publishing system. Tests are run by batch
+evaluation of the notebooks.
 
 ## Copyright
 
@@ -216,3 +220,7 @@ Licensed under the GNU General Public License - Version 3 (the
 “License”); you may not use this project’s files except in compliance
 with the License. A copy of the License is provided in the LICENSE file
 in this repository.
+
+[^1]: or possibly
+    [“semi-literate”](https://en.wikipedia.org/wiki/Literate_programming#Literate_programming_practices)
+    programming

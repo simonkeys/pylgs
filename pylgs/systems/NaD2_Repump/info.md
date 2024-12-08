@@ -1,15 +1,15 @@
 #### Atomic levels
 
-$\text{3S}_{\frac{1}{2}}$, $\text{3P}_{\frac{3}{2}}$
+$\text{3S} _{1/2}$, $\text{3P} _{3/2}$
 
 #### Pump transitions
 
-1. $\text{3S}_{\frac{1}{2}}\land F=1\to \text{3P}_{\frac{3}{2}}$
-1. $\text{3S}_{\frac{1}{2}}\land F=2\to \text{3P}_{\frac{3}{2}}$
+1. $\text{3S} _{1/2}\land F=1\to \text{3P} _{3/2}$
+1. $\text{3S} _{1/2}\land F=2\to \text{3P} _{3/2}$
 
 #### Transition wavelengths
 
-- $\text{3P}_{\frac{3}{2}}\to \text{3S}_{\frac{1}{2}}$: 589.158 nm
+- $\text{3P} _{3/2}\to \text{3S} _{1/2}$: 589.158 nm
 
 #### Substructure
 
