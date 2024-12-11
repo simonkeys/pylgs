@@ -22,7 +22,8 @@ from pymor.operators.interface import Operator
 class VelocityGroups(dict):
     """`VelocityGroups` contains informations about the centers, edges, and relative densities of a list of velocity group bins."""
     def __init__(self, 
-                 bins:Iterable|int=6 # Iterable of velocity group edges or int specifying number of evenly spaced velocity groups
+                 bins:Iterable|int=6, # Iterable of velocity group edges or int specifying number of evenly spaced velocity groups
+                 range:Number|Iterable=3 # Default range (`min_vel`, `max_vel`) or half-width `max_vel` for velocity groups
                 ):
         super().__init__()
         if isinstance(bins, VelocityGroups):
@@ -30,7 +31,8 @@ class VelocityGroups(dict):
             for k, v in bins.items():
                 self[k] = v
             return
-        self.edges = np.linspace(-3, 3, bins + 1) if isinstance(bins, int) else bins
+        if isinstance(range, Number): range = (-range, range)
+        self.edges = np.linspace(*range, bins + 1) if isinstance(bins, int) else bins
         self['VGCenter'] = np.mean(np.array(list(zip(self.edges[:-1], self.edges[1:]))), axis=1)
         # self['VGBins'] = np.array(list(zip(bins[:-1], bins[1:])))
         # self['VGCenter'] = np.mean(self['VGBins'], axis=1)
