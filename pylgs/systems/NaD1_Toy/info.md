@@ -29,7 +29,9 @@ $\text{3S} _{1/2}$, $\text{3P} _{1/2}$
 - TemperatureK
 - VccRatePerS
 - DetuningHz1
-- EllipticityDegrees1
-- IntensitySI1
+-                         149896229 Pi
+Sqrt[IntensitySI1] Sqrt[------------]
+                             10
+-------------------------------------
+                 250
 - LaserWidthHz1
-- PolarizationAngleDegrees1
