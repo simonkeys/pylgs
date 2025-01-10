@@ -16,7 +16,7 @@ package](https://computing.llnl.gov/projects/sundials), with
 [scikits.odes](https://scikits-odes.readthedocs.io/en/latest/installation.html)
 as the Python interface. Before installing pyLGS you may need to install
 SUNDIALS and the scikits.odes dependencies. On Ubuntu/Debian-based
-distributions this can be done with `apt-get`:
+distributions (or on Windows using WSL) this can be done with `apt-get`:
 
 ``` sh
 sudo apt-get install python3-dev gcc gfortran libsundials-dev
@@ -24,6 +24,15 @@ sudo apt-get install python3-dev gcc gfortran libsundials-dev
 
 (Note that SUNDIALS version 6 or later is required – this is supplied by
 Ubuntu 24.04/Debian 12 and later.)
+
+On macOS SUNDIALS can be installed using conda:
+
+``` sh
+conda install conda-forge::sundials
+```
+
+(Note that homebrew also has a SUNDIALS package, but it doesn’t install
+the header files that scikits.odes requires.)
 
 Once the above dependencies are installed, pyLGS can be installed with
 `pip`:
@@ -46,7 +55,7 @@ List available atomic systems for an LGS model:
 LGSSystem.builtins()
 ```
 
-    ['NaD1', 'Na330', 'NaD2', 'NaD2_Repump', 'NaD1_Toy']
+    ['Na330', 'NaD1', 'NaD1_Toy', 'NaD2', 'NaD2_Repump']
 
 Show a level diagram for one of the atomic systems:
 
@@ -163,7 +172,7 @@ Find the total return flux:
 model.total_flux(sol).item()
 ```
 
-    7709.054844667825
+    7709.054844668253
 
 Plot the return flux as a function of atomic velocity:
 
