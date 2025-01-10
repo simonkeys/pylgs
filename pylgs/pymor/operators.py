@@ -506,8 +506,8 @@ class ProductOperator(Operator):
     ):
         for op in operators:
             if not isinstance(op, Operator): raise ValueError(f'Input {op} should be an Operator.')
-        self.source = np.product([op.source for op in operators])
-        self.range = np.product([op.range for op in operators])
+        self.source = np.prod([op.source for op in operators])
+        self.range = np.prod([op.range for op in operators])
         self.__auto_init(locals())
         self.linear = True
         
