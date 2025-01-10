@@ -138,14 +138,14 @@ class BDFTimeStepper(TimeStepper):
         
         def cvode_rhs(t, y, ydot):
             progress.value = t
-            np.copyto(ydot, (-operator.assemble(mu.with_(t=t)).apply(operator.source.from_numpy(y)) + rhs.as_range_array(mu.with_(t=t))).to_numpy()[0])
+            np.copyto(ydot, (-operator.assemble(mu.at_time(t=t)).apply(operator.source.from_numpy(y)) + rhs.as_range_array(mu.at_time(t=t))).to_numpy()[0])
 
         def preconditioner_setup(t, y, jok, jcurPtr, gamma, user_data):
             """Generate P and do ILU decomposition."""
             if jok:
                 jcurPtr.value = False
             else:
-                user_data['approximate_jacobian'] = -to_matrix(operator.assemble(mu.with_(t=t)))
+                user_data['approximate_jacobian'] = -to_matrix(operator.assemble(mu.at_time(t=t)))
                 user_data['approximate_jacobian'] = restrict_bandwidth(user_data['approximate_jacobian'], operator.solver_options['inverse']['preconditioner_bandwidth'])
                 jcurPtr.value = True
             # Scale jacobian by -gamma, add identity matrix and do LU decomposition

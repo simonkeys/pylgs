@@ -195,6 +195,9 @@ class XarrayVectorSpace(VectorSpace):
     def _repr_html_(self):
         return str(self)
 
+    def __hash__(self):
+        return hash(self.dim)
+
 # %% ../../nbs/api/pymor/vectorarrays.ipynb
 from pymor.vectorarrays.interface import _create_random_values
 
