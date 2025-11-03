@@ -286,7 +286,7 @@ def apply_inverse(op, V, initial_guess=None, options=None, least_squares=False, 
 
     options = _parse_options(options, solver_options(), default_solver, default_least_squares_solver, least_squares)
 
-    V = V.to_numpy()
+    V = V.to_numpy().T
     initial_guess = initial_guess.to_numpy() if initial_guess is not None else None
     promoted_type = np.promote_types(matrix.dtype, V.dtype)
     R = np.empty((len(V), matrix.shape[1]), dtype=promoted_type)
@@ -400,7 +400,7 @@ def apply_inverse(op, V, initial_guess=None, options=None, least_squares=False, 
         if not np.isfinite(np.sum(R)):
             raise InversionError('Result contains non-finite values')
 
-    return op.source.from_numpy(R)
+    return op.source.from_numpy(R.T)
 
 pymor.bindings.scipy.apply_inverse = apply_inverse
 

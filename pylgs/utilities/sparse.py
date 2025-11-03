@@ -29,14 +29,16 @@ def sparse2d(a):
 
 # %% ../../nbs/api/utilities/sparse.ipynb
 @delegates(COO, but='data')
-def sparse(a, format='coo', **kwargs)->SparseArray:
+def sparse(a, format='coo', shape=None, **kwargs)->SparseArray:
     """Create an N-D sparse array in specified format."""
     if format == 'gcxs': cls = GCXS
     elif format == 'coo': cls = COO
     if isinstance(a, ndarray): return cls.from_numpy(a)
     if sps.issparse(a): return cls.from_scipy_sparse(a)
     if isinstance(a, SparseArray): return cls(a)
-    return cls(COO(*a, **kwargs)) # Assume a is coords and data in COO format
+    # Assume a is coords and data in COO format
+    if shape is None: shape = [max(c) - min(c) + 1 for c in a[0]]
+    return cls(COO(*a, shape=shape, **kwargs))
 
 # %% ../../nbs/api/utilities/sparse.ipynb
 def sparse2d_identity(n):

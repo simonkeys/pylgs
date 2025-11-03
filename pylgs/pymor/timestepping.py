@@ -138,7 +138,7 @@ class BDFTimeStepper(TimeStepper):
         
         def cvode_rhs(t, y, ydot):
             progress.value = t
-            np.copyto(ydot, (-operator.assemble(mu.at_time(t=t)).apply(operator.source.from_numpy(y)) + rhs.as_range_array(mu.at_time(t=t))).to_numpy()[0])
+            np.copyto(ydot, (-operator.assemble(mu.at_time(t=t)).apply(operator.source.from_numpy(y)) + rhs.as_range_array(mu.at_time(t=t))).to_numpy().T[0])
 
         def preconditioner_setup(t, y, jok, jcurPtr, gamma, user_data):
             """Generate P and do ILU decomposition."""
@@ -172,7 +172,7 @@ class BDFTimeStepper(TimeStepper):
             user_data={}
         )
         t_list = np.linspace(initial_time, end_time, num_values)
-        sol = self._solver.solve(t_list, initial_data.to_numpy()[0])
+        sol = self._solver.solve(t_list, initial_data.to_numpy().T[0])
         progress.close()
         if isinstance(operator.source, XarrayVectorSpace):
             return [operator.source.from_numpy(sol.values.y, extended_dim={'Time': t_list})]

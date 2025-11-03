@@ -110,11 +110,18 @@ class XarrayVectorArray(VectorArray):
     def coords(self): return self.impl.coords
 
     @property
-    def extended_dims(self):
-        return self.impl.extended_dims
+    def dims(self): return self.impl.space_array.dims
+    
+    @property
+    def extended_dims(self): return self.impl.extended_dims
+
+    def _coords_str(self, dims):
+        if not dims: return '{1}'
+        sizes = self.array.sizes
+        return '{' + ' ⨉ '.join(f'{dim}({sizes[dim]})' for dim in dims) + '}'        
     
     def __str__(self):
-        return str(self.space)[:-1] + ", " + _coords_str(self.coords, self.extended_dims)[1:]
+        return self._coords_str(self.dims)[:-1] + ", " + self._coords_str(self.extended_dims)[1:]
     
     def short_str(self):
         return _short_coords_str(self.space)[:-1] + ", " + _short_coords_str(self.coords, self.extended_dims)[1:]
@@ -312,7 +319,7 @@ def item(self:XarrayVectorArray):
 def stacked_array(self:XarrayVectorArrayImpl):
     core = {'core': self.space_array.dims} if self.space_array.dims else {}
     extended = {'extended': self.extended_dims} if self.extended_dims else {}
-    return self._array.stack(extended | core)
+    return self._array.stack(core | extended)
 
 # %% ../../nbs/api/pymor/vectorarrays.ipynb
 @patch

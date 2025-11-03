@@ -23,8 +23,8 @@ from pymor.vectorarrays.interface import VectorArray
 from pymor.operators.interface import Operator
 
 # %% ../nbs/api/dmelements.ipynb
-_dm_element_hfz = re.compile('ρ<sub>([^,]+), \(([^,]+), ([^,]+), ([^)]+)\), \(([^,]+), ([^,]+), ([^)]+)\)</sub>')
-_dm_element_toy = re.compile('ρ<sub>([^,]+), ([^,]+), ([^,]+)</sub>')
+_dm_element_hfz = re.compile(r'ρ<sub>([^,]+), \(([^,]+), ([^,]+), ([^)]+)\), \(([^,]+), ([^,]+), ([^)]+)\)</sub>')
+_dm_element_toy = re.compile(r'ρ<sub>([^,]+), ([^,]+), ([^,]+)</sub>')
 
 # %% ../nbs/api/dmelements.ipynb
 def parse_dm_element(s):

@@ -375,7 +375,7 @@ def _read_sparse_dataarray(
             header.append(line.strip('%\n '))
     matrix = pd.read_csv(
         file_name,
-        sep='\s+',
+        sep=r'\s+',
         header=None,
         skiprows=len(header),
         index_col=None,
