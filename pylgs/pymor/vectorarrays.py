@@ -177,7 +177,8 @@ class XarrayVectorSpace(VectorSpace):
 
     def zeros(
         self, 
-        coords:Optional[dict]=None # Coordinates to extend vector space over
+        coords:Optional[dict]=None, # Coordinates to extend vector space over
+        reserve=0
     )->XarrayVectorArray: # `XarrayVectorArray` with all elements equal to zero
         """Return `XarrayVectorArray` of null vectors in XarrayVectorSpace optionally extended to include supplied coordinates `coords`."""
         if coords is None: coords = {}
@@ -186,7 +187,8 @@ class XarrayVectorSpace(VectorSpace):
 
     def ones(
         self, 
-        coords:Optional[dict]=None # Coordinates to extend vector space over
+        coords:Optional[dict]=None, # Coordinates to extend vector space over
+        reserve=0
     )->XarrayVectorArray: # `XarrayVectorArray` with all elements equal to one
         """Return `XarrayVectorArray` of vectors with each element equal to one in XarrayVectorSpace optionally extended to include supplied coordinates `coords`."""
         if coords is None: coords = {}
