@@ -95,16 +95,24 @@ class AdamsTimeStepper(TimeStepper):
         self.__auto_init(locals())
         
     def iterate(self, initial_time, end_time, initial_data, operator, rhs=None, mass=None, mu=None, num_values=None):
-        a = operator.assemble(mu.with_(t=0.)).matrix
-        b = rhs.to_numpy().ravel()
+
+        progress = widgets.FloatProgress(
+            value=initial_time,
+            min=initial_time,
+            max=end_time,
+            bar_style='info',
+            orientation='horizontal'
+        )
+        display(progress)
         
         def cvode_rhs(t, y, ydot):
-            np.copyto(ydot, (-a.dot(y) + b))
+            progress.value = t
+            np.copyto(ydot, (-operator.assemble(mu.at_time(t=t)).apply(operator.source.from_numpy(y)) + rhs.as_range_array(mu.at_time(t=t))).to_numpy().T[0])
         
         self._solver = cvode.CVODE(cvode_rhs, lmm_type='Adams', nonlinsolver='fixedpoint', max_steps=1000000, one_step_compute=num_values is None)
         if num_values is not None:
             self._t_list = np.linspace(initial_time, end_time, num_values)
-            sol = self._solver.solve(self._t_list, initial_data.to_numpy()[0])
+            sol = self._solver.solve(self._t_list, initial_data.to_numpy().T[0])
             y = sol.values.y
         else:
             self._t_list = [initial_time]
