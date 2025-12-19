@@ -13,11 +13,18 @@ import numpy as np
 from scikits.odes.sundials import cvode
 import pymor
 from pymor.algorithms.to_matrix import to_matrix
+from pymor.algorithms.simplify import expand
 from pymor.algorithms.timestepping import TimeStepper
+from pymor.basic import LincombOperator
+
+from pymor.algorithms.simplify import ExpandRules, expand, ContractRules, contract
+from pymor.algorithms.rules import match_class, RuleTable
+
 
 from ..utilities.sparse import sparse2d_identity, spilu, restrict_bandwidth
 from .vectorarrays import *
 from .operators import *
+# from pymor.basic import *
 
 # %% ../../nbs/api/pymor/timestepping.ipynb
 try:
@@ -105,24 +112,50 @@ class AdamsTimeStepper(TimeStepper):
         )
         display(progress)
         
+        np_rhs = rhs.as_range_array().to_numpy()
+        # pm_rhs = rhs.as_range_array()
+        expanded = expand(operator).partial_assemble(mu)
+        if isinstance(expanded, LincombOperator): 
+            constant = expanded.operators[0] * expanded.coefficients[0]
+            operators = expanded.operators[1:]
+            coefficients = expanded.coefficients[1:]        
+        else:
+            constant = expanded
+            operators = []
+            coefficients = []
+        
         def cvode_rhs(t, y, ydot):
             progress.value = t
-            np.copyto(ydot, (-operator.assemble(mu.at_time(t=t)).apply(operator.source.from_numpy(y)) + rhs.as_range_array(mu.at_time(t=t))).to_numpy().T[0])
+            y = operator.source.from_numpy(y)
+            np_mv = constant.apply(y).to_numpy() + np.sum([op.apply(y).to_numpy() * co.evaluate(mu.at_time(t=t)) for op, co in zip(operators, coefficients)], axis=0)
+            np_result = (-np_mv + np_rhs).T[0]
+            np.copyto(ydot, np_result)
+            # pm_operator = operator.assemble(mu.at_time(t=t))
+            # pm_mv = pm_operator.apply(y)
+            # result = (-pm_mv + pm_rhs).to_numpy().T[0]
+            # print("yd", np.max(np.abs(np_result - result)))
+            # np.copyto(ydot, result)
         
         self._solver = cvode.CVODE(cvode_rhs, lmm_type='Adams', nonlinsolver='fixedpoint', max_steps=1000000, one_step_compute=num_values is None)
-        if num_values is not None:
-            self._t_list = np.linspace(initial_time, end_time, num_values)
-            sol = self._solver.solve(self._t_list, initial_data.to_numpy().T[0])
-            y = sol.values.y
-        else:
-            self._t_list = [initial_time]
-            y = list(initial_data.to_numpy())
-            self._solver.init_step(t0=self._t_list[0], y0=y[0])
-            while self._t_list[-1] < end_time:
-                sol = self._solver.step(t=end_time)
-                self._t_list.append(sol.values.t)
-                y.append(sol.values.y)
-        return ((operator.range.from_numpy(u), t) for u, t in zip(y, self._t_list))
+        t_list = np.linspace(initial_time, end_time, num_values)
+        sol = self._solver.solve(t_list, initial_data.to_numpy().T[0])
+        progress.close()
+        if isinstance(operator.source, XarrayVectorSpace):
+            return [operator.source.from_numpy(sol.values.y, extended_coords={'Time': t_list})]
+        return ((operator.source.from_numpy(u), t) for u, t in zip(sol.values.y, t_list))        
+        # if num_values is not None:
+        #     self._t_list = np.linspace(initial_time, end_time, num_values)
+        #     sol = self._solver.solve(self._t_list, initial_data.to_numpy().T[0])
+        #     y = sol.values.y
+        # else:
+        #     self._t_list = [initial_time]
+        #     y = list(initial_data.to_numpy())
+        #     self._solver.init_step(t0=self._t_list[0], y0=y[0])
+        #     while self._t_list[-1] < end_time:
+        #         sol = self._solver.step(t=end_time)
+        #         self._t_list.append(sol.values.t)
+        #         y.append(sol.values.y)
+        # return ((operator.range.from_numpy(u), t) for u, t in zip(y, self._t_list))
 
 # %% ../../nbs/api/pymor/timestepping.ipynb
 class BDFTimeStepper(TimeStepper):
@@ -183,7 +216,7 @@ class BDFTimeStepper(TimeStepper):
         sol = self._solver.solve(t_list, initial_data.to_numpy().T[0])
         progress.close()
         if isinstance(operator.source, XarrayVectorSpace):
-            return [operator.source.from_numpy(sol.values.y, extended_dim={'Time': t_list})]
+            return [operator.source.from_numpy(sol.values.y, extended_coords={'Time': t_list})]
         return ((operator.source.from_numpy(u), t) for u, t in zip(sol.values.y, t_list))
 
 # %% ../../nbs/api/pymor/timestepping.ipynb

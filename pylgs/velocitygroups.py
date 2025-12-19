@@ -17,6 +17,7 @@ from .pymor.operators import *
 from .pymor.grids import *
 from pymor.vectorarrays.interface import VectorArray
 from pymor.operators.interface import Operator
+from pymor.basic import IdentityOperator
 
 # %% ../nbs/api/velocitygroups.ipynb
 class VelocityGroups(dict):
@@ -59,26 +60,25 @@ def _velocity_space(vg, ext=''):
 # %% ../nbs/api/velocitygroups.ipynb
 def _vg_identity(vg):
     return XarrayMatrixOperator(
-        DataArray(sparse_identity(vg['VGNumber']), coords=[('Atomic velocity (range)', vg['VGCenter']), ('Atomic velocity', vg['VGCenter'])])
-    )
-
-# %% ../nbs/api/velocitygroups.ipynb
-def _vg_diagonal(vg, diags):
-    return XarrayMatrixOperator(
-        DataArray(sparse_diag(diags), coords=[('Atomic velocity (range)', vg['VGCenter']), ('Atomic velocity', vg['VGCenter'])])
+        DataArray(sparse_identity(vg['VGNumber']), coords=[('Atomic velocity' + Lbl.RNG, vg['VGCenter']), ('Atomic velocity', vg['VGCenter'])])
     )
 
 # %% ../nbs/api/velocitygroups.ipynb
 @patch
 def identity(self:VelocityGroups)->Operator:
     """The velocity-space identity operator."""
-    # Want to use IdentityOperator for this, but first need to extend XarrayMatrixOperator so that source and range can be the same space. 
-    # return IdentityOperator(_velocity_space(vg))
+    return IdentityOperator(_velocity_space(self))
+    # return XarrayMatrixOperator(
+    #         sparse_identity(self['VGNumber']), 
+    #         range=_velocity_space(self), 
+    #         source=_velocity_space(self)
+    #     )
+
+# %% ../nbs/api/velocitygroups.ipynb
+def _vg_diagonal(vg, diags):
     return XarrayMatrixOperator(
-            sparse_identity(self['VGNumber']), 
-            range=_velocity_space(self, ' (range)'), 
-            source=_velocity_space(self)
-        )
+        DataArray(sparse_diag(diags), coords=[('Atomic velocity' + Lbl.RNG, vg['VGCenter']), ('Atomic velocity' + Lbl.SRC, vg['VGCenter'])])
+    )
 
 # %% ../nbs/api/velocitygroups.ipynb
 @patch
@@ -96,7 +96,7 @@ def n_times_1(self:VelocityGroups)->Operator:
     """Operator that sums over all velocity groups then scales by the Maxwell-Boltzmann distribution."""
     return XarrayMatrixOperator(
         sparse(self['VGDensity'][:, None] * np.ones((self['VGNumber']))),
-        range=_velocity_space(self, ' (range)'), 
+        range=_velocity_space(self), 
         source=_velocity_space(self)
     )
 
@@ -106,14 +106,14 @@ def drho_dv(self:VelocityGroups)->Operator:
     """Derivative with respect to velocity operator.$"""
     return XarrayMatrixOperator(
         self['VGInverseWidth'] * (sparse_kronecker_matrix(self['VGNumber'], 0) - sparse_kronecker_matrix(self['VGNumber'], -1)), 
-        range=_velocity_space(self, ' (range)'), 
+        range=_velocity_space(self), 
         source=_velocity_space(self)
     )
 
 # %% ../nbs/api/velocitygroups.ipynb
 def _vg_da(a, vg):
-    range = ('Atomic velocity (range)', vg['VGCenter']) if a.shape[0] == vg['VGNumber'] else ("none", ["none"])
-    source = ('Atomic velocity', vg['VGCenter']) if a.shape[1] == vg['VGNumber'] else ("none", ["none"])
+    range = ('Atomic velocity' + Lbl.RNG, vg['VGCenter']) if a.shape[0] == vg['VGNumber'] else ("none", ["none"])
+    source = ('Atomic velocity' + Lbl.SRC, vg['VGCenter']) if a.shape[1] == vg['VGNumber'] else ("none", ["none"])
     return DataArray(a, coords=[range, source])
 
 # %% ../nbs/api/velocitygroups.ipynb

@@ -38,13 +38,18 @@ from ..utilities.xarray import *
 from ..utilities.sparse import sparse, sparse2d, kron, sparse2d_rand
 from .parameters import *
 from .vectorarrays import *
+from .vectorarrays import _unlabel_dims
 
 # %% auto 0
-__all__ = ['XarrayMatrixOperator', 'densify', 'XarrayFunctionalOperator', 'SumOperator', 'ScaleOperator', 'ProductOperator']
+__all__ = ['XarrayMatrixOperator', 'contract_matvec', 'dims_matvec', 'densify', 'XarrayFunctionalOperator', 'SumOperator',
+           'ScaleOperator', 'ProductOperator']
 
 # %% ../../nbs/api/pymor/operators.ipynb
 def _mapping_str(op:Operator):
-    return f"{op.source.short_str()} → {op.range.short_str()}"
+    try:
+        return f"{op.source.short_str()} → {op.range.short_str()}"
+    except AttributeError:
+        return f"{str(op.source)} → {str(op.range)}"
 
 # %% ../../nbs/api/pymor/operators.ipynb
 class XarrayMatrixBasedOperator(Operator):
@@ -69,10 +74,14 @@ class XarrayMatrixBasedOperator(Operator):
         return self.assemble(mu).apply_adjoint(V)
 
     def as_range_array(self, mu=None):
-        return self.range.from_xarray(self.assemble(mu).matrix.copy())
+        matrix = _unlabel_dims(self.assemble(mu).matrix.squeeze())
+        extended_coords = {d: matrix.coords[d] for d in matrix.dims if d not in self.range.dims}
+        return self.range.from_numpy(self.matrix.data, extended_coords)
 
     def as_source_array(self, mu=None):
-        return self.source.from_xarray(self.assemble(mu).matrix.copy()).conj()
+        matrix = _unlabel_dims(self.assemble(mu).matrix.squeeze())
+        extended_coords = {d: matrix.coords[d] for d in matrix.dims if d not in self.source.dims}
+        return self.source.from_numpy(self.matrix.data, extended_coords).conj()
 
     @property
     def display_name(self):
@@ -92,13 +101,40 @@ def _ndims(matrix):
         return matrix.ndim    
 
 # %% ../../nbs/api/pymor/operators.ipynb
-def _get_space_dims(dims, matrix, default):
-    if dims is None:
-        if hasattr(matrix, 'dims'): return list(matrix.dims)
-        else: return [default]
-    elif isinstance(dims, str): return [dims]
-    elif hasattr(dims, 'dims'): return dims.dims
-    return list(dims)
+def _label_dims_with(obj, lbl):
+    if isinstance(obj, list | tuple): 
+        return [d + lbl for d in obj]
+    if isinstance(obj, Coordinates):
+        return {k + lbl: v.data for k,v in obj.items()}
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def _label_dims(obj, src_dims, rng_dims):
+    if isinstance(obj, XarrayVectorSpace):
+        return obj.with_(coords_dict=_label_dims(obj.coords, src_dims, rng_dims))
+    labled_src_dims = _label_dims_with(src_dims, Lbl.SRC)
+    labled_rng_dims = _label_dims_with(rng_dims, Lbl.RNG)
+    rename_dict = dict(zip(src_dims, labled_src_dims)) | dict(zip(rng_dims, labled_rng_dims))
+    if isinstance(obj, list | tuple):
+        return [rename_dict.get(dim, dim) for dim in obj]
+    if isinstance(obj, DataArray):
+        return obj.rename(rename_dict)
+    if isinstance(obj, Coordinates):
+        return Coordinates({rename_dict.get(k, k): v.data for k,v in obj.items()})
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def _is_labeled_da(da):
+    if not isinstance(da, DataArray): return False
+    return any(d.endswith(Lbl.SRC) or d.endswith(Lbl.RNG) for d in da.dims)
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def _get_space_dims(dims):
+    if dims is None: return None, None
+    if hasattr(dims, 'dims'): return dims.dims, dims.coords
+    if isinstance(dims, dict): dims = Coordinates(dims)
+    if isinstance(dims, Coordinates): return list(dims), coords
+    if isinstance(dims, str): dims = [dims]
+    if isinstance(dims, list | tuple): return dims, None
+    raise ValueError("Source or range specification not valid")
 
 # %% ../../nbs/api/pymor/operators.ipynb
 class XarrayMatrixOperator(XarrayMatrixBasedOperator):
@@ -112,22 +148,47 @@ class XarrayMatrixOperator(XarrayMatrixBasedOperator):
         solver_options:dict=None, # Options for matrix solver
         name:str=None # Operator name
     ):
-        if (source is None or range is None) and _ndims(matrix) != 2: 
-            raise ValueError(f'source and range must be specified if array {matrix} does not have two dimensions.')
+        if not source:
+            if not _is_labeled_da(matrix):
+                raise ValueError("Source argument required if matrix is not a DataArray with a dim labeled as source.")
+
         if issparse(matrix): matrix = sparse(matrix)
-        range_dims = _get_space_dims(range, matrix[:, 0], 'range')
-        source_dims = _get_space_dims(source, matrix[0], 'source')
+        src_dims, src_coords = _get_space_dims(source)
+        rng_dims, rng_coords = _get_space_dims(range)
         if not isinstance(matrix, DataArray):
+            if rng_coords is None:
+                rng_coords = Coordinates({dim: np.arange(n) for dim, n in zip(rng_dims, matrix.shape)})
+            if src_coords is None:
+                src_coords = Coordinates({dim: np.arange(n) for dim, n in zip(src_dims, matrix.shape[len(rng_dims):])})
+            labeled_src_dims = _label_dims_with(src_dims, Lbl.SRC)
+            labeled_rng_dims = _label_dims_with(rng_dims, Lbl.RNG)
+            labeled_src_coords = _label_dims_with(src_coords, Lbl.SRC)
+            labeled_rng_coords = _label_dims_with(rng_coords, Lbl.RNG)
             matrix = DataArray(
                 matrix, 
-                dims=range_dims + source_dims, 
-                coords=getattr(range, 'coords', Coordinates()) + getattr(source, 'coords', Coordinates()),
+                dims=labeled_rng_dims + labeled_src_dims,
+                coords=labeled_rng_coords | labeled_src_coords,
                 name=name
             )
+        elif not _is_labeled_da(matrix):
+            rng_coords = Coordinates({k: matrix[k] for k in rng_dims})
+            src_coords = Coordinates({k: matrix[k] for k in src_dims})
+            matrix = _label_dims(matrix, src_dims, rng_dims)
+        else:
+            labeled_src_dims = [d for d in matrix.dims if d.endswith(Lbl.SRC)]
+            labeled_rng_dims = [d for d in matrix.dims if d.endswith(Lbl.RNG)]
+            src_dims = _unlabel_dims(labeled_src_dims)
+            rng_dims = _unlabel_dims(labeled_rng_dims)
+            labeled_src_coords = {k: v for k,v in matrix.coords.items() if k.endswith(Lbl.SRC)}
+            labeled_rng_coords = {k: v for k,v in matrix.coords.items() if k.endswith(Lbl.RNG)}
+            src_coords = _unlabel_dims(labeled_src_coords)
+            rng_coords = _unlabel_dims(labeled_rng_coords)
         if name is None: name = matrix.name
-        source = XarrayVectorSpace({dim: matrix[dim] for dim in source_dims})
-        range = XarrayVectorSpace({dim: matrix[dim] for dim in range_dims}, name=name)
+        source = XarrayVectorSpace(src_coords)
+        range = XarrayVectorSpace(rng_coords)
         self.__auto_init(locals())
+        self.labeled_source = _label_dims(source, src_dims, [])
+        self.labeled_range = _label_dims(range, [], rng_dims)
 
     def assemble(self, mu=None): return self
 
@@ -146,8 +207,39 @@ def H(self:XarrayMatrixOperator):
     adjoint_matrix = self.matrix if np.isrealobj(self.matrix) else self.matrix.conj()           
     options = {'inverse': self.solver_options.get('inverse_adjoint'),
                'inverse_adjoint': self.solver_options.get('inverse')} if self.solver_options else None
-    return self.with_(matrix=adjoint_matrix, source=self.range, range=self.source, 
+    return self.with_(matrix=_unlabel_dims(adjoint_matrix), source=self.range, range=self.source, 
                       solver_options=options, name=self.name + '_adjoint')
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def contract_matvec(a, b, axes):
+    """Contract one axis of the first (2D) array with one axis of the second (ND) array."""
+    return np.moveaxis(np.tensordot(a, b, axes), 0, axes[1])
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def dims_matvec(a, b):
+    """Contract one axis of the first (2D) array with the axis of the second (ND) array of the same name."""
+    a, adims = a
+    b, bdims = b
+    ax = [[adims.index(d), i] for i,d in enumerate(bdims) if d in adims][0]
+    newdims = list(bdims)
+    newdims[ax[1]] = adims[1 - ax[0]]
+    return contract_matvec(a, b, ax), newdims
+
+# %% ../../nbs/api/pymor/operators.ipynb
+@patch
+def __truediv__(self:XarrayVectorSpace, other):
+    if not isinstance(other, XarrayVectorSpace): raise NotImplementedError
+    return self.with_(coords={k: v for k,v in self.coords.items() if k not in other.coords})
+
+# %% ../../nbs/api/pymor/operators.ipynb
+@patch
+def range_under(self:XarrayVectorSpace, op:XarrayMatrixOperator):
+    if not op.range.dims:
+        coords = self.coords_dict.copy()
+        del coords[op.source.dims[0]]
+    else:
+        coords = dict([(op.range.dims[0], op.range.coords[op.range.dims[0]]) if k == op.source.dims[0] else (k,v) for k,v in self.coords_dict.items()])
+    return self.with_(coords_dict=coords)
 
 # %% ../../nbs/api/pymor/operators.ipynb
 @patch
@@ -157,9 +249,12 @@ def apply(
     mu=None # The parameter values for which to evaluate the operator
 )->XarrayVectorArray: # `XarrayVectorArray` in the range `XarrayVectorSpace`
     """Apply the operator to an `XarrayVectorArray` in the source vector space."""
-    U = self.range.make_array(self.matrix.dot(U.array))
-    if self.name != self.__class__.__name__: U = U.rename(self.name)
-    return U
+    # src_dims = _label_dims(U.array.dims, U.dims, [])
+    # out, out_dims = dims_matvec((self.matrix.data, self.matrix.dims), (U.array.data, src_dims))
+    # out = self.range.from_numpy(out, extended_dim=U.extended_coords)
+    out = U.space.range_under(self).from_xarray(_unlabel_dims(self.matrix.dot(U.array_labeled_as_source())))
+    if self.name != self.__class__.__name__: out.name = self.name
+    return out
 
 # %% ../../nbs/api/pymor/operators.ipynb
 @patch
@@ -214,7 +309,7 @@ def _assemble_lincomb(self:XarrayMatrixOperator, operators, coefficients, identi
 @match_class(XarrayMatrixOperator)
 def to_matrix_XarrayMatrixOperator(self, op):
     """Return the operator as a 2D matrix with stacked range and source dimensions in either `ndarray` or `sparray` format."""
-    data = op.matrix.stack(_range=op.range.coords.dims, _source=op.source.coords.dims).data
+    data = op.matrix.stack(_range=op.labeled_range.coords.dims, _source=op.labeled_source.coords.dims).data
     if isinstance(data, SparseArray): return sparse2d(data)
     return data
     
@@ -286,7 +381,7 @@ class SumOperator(Operator):
 
     def apply(self, U, mu=None):
         U = self.range.from_xarray(U.array.sum(self.source.dims))
-        if self.name != self.__class__.__name__: U = U.rename(self.name)
+        if self.name != self.__class__.__name__: U.name = self.name
         return U
 
     def __mul__(self, other):
@@ -320,7 +415,7 @@ class ScaleOperator(Operator):
 
     def apply(self, U, mu=None):
         U = U * self.array
-        if self.name != self.__class__.__name__: U = U.rename(self.name)
+        if self.name != self.__class__.__name__: U.name = self.name
         return U
 
     @property
@@ -404,6 +499,7 @@ def from_file(
         for s in da.coords[da.dims[0]].data
     ]
     del da.attrs['parameters']
+    # return da
     operators = [XarrayMatrixOperator(d.drop_vars(da.dims[0])) for d in da]    
     return LincombOperator(operators, coefficients, **kwargs)
 
