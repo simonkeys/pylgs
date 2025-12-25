@@ -41,8 +41,11 @@ from .vectorarrays import *
 from .vectorarrays import _unlabel_dims
 
 # %% auto 0
-__all__ = ['XarrayMatrixOperator', 'contract_matvec', 'dims_matvec', 'densify', 'XarrayFunctionalOperator', 'SumOperator',
-           'ScaleOperator', 'ProductOperator']
+__all__ = ['operator_html_tree', 'XarrayMatrixOperator', 'contract_matvec', 'dims_matvec', 'densify', 'XarrayFunctionalOperator',
+           'SumOperator', 'ScaleOperator', 'ProductOperator']
+
+# %% ../../nbs/api/pymor/operators.ipynb
+LincombOperator.suboperator_symbol = '+'
 
 # %% ../../nbs/api/pymor/operators.ipynb
 def _mapping_str(op:Operator):
@@ -50,6 +53,118 @@ def _mapping_str(op:Operator):
         return f"{op.source.short_str()} → {op.range.short_str()}"
     except AttributeError:
         return f"{str(op.source)} → {str(op.range)}"
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def _operator_group_tag(
+    level:int, 
+    cls:str, 
+    mapping:str, 
+    name:str|None=None, 
+    suboperators:list(str)|None=None, 
+    symbol:str|None=None, 
+    opened:bool=False
+) -> str:
+    if suboperators:
+        return f'''
+            <li>
+                <details {'open' if opened else 'closed'}>
+                    <summary>
+                        <ul class="operator">
+                            {'<li>' + name + '</li>' if name else ''}
+                            <li>{cls}</li>
+                            <li>{mapping}</li>
+                        </ul>
+                    </summary>
+                    <ul class="operator-group operator-group-{'even' if not (level % 2) else 'odd'}">
+                        {symbol.join(suboperators)}
+                    </ul>
+                </details>
+            </li>
+        '''
+    else:
+        return f'''
+            <li>
+                <ul class="operator">
+                    {'<li>' + name + '</li>' if name else ''}
+                    <li>{cls}</li>
+                    <li>{mapping}</li>
+                </ul>
+            </li>
+        '''
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def _operator_html_node(op:Operator, level:int=0, opened:bool=False) -> str:
+    cls = op.__class__.__name__
+    name = op.name if op.name != cls else None
+    mapping = _mapping_str(op)
+    if hasattr(op, 'operators'):
+        suboperators = [_operator_html_node(o, level=level + 1, opened=opened) for o in op.operators]
+        symbol = op.suboperator_symbol
+        return _operator_group_tag(level, cls, mapping, name, suboperators, symbol, opened)
+    return _operator_group_tag(level, cls, mapping, name)
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def operator_html_tree(op:Operator, opened:bool=False) -> str:
+    style = """
+    <style>
+        summary {
+            list-style: none;
+            display: flex;
+            gap: 0.25em;
+            align-items: start;
+            cursor: pointer;
+        }
+        summary::before {
+            content: '▶︎';
+            font-size: 75%;
+            width: 1em;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+        details[open]>summary::before {
+            transform: rotate(90deg);
+            transform-origin: 40% 45% 0;
+        }
+        .operator-group-odd > li {
+            background-color: #f0f0f0;;
+        }
+        .operator-group-even > li {
+            background-color: #fbfbfb;
+        }
+        .operator-group {
+            display: flex;
+            gap: .4em;
+            align-items: center;
+            padding: 0px;
+            margin-left: -2em;
+            margin-top: .25em;
+        }
+        .operator-group > li {
+            list-style-type: none;
+            border: 1px solid black;
+            border-radius: .25em;
+            padding: .25em;
+        }
+        .operator {
+            margin: 0;
+            padding: 0;
+            margin-top: -.2em;
+            margin-left: -2em;
+        }
+        .operator > li {
+            list-style-type: none;
+            border: none;
+            padding: 0;
+            line-height: 1.25em;
+        }
+    </style>
+    """
+    return style + f'<ul class="operator-group operator-group-odd">{_operator_html_node(op, opened=opened)}</ul>'
+
+# %% ../../nbs/api/pymor/operators.ipynb
+@patch
+def _repr_html_(self:Operator):
+    return operator_html_tree(self)
 
 # %% ../../nbs/api/pymor/operators.ipynb
 class XarrayMatrixBasedOperator(Operator):
@@ -89,9 +204,6 @@ class XarrayMatrixBasedOperator(Operator):
 
     def __str__(self):
         return f"{self.display_name}{_mapping_str(self)}"
-
-    def _repr_html_(self):
-        return str(self)
 
 # %% ../../nbs/api/pymor/operators.ipynb
 def _ndims(matrix):
@@ -397,9 +509,6 @@ class SumOperator(Operator):
     def __str__(self):
         return f"{self.name if self.name != self.__class__.__name__ else '∑'}{_mapping_str(self)}"
 
-    def _repr_html_(self):
-        return str(self)
-
 # %% ../../nbs/api/pymor/operators.ipynb
 class ScaleOperator(Operator):
     """A scaling operator for `XarrayVectorSpace`s."""
@@ -434,24 +543,6 @@ class ScaleOperator(Operator):
 
     def __str__(self):
         return f"{self.display_name}{_mapping_str(self)}"
-
-    def _repr_html_(self):
-        return str(self)
-
-# %% ../../nbs/api/pymor/operators.ipynb
-def _no_space_str(op):
-    if isinstance(op, XarrayMatrixOperator): return op.name if op.name != op.__class__.__name__ else 'X'
-    if isinstance(op, LincombOperator): return '[' + ' + '.join(f'{_no_space_str(c)}·{_no_space_str(o)}' for c, o in zip(op.coefficients, op.operators)) + ']'
-    return str(op)
-
-# %% ../../nbs/api/pymor/operators.ipynb
-@patch
-def __str__(self:LincombOperator):
-    return f"{_no_space_str(self)}{_mapping_str(self)}"
-
-@patch
-def _repr_html_(self:LincombOperator):
-    return str(self)
 
 # %% ../../nbs/api/pymor/operators.ipynb
 def _numpy_zero_operator(shape):
@@ -595,6 +686,9 @@ def terms(self:LincombOperator):
 # %% ../../nbs/api/pymor/operators.ipynb
 class ProductOperator(Operator):
     """An Operator given by the direct product of operators `operators`."""
+    
+    suboperator_symbol = '⛒'
+    
     def __init__(
         self, 
         operators, # Sequence of operators that each assemble to XarrayMatrixOperator
@@ -609,6 +703,8 @@ class ProductOperator(Operator):
         
     def apply(self, U, mu=None):
         pass
+
+    
 
 # %% ../../nbs/api/pymor/operators.ipynb
 @patch
@@ -629,17 +725,8 @@ def __str__(self:ProductOperator):
 
 # %% ../../nbs/api/pymor/operators.ipynb
 @patch
-def _repr_html_(self:ProductOperator):
-    return str(self)
-
-# %% ../../nbs/api/pymor/operators.ipynb
-@patch
 def __str__(self:IdentityOperator):
     return f'I{_mapping_str(self)}'
-
-@patch
-def _repr_html_(self:IdentityOperator):
-    return str(self)
 
 # %% ../../nbs/api/pymor/operators.ipynb
 @patch
