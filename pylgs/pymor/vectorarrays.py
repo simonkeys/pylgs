@@ -287,7 +287,15 @@ class XarrayVectorArray(VectorArray):
         space = self.space._repr_html_()
         extended = [f'{k}({len(v)})' for k,v in self.extended_coords.items()]
         if not extended: extended = ['∅']
-        return ' ⛒ '.join(extended) + f' ⛒ {space}'
+        # return ' ⛒ '.join(extended) + f' ⛒ {space}'
+        return f'''
+            <details closed>
+                <summary>
+                    {' ⛒ '.join(extended + [space])}
+                </summary>
+                {self.array._repr_html_()}
+            </details>
+        '''
 
 # %% ../../nbs/api/pymor/vectorarrays.ipynb
 @patch

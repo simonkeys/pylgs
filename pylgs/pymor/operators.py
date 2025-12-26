@@ -107,21 +107,22 @@ def _operator_html_node(op:Operator, level:int=0, opened:bool=False) -> str:
 def operator_html_tree(op:Operator, opened:bool=False) -> str:
     style = """
     <style>
-        summary {
+        .operator-group summary {
             list-style: none;
             display: flex;
             gap: 0.25em;
             align-items: start;
             cursor: pointer;
         }
-        summary::before {
+        .operator-group summary::before {
             content: '▶︎';
             font-size: 75%;
+            align-items: center;
             width: 1em;
             flex-shrink: 0;
             transition: 0.3s;
         }
-        details[open]>summary::before {
+        .operator-group details[open] > summary::before {
             transform: rotate(90deg);
             transform-origin: 40% 45% 0;
         }
