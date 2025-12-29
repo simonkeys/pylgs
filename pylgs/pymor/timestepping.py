@@ -141,7 +141,7 @@ class AdamsTimeStepper(TimeStepper):
         sol = self._solver.solve(t_list, initial_data.to_numpy().T[0])
         progress.close()
         if isinstance(operator.source, XarrayVectorSpace):
-            return [operator.source.from_numpy(sol.values.y, extended_coords={'Time': t_list})]
+            return [operator.source.from_numpy(sol.values.y, extended_coords_data={'Time': t_list})]
         return ((operator.source.from_numpy(u), t) for u, t in zip(sol.values.y, t_list))        
         # if num_values is not None:
         #     self._t_list = np.linspace(initial_time, end_time, num_values)
@@ -216,7 +216,7 @@ class BDFTimeStepper(TimeStepper):
         sol = self._solver.solve(t_list, initial_data.to_numpy().T[0])
         progress.close()
         if isinstance(operator.source, XarrayVectorSpace):
-            return [operator.source.from_numpy(sol.values.y, extended_coords={'Time': t_list})]
+            return [operator.source.from_numpy(sol.values.y, extended_coords_data={'Time': t_list})]
         return ((operator.source.from_numpy(u), t) for u, t in zip(sol.values.y, t_list))
 
 # %% ../../nbs/api/pymor/timestepping.ipynb

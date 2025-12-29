@@ -41,8 +41,8 @@ from .vectorarrays import *
 from .vectorarrays import _unlabel_dims
 
 # %% auto 0
-__all__ = ['operator_html_tree', 'XarrayMatrixOperator', 'contract_matvec', 'dims_matvec', 'densify', 'XarrayFunctionalOperator',
-           'SumOperator', 'ScaleOperator', 'ProductOperator']
+__all__ = ['operator_html_tree', 'coordinates_to_list', 'XarrayMatrixOperator', 'contract_matvec', 'dims_matvec', 'densify',
+           'XarrayFunctionalOperator', 'SumOperator', 'ScaleOperator', 'ProductOperator']
 
 # %% ../../nbs/api/pymor/operators.ipynb
 LincombOperator.suboperator_symbol = '+'
@@ -228,21 +228,29 @@ def _label_dims_with(obj, lbl):
 # %% ../../nbs/api/pymor/operators.ipynb
 def _label_dims(obj, src_dims, rng_dims):
     if isinstance(obj, XarrayVectorSpace):
-        return obj.with_(coords_dict=_label_dims(obj.coords, src_dims, rng_dims))
+        coords_data = [(_label_dims(dim, src_dims, rng_dims), data, attrs) for dim,data,attrs in obj.coords_data]
+        return obj.with_(coords_data=coords_data)
     labled_src_dims = _label_dims_with(src_dims, Lbl.SRC)
     labled_rng_dims = _label_dims_with(rng_dims, Lbl.RNG)
     rename_dict = dict(zip(src_dims, labled_src_dims)) | dict(zip(rng_dims, labled_rng_dims))
-    if isinstance(obj, list | tuple):
-        return [rename_dict.get(dim, dim) for dim in obj]
-    if isinstance(obj, DataArray):
-        return obj.rename(rename_dict)
-    if isinstance(obj, Coordinates):
-        return Coordinates({rename_dict.get(k, k): v.data for k,v in obj.items()})
+    match obj:
+        case str():
+            return rename_dict.get(obj, obj)
+        case list() | tuple():
+            return [rename_dict.get(dim, dim) for dim in obj]
+        case DataArray():
+            return obj.rename(rename_dict)
+        case Coordinates():
+            return Coordinates({rename_dict.get(k, k): v.data for k,v in obj.items()})
 
 # %% ../../nbs/api/pymor/operators.ipynb
 def _is_labeled_da(da):
     if not isinstance(da, DataArray): return False
     return any(d.endswith(Lbl.SRC) or d.endswith(Lbl.RNG) for d in da.dims)
+
+# %% ../../nbs/api/pymor/operators.ipynb
+def coordinates_to_list(coords, dims):
+    return [(d, coords[d].data, coords[d].attrs) for d in dims]
 
 # %% ../../nbs/api/pymor/operators.ipynb
 def _get_space_dims(dims):
@@ -297,8 +305,8 @@ class XarrayMatrixOperator(XarrayMatrixBasedOperator):
             labeled_rng_dims = [d for d in matrix.dims if d.endswith(Lbl.RNG)]
             src_dims = _unlabel_dims(labeled_src_dims)
             rng_dims = _unlabel_dims(labeled_rng_dims)
-            labeled_src_coords = {k: v for k,v in matrix.coords.items() if k.endswith(Lbl.SRC)}
-            labeled_rng_coords = {k: v for k,v in matrix.coords.items() if k.endswith(Lbl.RNG)}
+            labeled_src_coords = [(k, v.data, v.attrs) for k,v in matrix.coords.items() if k.endswith(Lbl.SRC)]
+            labeled_rng_coords = [(k, v.data, v.attrs) for k,v in matrix.coords.items() if k.endswith(Lbl.RNG)]
             src_coords = _unlabel_dims(labeled_src_coords)
             rng_coords = _unlabel_dims(labeled_rng_coords)
         if name is None: name = matrix.name
@@ -352,12 +360,16 @@ def __truediv__(self:XarrayVectorSpace, other):
 # %% ../../nbs/api/pymor/operators.ipynb
 @patch
 def range_under(self:XarrayVectorSpace, op:XarrayMatrixOperator):
+    """Find the space that this space is mapped to by an XarrayMatrixOperator. Assumes that the operator has one-dimensional source and range."""
     if not op.range.dims:
-        coords = self.coords_dict.copy()
-        del coords[op.source.dims[0]]
+        coords = self.coords_data.copy()[:-1]
     else:
-        coords = dict([(op.range.dims[0], op.range.coords[op.range.dims[0]]) if k == op.source.dims[0] else (k,v) for k,v in self.coords_dict.items()])
-    return self.with_(coords_dict=coords)
+        source_dim = op.source.dims[0]
+        range_dim = op.range.dims[0]
+        range_coord = op.range.coords[range_dim]
+        range_coord = (range_coord.name, range_coord.data, range_coord.attrs)
+        coords = [range_coord if c[0] == source_dim else c for c in self.coords_data]
+    return self.with_(coords_data=coords)
 
 # %% ../../nbs/api/pymor/operators.ipynb
 @patch
