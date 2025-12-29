@@ -59,12 +59,13 @@ def _operator_group_tag(
     level:int, 
     cls:str, 
     mapping:str, 
-    name:str|None=None, 
+    name:str|None=None,
+    contents:str|None=None,
     suboperators:list(str)|None=None, 
     symbol:str|None=None, 
     opened:bool=False
 ) -> str:
-    if suboperators:
+    if suboperators or contents:
         return f'''
             <li>
                 <details {'open' if opened else 'closed'}>
@@ -76,7 +77,7 @@ def _operator_group_tag(
                         </ul>
                     </summary>
                     <ul class="operator-group operator-group-{'even' if not (level % 2) else 'odd'}">
-                        {symbol.join(suboperators)}
+                        {contents or symbol.join(suboperators)}
                     </ul>
                 </details>
             </li>
@@ -97,10 +98,14 @@ def _operator_html_node(op:Operator, level:int=0, opened:bool=False) -> str:
     cls = op.__class__.__name__
     name = op.name if op.name != cls else None
     mapping = _mapping_str(op)
+    contents = None
     if hasattr(op, 'operators'):
         suboperators = [_operator_html_node(o, level=level + 1, opened=opened) for o in op.operators]
         symbol = op.suboperator_symbol
-        return _operator_group_tag(level, cls, mapping, name, suboperators, symbol, opened)
+        return _operator_group_tag(level, cls, mapping, name, contents, suboperators, symbol, opened)
+    if hasattr(op, 'matrix'):
+        contents = op.matrix._repr_html_() if hasattr(op.matrix, '_repr_html_') else str(op.matrix)
+        return _operator_group_tag(level, cls, mapping, name, contents)
     return _operator_group_tag(level, cls, mapping, name)
 
 # %% ../../nbs/api/pymor/operators.ipynb
