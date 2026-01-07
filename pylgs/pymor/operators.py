@@ -50,7 +50,7 @@ LincombOperator.suboperator_symbol = '+'
 # %% ../../nbs/api/pymor/operators.ipynb
 def _mapping_str(op:Operator):
     try:
-        return f"{op.source._repr_html_()} → {op.range._repr_html_()}"
+        return f"{op.source._repr_html_(show_details=False)} → {op.range._repr_html_(show_details=False)}"
     except AttributeError:
         return f"{str(op.source)} → {str(op.range)}"
 

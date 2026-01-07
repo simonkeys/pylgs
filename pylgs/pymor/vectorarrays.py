@@ -145,9 +145,18 @@ class XarrayVectorSpace(VectorSpace):
     # def short_str(self):
     #     return _short_coords_str(self.coords)
     
-    def _repr_html_(self):
-        return ' ⛒ '.join(f'<b>{attrs.get('short_name', None) or dim}</b>({len(data)})' for dim,data,attrs in self.coords_data)
-
+    def _repr_html_(self, show_details=True):
+        if not show_details:
+            return ' ⛒ '.join(f'<b>{attrs.get('short_name', None) or dim}</b>({len(data)})' for dim,data,attrs in self.coords_data)
+        return f'''
+            <details closed>
+                <summary>
+                    {self._repr_html_(show_details=False)}
+                </summary>
+                {self._array._repr_html_()}
+            </details>
+        '''    
+    
     def __hash__(self):
         return hash(self.dim)
 
@@ -301,15 +310,16 @@ class XarrayVectorArray(VectorArray):
     # def short_str(self):
     #     return _short_coords_str(self.space)[:-1] + ", " + _short_coords_str(self.coords, self.dims)[1:]
     
-    def _repr_html_(self):
-        space = self.space._repr_html_()
+    def _repr_html_(self, show_details=True):
+        space = self.space._repr_html_(show_details=False)
         extended = [f'{name}({len(array)})' for name, array, _ in self.extended_coords_data]
         if not extended: extended = ['∅']
-        # return ' ⛒ '.join(extended) + f' ⛒ {space}'
+        out = ' ⛒ '.join(extended + [space])
+        if not show_details: return out
         return f'''
             <details closed>
                 <summary>
-                    {' ⛒ '.join(extended + [space])}
+                    {out}
                 </summary>
                 {self.array._repr_html_()}
             </details>
