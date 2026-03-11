@@ -12,7 +12,7 @@ license = {text = "GPLv3"}
 authors = [{name = "Simon Rochester", email = "simon.rochester@gmail.com"}]
 keywords = ['nbdev', 'jupyter', 'notebook', 'python', 'LGS']
 classifiers = ["Natural Language :: English", "Intended Audience :: Developers", "Development Status :: 3 - Alpha", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3 :: Only"]
-dependencies = ['fastcore==1.8.12', 'plum-dispatch==2.5.7', 'pydash==8.0.5', 'wrapt==1.17.3', 'pymor==2025.2.0', 'scikits-odes==3.1.1', 'sparse==0.17.0', 'sympy==1.14.0', 'xarray==2025.9.1', 'opt-einsum==3.4.0', 'einops==0.8.1', 'matplotlib==3.10.6', 'plotly==6.3.0', 'ipywidgets==8.1.7']
+dependencies = ['fastcore>=1.8.12', 'plum-dispatch>=2.5.7', 'pydash>=8.0.5', 'wrapt>=1.17.3', 'pymor>=2025.2.0', 'scikits-odes>=3.1.1', 'sparse>=0.17.0', 'sympy>=1.14.0', 'xarray>=2025.9.1', 'opt-einsum>=3.4.0', 'einops>=0.8.1', 'matplotlib>=3.10.6', 'plotly>=6.3.0', 'ipywidgets>=8.1.7', 'jupyterlab>=4.5.1']
 
 [project.urls]
 Repository = "https://github.com/simonkeys/pylgs"
@@ -22,7 +22,7 @@ Documentation = "https://simonkeys.github.io/pylgs"
 pylgs = "pylgs._modidx:d"
 
 [project.optional-dependencies]
-dev = ['nbdev-simonkeys', 'h5netcdf==1.6.4', 'jupyterlab==4.5.1', 'kaleido==1.1.0', 'twine==6.2.0']
+dev = ['nbdev>=3.0.12', 'h5netcdf>=1.6.4', 'kaleido>=1.1.0', 'twine>=6.2.0']
 
 [tool.setuptools.dynamic]
 version = {attr = "pylgs.__version__"}
