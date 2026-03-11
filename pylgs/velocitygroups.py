@@ -48,10 +48,12 @@ class VelocityGroups(dict):
 @patch
 def subdivide(
     self:VelocityGroups, 
-    indices:int|ndarray|slice=slice(None) # Indices, boolean array, or slice object specifying velocity groups to subdivide
+    indices:int|ndarray|slice=slice(None), # Indices, boolean array, or slice object specifying velocity groups to subdivide
+    n:int=2 # Number of groups to subdivide into
 ):
     """Divide the velocity groups with indices `indices` in two."""
-    return VelocityGroups(np.union1d(self.edges, self["VGCenter"][indices]))
+    new_edges = np.concat([np.linspace(c - w/2, c + w/2, n + 1)[1:-1] for c,w in zip(self["VGCenter"][indices], self["VGWidth"][indices])])
+    return VelocityGroups(np.union1d(self.edges, new_edges))
 
 # %% ../nbs/api/velocitygroups.ipynb
 def _velocity_space(vg, ext=''):
