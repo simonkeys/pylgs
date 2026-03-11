@@ -6,13 +6,14 @@ website:
         contents:
           - tutorials/sodium_lgs.ipynb
           - tutorials/polychromatic_lgs.ipynb
+          - tutorials/chirped_lgs.ipynb
           - tutorials/technical_background.ipynb
         href: tutorials/index.qmd
       - section: API
         contents:
-          - api/velocitygroups.ipynb
           - api/lgssystem.ipynb
           - api/dmelements.ipynb
+          - api/velocitygroups.ipynb
           - section: pymor
             contents:
               - api/pymor/vectorarrays.ipynb
