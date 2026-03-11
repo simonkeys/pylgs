@@ -2,6 +2,7 @@
   {
     "listing": "/tutorials/index.html",
     "items": [
+      "/tutorials/chirped_lgs.html",
       "/tutorials/polychromatic_lgs.html",
       "/tutorials/sodium_lgs.html",
       "/tutorials/technical_background.html"
