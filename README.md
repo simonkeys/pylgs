@@ -172,7 +172,7 @@ Find the total return flux:
 model.total_flux(sol).item()
 ```
 
-    7709.054844668253
+    7709.055503256246
 
 Plot the return flux as a function of atomic velocity:
 
