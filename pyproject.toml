@@ -28,7 +28,10 @@ dev = ['nbdev-simonkeys', 'h5netcdf==1.6.4', 'jupyterlab==4.5.1', 'kaleido==1.1.
 version = {attr = "pylgs.__version__"}
 
 [tool.setuptools.packages.find]
-include = ["pylgs"]
+include = ["pylgs", "pylgs.*", "pylgs.systems.*"]
+
+[tool.setuptools.package-data]
+mypkg = ["*.mtxn", "*.md", "*.svg"]
 
 [tool.nbdev]
 custom_sidebar = true
