@@ -74,7 +74,14 @@ def population(dm_elements):
 
 # %% ../nbs/api/dmelements.ipynb
 def total_population(dm_elements):
-    return XarrayMatrixOperator(population(dm_elements).matrix.sum("Population (range)"), name="Total population")
+    return XarrayMatrixOperator(
+        population(
+            dm_elements
+        ).matrix.sum(
+            "Population (range)"
+        ),
+        name="Total population"
+    )
 
 # %% ../nbs/api/dmelements.ipynb
 def level_population(dm_elements):
