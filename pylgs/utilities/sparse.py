@@ -84,10 +84,10 @@ def sparse_kronecker_matrix(n, k=0, format='coo')->SparseArray:
 
 # %% ../../nbs/api/utilities/sparse.ipynb
 def kron(a, b, *rest):
-    if not rest: 
-        if sps.issparse(a) and sps.issparse(b): return sps.kron(a, b, format='csr')
-        return np.kron(a, b)
-    return kron(kron(a, b), *rest)
+    if rest: return kron(kron(a, b), *rest)
+    if sps.issparse(a) or sps.issparse(b): 
+        return sps.kron(a, b, format='csr')
+    return np.kron(a, b)
 
 # %% ../../nbs/api/utilities/sparse.ipynb
 sparse2d_rand = sps.random_array
