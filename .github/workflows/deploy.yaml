@@ -14,4 +14,4 @@ jobs:
     steps:
       - name: Install SUNDIALS
         run: sudo apt-get -y install libsundials-dev
-      - uses: fastai/workflows/quarto-ghp@master
+      - uses: fastai/workflows/quarto-ghp3@master

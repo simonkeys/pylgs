@@ -7,4 +7,4 @@ jobs:
     steps:
       - name: Install SUNDIALS
         run: sudo apt-get -y install libsundials-dev
-      - uses: fastai/workflows/nbdev-ci@master
+      - uses: fastai/workflows/nbdev3-ci@master
