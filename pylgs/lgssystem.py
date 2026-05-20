@@ -5,7 +5,7 @@
 # %% auto #0
 __all__ = ['optree', 'ScipyGCROTMKSpILUSolver', 'LGSSystem']
 
-# %% ../nbs/api/lgssystem.ipynb #97c8e84c
+# %% ../nbs/api/lgssystem.ipynb #b2b6bdb7
 import importlib
 from IPython.display import SVG, Markdown
 
@@ -26,8 +26,9 @@ from .pymor.grids import *
 from .pymor.models import *
 from .velocitygroups import *
 from .dmelements import *
+from .pymor.timestepping import cvode
 
-# %% ../nbs/api/lgssystem.ipynb #0dc86a6c
+# %% ../nbs/api/lgssystem.ipynb #700d10e7
 def optree(op):
     match op:
         case LincombOperator(): 
@@ -39,11 +40,11 @@ def optree(op):
         case _:
             return f'{op.name}({op.__class__.__name__.removesuffix("Operator")})'
 
-# %% ../nbs/api/lgssystem.ipynb #77ff7214
+# %% ../nbs/api/lgssystem.ipynb #dea22339
 from scipy.sparse.linalg import LinearOperator, gcrotmk, spilu
 from pymor.solvers.interface import Solver
 
-# %% ../nbs/api/lgssystem.ipynb #aa08b25e
+# %% ../nbs/api/lgssystem.ipynb #a1dd7fc3
 class ScipyGCROTMKSpILUSolver(Solver):
 
     # @defaults('tol', 'maxiter', 'spilu_drop_tol', 'spilu_fill_factor', 'spilu_drop_rule', 'spilu_permc_spec')
@@ -81,7 +82,7 @@ class ScipyGCROTMKSpILUSolver(Solver):
 
         return operator.source.from_numpy(R), {}
 
-# %% ../nbs/api/lgssystem.ipynb #7be58194
+# %% ../nbs/api/lgssystem.ipynb #70ebc7a8
 class LGSSystem(ParametricObject):
     """`LGSSystem` creates numerical models for the chosen laser guide star atomic system."""
     
@@ -120,7 +121,7 @@ class LGSSystem(ParametricObject):
         self.population = population(self.dm_elements) 
         self.total_population = total_population(self.dm_elements)
 
-# %% ../nbs/api/lgssystem.ipynb #d16a3a03
+# %% ../nbs/api/lgssystem.ipynb #b3469457
 @patch(cls_method=True)
 def _is_valid_dir(cls:LGSSystem, dir):
     """Check if the supplied directory has the required files to define an LGSSystem."""
@@ -130,17 +131,17 @@ def _is_valid_dir(cls:LGSSystem, dir):
     required_files = {'A_dop.mtxn', 'A_ind.mtxn', 'A_rec.mtxn', 'A_vcc.mtxn', 'Flux.mtxn', 'b.mtxn'}
     return required_files <= files
 
-# %% ../nbs/api/lgssystem.ipynb #6e600f6e
+# %% ../nbs/api/lgssystem.ipynb #cf741fa3
 @patch(cls_method=True)
 def _builtin_paths(cls:LGSSystem):
     return [dir for dir in importlib.resources.files("pylgs.systems").iterdir() if LGSSystem._is_valid_dir(dir)]
 
-# %% ../nbs/api/lgssystem.ipynb #46080a8d
+# %% ../nbs/api/lgssystem.ipynb #df75bd3c
 @patch(cls_method=True)
 def builtins(cls:LGSSystem):
     return [dir.name for dir in LGSSystem._builtin_paths()]
 
-# %% ../nbs/api/lgssystem.ipynb #559ac992
+# %% ../nbs/api/lgssystem.ipynb #8818f9db
 @patch(cls_method=True)
 def _get_path(cls:LGSSystem, name):
     if LGSSystem._is_valid_dir(name): return Path(name)
@@ -148,7 +149,7 @@ def _get_path(cls:LGSSystem, name):
         if dir.name == name: return dir
     raise FileNotFoundError(f"{name} does not correspond to a built-in or supplied LGSSystem.")
 
-# %% ../nbs/api/lgssystem.ipynb #d810b462
+# %% ../nbs/api/lgssystem.ipynb #dfba380d
 @patch(cls_method=True)
 def diagram(
     cls:LGSSystem, 
@@ -158,7 +159,7 @@ def diagram(
     """Draw a level diagram for the system of the specified kind."""
     return SVG(LGSSystem._get_path(name)/f"LevelDiagram{kind}.svg")
 
-# %% ../nbs/api/lgssystem.ipynb #ff30c367
+# %% ../nbs/api/lgssystem.ipynb #96dba945
 @patch(cls_method=True)
 def info(
     cls:LGSSystem, 
@@ -167,7 +168,7 @@ def info(
     """Display information about LGS system `name`."""
     return Markdown(filename=LGSSystem._get_path(name)/"info.md")
 
-# %% ../nbs/api/lgssystem.ipynb #f9b54a3b
+# %% ../nbs/api/lgssystem.ipynb #dcac372d
 @patch
 def _reaction(self:LGSSystem, vg:VelocityGroups):
     return (
@@ -175,17 +176,17 @@ def _reaction(self:LGSSystem, vg:VelocityGroups):
         + (vg.velocity_diagonal().with_(name="Velocity") * self.A_dop).with_(name="VG dop.")
     ).with_(name="Reaction")
 
-# %% ../nbs/api/lgssystem.ipynb #023fe4bf
+# %% ../nbs/api/lgssystem.ipynb #a874f2e7
 @patch
 def _vcc(self:LGSSystem, vg:VelocityGroups):
     return vg.n_times_1().with_(name="MaxBoltz") * self.A_vcc
 
-# %% ../nbs/api/lgssystem.ipynb #38827b56
+# %% ../nbs/api/lgssystem.ipynb #cb82c30b
 @patch
 def _recoil(self:LGSSystem, vg:VelocityGroups):
     return vg.drho_dv().with_(name='drho_dv') * self.A_rec
 
-# %% ../nbs/api/lgssystem.ipynb #114e213e
+# %% ../nbs/api/lgssystem.ipynb #2291fbaf
 @patch
 def operator(
     self:LGSSystem, 
@@ -197,7 +198,7 @@ def operator(
         # solver_options={'inverse': {'type': 'scipy_lgmres_spilu', 'preconditioner_bandwidth': self.n_variables}}
     )
 
-# %% ../nbs/api/lgssystem.ipynb #8e5e42ba
+# %% ../nbs/api/lgssystem.ipynb #d18f168b
 @patch
 def rhs(
     self:LGSSystem, 
@@ -206,12 +207,12 @@ def rhs(
     """The right-hand side vector for this system given the `VelocityGroups` `vg`."""
     return velocity_density_vector(vg) * self.b.as_range_array()
 
-# %% ../nbs/api/lgssystem.ipynb #ad6634c0
+# %% ../nbs/api/lgssystem.ipynb #e1427f69
 @patch
 def _initial_dm(self:LGSSystem, vg):
     return velocity_density_vector(vg) * self.initial
 
-# %% ../nbs/api/lgssystem.ipynb #909b99b8
+# %% ../nbs/api/lgssystem.ipynb #00641a0e
 @patch
 def _products(self:LGSSystem, vg): 
     return {
@@ -228,7 +229,7 @@ def _products(self:LGSSystem, vg):
         'velocity_normalize': vg.normalize(), # Normalize by velocity-group width
     }
 
-# %% ../nbs/api/lgssystem.ipynb #09a55590
+# %% ../nbs/api/lgssystem.ipynb #326214f1
 @patch
 def stationary_model(
     self:LGSSystem, 
@@ -247,7 +248,7 @@ def stationary_model(
         }
     )
 
-# %% ../nbs/api/lgssystem.ipynb #cee36642
+# %% ../nbs/api/lgssystem.ipynb #24f80def
 @patch
 def adaptive_stationary_model(
     self:LGSSystem, 
@@ -268,7 +269,7 @@ def adaptive_stationary_model(
         vg = vg.subdivide(mask)
     return self.stationary_model(vg)
 
-# %% ../nbs/api/lgssystem.ipynb #06ef334d
+# %% ../nbs/api/lgssystem.ipynb #5ef2cef7
 @patch
 def instationary_model(
     self:LGSSystem, 
@@ -277,7 +278,7 @@ def instationary_model(
     T=1.e-6, # Final time (seconds)
     num_values=100, # Number of time step values to return
     initial_rho=None, # Initial density matrix. `None` means to use the thermal distribution
-    time_stepper=BDFTimeStepper() # Solver to use
+    time_stepper=None # Solver to use. `None` means to use the default `BDFTimeStepper`
 ) -> InstationaryModel: # Model for the LGS system dynamics
     """Create an `InstationaryModel` for the LGS system dynamics."""
     vg = VelocityGroups(vg)
@@ -287,7 +288,7 @@ def instationary_model(
         self.operator(vg), 
         self.rhs(vg), 
         mass=None,
-        time_stepper=time_stepper,
+        time_stepper=ifnone(time_stepper, BDFTimeStepper()),
         num_values=num_values,
         # output_functional=self._products(vg)[output],
         products=self._products(vg),
@@ -297,11 +298,11 @@ def instationary_model(
         }
     )
 
-# %% ../nbs/api/lgssystem.ipynb #5aed71b6
+# %% ../nbs/api/lgssystem.ipynb #1b34e706
 def _to_nmo(op, format='dense'):
     return NumpyMatrixOperator(to_matrix(op, format=format))
 
-# %% ../nbs/api/lgssystem.ipynb #2080d39b
+# %% ../nbs/api/lgssystem.ipynb #6a43e9e2
 @patch
 @delegates(LGSSystem.instationary_model)
 def numpy_instationary_model(self:LGSSystem, vg, **kwargs):
@@ -328,7 +329,7 @@ def numpy_instationary_model(self:LGSSystem, vg, **kwargs):
         name=None,
     )
 
-# %% ../nbs/api/lgssystem.ipynb #e9887657
+# %% ../nbs/api/lgssystem.ipynb #ba2ca3ed
 @patch
 def _floquet_products(self:LGSSystem, vg, n_vector, T): 
     return {
@@ -345,7 +346,7 @@ def _floquet_products(self:LGSSystem, vg, n_vector, T):
         # 'velocity_normalize': velocity_normalize(vg),
     }
 
-# %% ../nbs/api/lgssystem.ipynb #68a21f00
+# %% ../nbs/api/lgssystem.ipynb #36081530
 @patch
 def stationary_floquet_model(
     self:LGSSystem, 
@@ -376,7 +377,7 @@ def stationary_floquet_model(
         preconditioner=-self._reaction(vg)
     )
 
-# %% ../nbs/api/lgssystem.ipynb #721e232b
+# %% ../nbs/api/lgssystem.ipynb #753fad8e
 @patch
 def adaptive_stationary_floquet_model(
     self:LGSSystem, 
