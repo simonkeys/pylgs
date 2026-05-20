@@ -154,6 +154,4 @@ checklink/cookies.txt
 # Quarto
 .quarto
 
-
-nbs/scratch
 .jupyter
