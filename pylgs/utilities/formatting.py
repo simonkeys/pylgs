@@ -5,11 +5,11 @@
 # %% auto #0
 __all__ = ['si_prefixes', 'significant', 'significant_digits', 'prefix_format']
 
-# %% ../../nbs/api/utilities/formatting.ipynb #7e04c419
+# %% ../../nbs/api/utilities/formatting.ipynb #22ef738b
 import math
 from numbers import Integral
 
-# %% ../../nbs/api/utilities/formatting.ipynb #c35ceb74
+# %% ../../nbs/api/utilities/formatting.ipynb #9e654dd2
 si_prefixes = {
     -30 : 'q',
     -27 : 'r',
@@ -34,18 +34,18 @@ si_prefixes = {
     30  : 'Q',
 }
 
-# %% ../../nbs/api/utilities/formatting.ipynb #69368861
+# %% ../../nbs/api/utilities/formatting.ipynb #c7f495bd
 def significant(x, n=1):
     if x == 0: return x
     return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
 
-# %% ../../nbs/api/utilities/formatting.ipynb #cf33f206
+# %% ../../nbs/api/utilities/formatting.ipynb #db9ecbc5
 def significant_digits(x, n=1):
     if x == 0: return x
     x = significant(x, n)
     return int(round(x * 10**(-int(math.floor(math.log10(abs(x)))) + (n - 1))))
 
-# %% ../../nbs/api/utilities/formatting.ipynb #5dea949c
+# %% ../../nbs/api/utilities/formatting.ipynb #cf462526
 def prefix_format(x, precision=3):
     if x == 0: return f'{x}'
     e = (math.floor(math.log(abs(x), 10) + 2) // 3) * 3

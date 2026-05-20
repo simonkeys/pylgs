@@ -5,7 +5,7 @@
 # %% auto #0
 __all__ = ['VelocityGroups', 'velocity_density_vector']
 
-# %% ../nbs/api/velocitygroups.ipynb #12052d9e
+# %% ../nbs/api/velocitygroups.ipynb #a30dbb2a
 from .imports import *
 from .utilities.nbdev import DictTbl, AttributeTbl
 from .utilities.testing import test_array
@@ -19,7 +19,7 @@ from pymor.vectorarrays.interface import VectorArray
 from pymor.operators.interface import Operator
 from pymor.basic import IdentityOperator
 
-# %% ../nbs/api/velocitygroups.ipynb #611c7413
+# %% ../nbs/api/velocitygroups.ipynb #88145292
 class VelocityGroups(dict):
     """`VelocityGroups` contains informations about the centers, edges, and relative densities of a list of velocity group bins."""
     def __init__(self, 
@@ -44,7 +44,7 @@ class VelocityGroups(dict):
         self['VGNumber'] = len(self['VGCenter'])
         self['velocity_groups'] = np.ones(self['VGDensity'].shape)
 
-# %% ../nbs/api/velocitygroups.ipynb #8533ddcb
+# %% ../nbs/api/velocitygroups.ipynb #0a892cf1
 @patch
 def subdivide(
     self:VelocityGroups, 
@@ -55,17 +55,17 @@ def subdivide(
     new_edges = np.concat([np.linspace(c - w/2, c + w/2, n + 1)[1:-1] for c,w in zip(self["VGCenter"][indices], self["VGWidth"][indices])])
     return VelocityGroups(np.union1d(self.edges, new_edges))
 
-# %% ../nbs/api/velocitygroups.ipynb #ba1ead4a
+# %% ../nbs/api/velocitygroups.ipynb #7a5c61dc
 def _velocity_space(vg, ext=''):
     return XarrayVectorSpace({'Atomic velocity' + ext: vg['VGCenter']})
 
-# %% ../nbs/api/velocitygroups.ipynb #1184a9b0
+# %% ../nbs/api/velocitygroups.ipynb #c8f9b76a
 def _vg_identity(vg):
     return XarrayMatrixOperator(
         DataArray(sparse_identity(vg['VGNumber']), coords=[('Atomic velocity' + Lbl.RNG, vg['VGCenter']), ('Atomic velocity', vg['VGCenter'])])
     )
 
-# %% ../nbs/api/velocitygroups.ipynb #5a69ec52
+# %% ../nbs/api/velocitygroups.ipynb #cef36fba
 @patch
 def identity(self:VelocityGroups)->Operator:
     """The velocity-space identity operator."""
@@ -76,23 +76,23 @@ def identity(self:VelocityGroups)->Operator:
     #         source=_velocity_space(self)
     #     )
 
-# %% ../nbs/api/velocitygroups.ipynb #673ab8bb
+# %% ../nbs/api/velocitygroups.ipynb #5b0f4157
 def _vg_diagonal(vg, diags):
     return XarrayMatrixOperator(
         DataArray(sparse_diag(diags), coords=[('Atomic velocity' + Lbl.RNG, vg['VGCenter']), ('Atomic velocity' + Lbl.SRC, vg['VGCenter'])])
     )
 
-# %% ../nbs/api/velocitygroups.ipynb #6ca0e24d
+# %% ../nbs/api/velocitygroups.ipynb #8b79cbb5
 @patch
 def velocity_diagonal(self:VelocityGroups)->Operator:
     """A velocity-space operator with the velocity on the diagonal."""
     return _vg_diagonal(self, self['VGCenter'])
 
-# %% ../nbs/api/velocitygroups.ipynb #464be528
+# %% ../nbs/api/velocitygroups.ipynb #6fe58ae8
 def velocity_density_vector(vg):
     return _velocity_space(vg).from_numpy(vg['VGDensity'])
 
-# %% ../nbs/api/velocitygroups.ipynb #29b09c26
+# %% ../nbs/api/velocitygroups.ipynb #d2cd8e2c
 @patch
 def n_times_1(self:VelocityGroups)->Operator:
     """Operator that sums over all velocity groups then scales by the Maxwell-Boltzmann distribution."""
@@ -102,7 +102,7 @@ def n_times_1(self:VelocityGroups)->Operator:
         source=_velocity_space(self)
     )
 
-# %% ../nbs/api/velocitygroups.ipynb #449adb92
+# %% ../nbs/api/velocitygroups.ipynb #7ee755b1
 @patch
 def drho_dv(self:VelocityGroups)->Operator:
     """Derivative with respect to velocity operator.$"""
@@ -112,19 +112,19 @@ def drho_dv(self:VelocityGroups)->Operator:
         source=_velocity_space(self)
     )
 
-# %% ../nbs/api/velocitygroups.ipynb #1937a228
+# %% ../nbs/api/velocitygroups.ipynb #87f11964
 def _vg_da(a, vg):
     range = ('Atomic velocity' + Lbl.RNG, vg['VGCenter']) if a.shape[0] == vg['VGNumber'] else ("none", ["none"])
     source = ('Atomic velocity' + Lbl.SRC, vg['VGCenter']) if a.shape[1] == vg['VGNumber'] else ("none", ["none"])
     return DataArray(a, coords=[range, source])
 
-# %% ../nbs/api/velocitygroups.ipynb #938d8416
+# %% ../nbs/api/velocitygroups.ipynb #3d7e98ec
 @patch
 def normalize(self:VelocityGroups)->Operator:
     """Returns the operator that normalizes a vector by dividing each component by the width of the corresponding velocity group."""
     return ScaleOperator(DataArray(self['VGInverseWidth'], {'Atomic velocity': self['VGCenter']}))
 
-# %% ../nbs/api/velocitygroups.ipynb #dfe4c4a8
+# %% ../nbs/api/velocitygroups.ipynb #399fc61e
 @patch
 def sum(self:VelocityGroups)->Operator:
     """Returns the operator that sums a vector over velocity groups."""

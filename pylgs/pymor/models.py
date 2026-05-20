@@ -8,7 +8,7 @@ __all__ = ['StationaryModel', 'InstationaryModel', 'fourier_space', 'to_sympy', 
            'floquet_expand', 'time_space', 'floquet_reconstruction_array', 'floquet_reconstruction_operator',
            'StationaryFloquetModel']
 
-# %% ../../nbs/api/pymor/models.ipynb #0d01d05b
+# %% ../../nbs/api/pymor/models.ipynb #808dbb9a
 from functools import partial
 from numbers import Number
 
@@ -18,7 +18,7 @@ from pymor.basic import Mu, LincombOperator, IdentityOperator
 from pymor.vectorarrays.interface import VectorArray
 from ..utilities.sparse import sparse_diag, sparse_identity
 
-# %% ../../nbs/api/pymor/models.ipynb #93aa9d65
+# %% ../../nbs/api/pymor/models.ipynb #eef3d441
 class StationaryModel(pymor.basic.StationaryModel):
     """Extend pyMOR's `StationaryModel` to include a `data` attribute for storing, e.g., the model's grid."""
     def __init__(
@@ -53,7 +53,7 @@ class StationaryModel(pymor.basic.StationaryModel):
             return v.apply(u, mu)
         return v.apply(self.solve(u), mu=mu)
 
-# %% ../../nbs/api/pymor/models.ipynb #2ca79ade
+# %% ../../nbs/api/pymor/models.ipynb #e85170c2
 @patch
 def solve(self:StationaryModel, mu=None, input=None, return_error_estimate=False, **kwargs):
     """Extend `StationaryModel.solve` to solve over a range of parameters."""
@@ -76,7 +76,7 @@ def solve(self:StationaryModel, mu=None, input=None, return_error_estimate=False
         sol = [self.solve(fixed_mu | {k: v[i] for k, v in var_mu.items()}, input=input, return_error_estimate=False, **kwargs) for i in range(n)]
         return self.operator.source.concatenate(sol, var_mu)
 
-# %% ../../nbs/api/pymor/models.ipynb #c75b94fe
+# %% ../../nbs/api/pymor/models.ipynb #337f6a31
 class InstationaryModel(pymor.basic.InstationaryModel):
     """Extend pyMOR's `InstationaryModel` to include a `data` attribute for storing, e.g., the model's grid."""
     def __init__(
@@ -114,7 +114,7 @@ class InstationaryModel(pymor.basic.InstationaryModel):
         name=name,
     )
 
-# %% ../../nbs/api/pymor/models.ipynb #0b2cf110
+# %% ../../nbs/api/pymor/models.ipynb #bd4ee38f
 import math
 
 from ..utilities.numpy import sym_range
@@ -132,11 +132,11 @@ import sympy as sy
 from sympy import Expr
 from sympy.parsing.sympy_parser import parse_expr
 
-# %% ../../nbs/api/pymor/models.ipynb #fcd162cf
+# %% ../../nbs/api/pymor/models.ipynb #c955567a
 def fourier_space(n): 
     return XarrayVectorSpace({'Fourier coefficient': sym_range(n)})
 
-# %% ../../nbs/api/pymor/models.ipynb #796d94ed
+# %% ../../nbs/api/pymor/models.ipynb #45158d59
 def to_sympy(functional):
     if isinstance(functional, Number):
         return functional
@@ -148,7 +148,7 @@ def to_sympy(functional):
         out = functional
     return parse_expr(out)
 
-# %% ../../nbs/api/pymor/models.ipynb #153a64ad
+# %% ../../nbs/api/pymor/models.ipynb #d63f8123
 def fourier_series(expr, n, t:str='t', nu:str='nu'):
     t = sy.Symbol(t)
     return sy.fourier_series(
@@ -160,7 +160,7 @@ def fourier_series(expr, n, t:str='t', nu:str='nu'):
         sy.exp
     ).expand()
 
-# %% ../../nbs/api/pymor/models.ipynb #2ef2da48
+# %% ../../nbs/api/pymor/models.ipynb #15c6d2c8
 def fourier_series_coefficients(series:Expr, n:int, t:str='t'):
     """Returns the positive and negative Fourier series coefficients up to and including order `n`.
     """
@@ -170,7 +170,7 @@ def fourier_series_coefficients(series:Expr, n:int, t:str='t'):
         for k in range(-n, n+1)
     ])
 
-# %% ../../nbs/api/pymor/models.ipynb #e75bc36f
+# %% ../../nbs/api/pymor/models.ipynb #73273475
 def fourier_expansion_operator(coefficient, n_operator, n_vector, mu:dict=None, t:str='t', nu:str='nu') -> np.ndarray:
     """Coefficients of complex Fourier series of expr in variable `t` at frequency `nu`.
 
@@ -191,12 +191,12 @@ def fourier_expansion_operator(coefficient, n_operator, n_vector, mu:dict=None, 
         range=space
     )
 
-# %% ../../nbs/api/pymor/models.ipynb #b511e5e6
+# %% ../../nbs/api/pymor/models.ipynb #9945f69f
 from pymor.algorithms.rules import match_class, RuleTable
 from pymor.models.interface import Model
 from pymor.operators.interface import Operator
 
-# %% ../../nbs/api/pymor/models.ipynb #3a0defd9
+# %% ../../nbs/api/pymor/models.ipynb #8f9d016d
 class FourierExpandRules(RuleTable):
     """|RuleTable| to Fourier expand an operator."""
 
@@ -218,40 +218,40 @@ class FourierExpandRules(RuleTable):
         if not set(self.mu).intersection(op.parameters): return op * IdentityOperator(fourier_space(self.n_vector))
         return self.replace_children(op)
 
-# %% ../../nbs/api/pymor/models.ipynb #d76198e7
+# %% ../../nbs/api/pymor/models.ipynb #71f31b01
 def fourier_expand(obj, n_operator:int, n_vector:int, mu:dict|None=None, t:str='t', nu:str='nu'):
     return FourierExpandRules(n_operator, n_vector, mu=mu).apply(obj)
 
-# %% ../../nbs/api/pymor/models.ipynb #49f6cc38
+# %% ../../nbs/api/pymor/models.ipynb #f555d41e
 def fourier_diagonal_operator(vec):
     space = fourier_space((len(vec)-1)//2)
     return XarrayMatrixOperator(sparse_diag(vec), source=space, range=space)
 
-# %% ../../nbs/api/pymor/models.ipynb #ff29e4af
+# %% ../../nbs/api/pymor/models.ipynb #7e85cf31
 def d_term(n_vector:int, nu:str='nu'):
     return ExpressionParameterFunctional(f'-(1j)*{nu}', {nu: 1}) * fourier_diagonal_operator(sym_range(n_vector))
 
-# %% ../../nbs/api/pymor/models.ipynb #fc7fa2ce
+# %% ../../nbs/api/pymor/models.ipynb #a819ee09
 def floquet_expand(op, n_operator, n_vector, mu:dict=None, t:str='t', nu:str='nu'):
     return (
         d_term(n_vector, nu=nu) * IdentityOperator(op.source)
         + fourier_expand(op, n_operator, n_vector, mu=mu, t=t, nu=nu)
     ).with_(solver=op.solver)
 
-# %% ../../nbs/api/pymor/models.ipynb #e94c41b2
+# %% ../../nbs/api/pymor/models.ipynb #77d13f0e
 def _kron_vector(space): return space.from_numpy((sym_range((space.dim - 1)//2) == 0).astype(int))
 
-# %% ../../nbs/api/pymor/models.ipynb #c587a3bb
+# %% ../../nbs/api/pymor/models.ipynb #7a0f1944
 def time_space(time): return XarrayVectorSpace({'Time': time})
 
-# %% ../../nbs/api/pymor/models.ipynb #d43e0ffc
+# %% ../../nbs/api/pymor/models.ipynb #53726f22
 def floquet_reconstruction_array(n_vector, time, mu):
     time_coord = time_space(time).coords['Time']
     fourier_coord = fourier_space(n_vector).coords['Fourier coefficient']
     nu = ExpressionParameterFunctional('nu', {'nu': 1}).evaluate(mu)
     return np.exp(-1j * nu * time_coord * fourier_coord)
 
-# %% ../../nbs/api/pymor/models.ipynb #67cc2287
+# %% ../../nbs/api/pymor/models.ipynb #55f82f42
 def floquet_reconstruction_operator(n_vector, time):
     return XarrayFunctionalOperator(
         GenericParameterFunctional(lambda mu: floquet_reconstruction_array(n_vector, time, mu), {'nu': 1}),
@@ -259,7 +259,7 @@ def floquet_reconstruction_operator(n_vector, time):
         source=fourier_space(n_vector),
     )
 
-# %% ../../nbs/api/pymor/models.ipynb #c818fa60
+# %% ../../nbs/api/pymor/models.ipynb #931dc4fb
 class StationaryFloquetModel(StationaryModel):
     """A model that solves for the Fourier coefficients of the periodic state of a modulated system."""
 

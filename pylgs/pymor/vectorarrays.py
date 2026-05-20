@@ -7,7 +7,7 @@ __all__ = ['Lbl', 'unlabel_dims', 'default_coordinate', 'dataarray_coordinate_da
            'make_coordinates', 'XarrayVectorSpace', 'transpose_like', 'XarrayVectorArrayImpl', 'XarrayVectorArray',
            'plotly_dataarray']
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #370e6b78
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #7a186e46
 from numbers import Number, Real
 from functools import partial, cached_property, singledispatch
 import inspect
@@ -30,17 +30,17 @@ from ..utilities.basic import get_item, filter_args, filter_out_args
 from ..utilities.xarray import Coordinates
 from ..utilities.formatting import prefix_format
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #97845bf5
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #2757bdd3
 import pandas as pd
 import plotly.express as px
 import plotly
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #426fc463
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #eb7303ee
 class Lbl(StrEnum):
     SRC = ' (source)'
     RNG = ' (range)'
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #411e5cf3
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #78e89170
 def unlabel_dims(obj):
     match obj:
         case str(): return obj.removesuffix(Lbl.SRC).removesuffix(Lbl.RNG)
@@ -50,7 +50,7 @@ def unlabel_dims(obj):
         case XarrayVectorSpace(): return obj.with_(coord_data={unlabel_dims(k): v for k,v in obj.coord_data.items()})
     return obj
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #d258eb4d
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #7a8669f4
 def default_coordinate(dim:str='len', size:int|list[int]|tuple[int]|None=None) -> tuple:
     if isinstance(size, list|tuple): size = size[0]
     if size: return (np.arange(size, dtype=int),)
@@ -61,7 +61,7 @@ def dataarray_coordinate_data(da:DataArray, dim:str) -> tuple:
         return (da[dim].data, da[dim].attrs)
     return default_coordinate(dim, da.sizes[dim])
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #4d217bf1
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #ada68c65
 @singledispatch
 def validate_coord_data(obj, shape=None) -> dict:
     raise TypeError(f'Object {obj} not recognized as coordinates')
@@ -95,15 +95,15 @@ def ____(obj:list, shape=None):
 def ____(obj:None, shape=None):
     return {}
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #58be21b5
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #304b7997
 def coord_data_shape(coord_data):
     return [len(c[0]) for c in coord_data.values()]
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #6fe91a2d
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #6b522295
 def make_coordinates(coord_data:dict) -> Coordinates:
     return Coordinates({k:(k, *v) for k,v in coord_data.items()})
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #ea03fe1a
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #7a8115a0
 class XarrayVectorSpace(VectorSpace):
     """`VectorSpace` of `XarrayVectorArrays`."""
 
@@ -194,13 +194,13 @@ class XarrayVectorSpace(VectorSpace):
     def is_scalar(self):
         return self.dim == 1
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #4405c857
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #1e7bb4c6
 # @patch(as_prop=True)
 # def ndim(self:XarrayVectorSpace): 
 #     """Number of dimensions of the vector space."""
 #     return self._array.ndim
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #1314c30c
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #383bc807
 @patch
 def rename(
     self:XarrayVectorSpace,
@@ -208,7 +208,7 @@ def rename(
 ):
     return self.with_(name=name) #XarrayVectorSpace(self._array.rename(new_name_or_name_dict, **names))
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #1111d1fa
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #437c0fc8
 @patch
 def __eq__(self:XarrayVectorSpace, other):
     return (
@@ -218,17 +218,17 @@ def __eq__(self:XarrayVectorSpace, other):
         # and all((self.coords_dict[k] == other.coords_dict[k]) for k in self.coords_dict)
     )
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #accb5403
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #bf6906c2
 @patch
 def __mul__(self:XarrayVectorSpace, other):
     if not isinstance(other, XarrayVectorSpace): raise NotImplementedError
     return XarrayVectorSpace(self.coord_data | other.coord_data, name=other.name)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #20bf59ae
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #20b5d67d
 def transpose_like(a:ndarray, dims, new_dims):
     return a.transpose([dims.index(d) for d in new_dims])
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #f443e30e
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #495002df
 class XarrayVectorArrayImpl(VectorArrayImpl):
 
     def __init__(
@@ -297,7 +297,7 @@ class XarrayVectorArrayImpl(VectorArrayImpl):
     def dofs(self, dof_indices, ind): raise NotImplementedError
     def amax(self, ind): raise NotImplementedError
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #3931cc30
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #9d9d8ca3
 class XarrayVectorArray(VectorArray):
     """`VectorArray` implementation via xarray arrays."""
 
@@ -353,12 +353,12 @@ class XarrayVectorArray(VectorArray):
             </details>
         '''
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #07adec31
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #ba80159c
 @patch
 def from_data(self:XarrayVectorSpace, data, data_dims=None, extended_coord_data=None):
     return self.make_array(data, data_dims, extended_coord_data)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #38343f42
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #3d853853
 @patch
 def from_numpy(
     self:XarrayVectorSpace, 
@@ -378,7 +378,7 @@ def from_numpy(
     shape = extended_shape + self.shape
     return self.from_data(data.reshape(shape), list(extended_coord_data) + self.dims, extended_coord_data)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #25149937
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #618de7c6
 @patch
 def from_xarray(
     self:XarrayVectorSpace, 
@@ -388,12 +388,12 @@ def from_xarray(
     # extended_coord_data = {k:v for k,v in data.coords.items() if k not in self.dims}
     return self.from_data(data)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #e4dc0032
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #4e41d2a9
 @patch
 def concatenate(self:XarrayVectorSpace, arrays, dim):
     return self.from_xarray(xr.concat([array.array for array in arrays], Variable(first(dim), first(dim.values()))))
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #dd419024
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #e3a673fe
 @patch
 def array_from_fn(
     self:XarrayVectorSpace,
@@ -407,7 +407,7 @@ def array_from_fn(
     data = fn(shape + self.shape)
     return self.from_data(data, list(extended_coords) + self.dims, extended_coords)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #6fa34e3a
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #4fd8a16d
 @patch
 def zeros(
     self:XarrayVectorSpace, 
@@ -417,7 +417,7 @@ def zeros(
     """Return `XarrayVectorArray` of null vectors in XarrayVectorSpace optionally extended to include supplied coordinates `coords`."""
     return self.array_from_fn(np.zeros, extended_coords, reserve)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #367d3745
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #e0dffc88
 @patch
 def ones(
     self:XarrayVectorSpace, 
@@ -427,10 +427,10 @@ def ones(
     """Return `XarrayVectorArray` of vectors with each element equal to one in XarrayVectorSpace optionally extended to include supplied coordinates `coords`."""
     return self.array_from_fn(np.ones, extended_coords, reserve)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #fffafd79
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #e9c66514
 from pymor.vectorarrays.interface import _create_random_values
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #19ee92c8
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #a473a647
 @patch
 def random(
     self:XarrayVectorSpace, 
@@ -442,7 +442,7 @@ def random(
     if name is not None: out.name = name
     return out
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #03ce9ace
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #89e4ad8c
 @patch
 def __contains__(self:XarrayVectorSpace, other):
     # This is reversed because when pymor calls `assert U in op.source`
@@ -465,25 +465,25 @@ def __contains__(self:XarrayVectorSpace, other):
     #     return other.space._array.coords.contain(self._array.coords)
     # return False
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #40ebfbac
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #5612198b
 @patch
 def array_labeled_as_source(self:XarrayVectorArray):
     return self.array.rename({d: d + Lbl.SRC for d in self.dims})
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #4d965754
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #737de4d2
 @patch
 def item(self:XarrayVectorArray):
     """Return the single value stored in the array if there is only one value."""
     return self.data.item()
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #14107252
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #2d59d4a9
 @patch(as_prop=True)
 def stacked_array(self:XarrayVectorArrayImpl):
     core = {'core': self._space.dims} if self._space.dims else {}
     extended = {'extended': self._dims} if self._dims else {}
     return self.array.stack(core | extended, create_index=False)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #2d5f4d8a
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #8388208e
 @patch
 def stacked_data(self:XarrayVectorArrayImpl):
     return transpose_like(
@@ -492,7 +492,7 @@ def stacked_data(self:XarrayVectorArrayImpl):
         self._space.size, self._extended_size
     )
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #0ddeaa63
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #8d4738fc
 @patch
 def to_numpy(self:XarrayVectorArrayImpl, ensure_copy, ind):
     out = self.stacked_data()
@@ -510,19 +510,19 @@ def to_numpy(self:XarrayVectorArrayImpl, ensure_copy, ind):
     # else:
     #     return array
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #1e707e1d
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #ab869571
 @patch
 def scal(self:XarrayVectorArrayImpl, alpha, ind):
     if ind is not None: raise NotImplementedError
     self._data *= alpha
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #2b754868
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #77aa91b6
 @patch
 def scal_copy(self:XarrayVectorArrayImpl, alpha, ind):
     if ind is not None: raise NotImplementedError
     return type(self)(self._data * alpha, self._space, self._data_dims, self._extended_coord_data)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #3ef1a2c0
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #4cfd820a
 @patch
 def axpy(self:XarrayVectorArrayImpl, alpha, x, ind, xind):
     if ind is not None: raise NotImplementedError
@@ -537,7 +537,7 @@ def axpy(self:XarrayVectorArrayImpl, alpha, x, ind, xind):
 
     self._data += B * alpha
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #f6c0b9bb
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #babefccf
 @patch
 def axpy_copy(self:XarrayVectorArrayImpl, alpha, x, ind, xind):
     if ind is not None or xind is not None: raise NotImplementedError
@@ -550,7 +550,7 @@ def axpy_copy(self:XarrayVectorArrayImpl, alpha, x, ind, xind):
             return type(self)(self._data - B, self._space, self._data_dims, self._extended_coord_data)
     return type(self)(self._data + B * alpha, self._space, self._data_dims, self._extended_coord_data)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #e309d489
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #b7511c30
 @patch
 def __mul__(self:XarrayVectorArray, other):
     match other:
@@ -570,11 +570,11 @@ def __mul__(self:XarrayVectorArray, other):
             return type(self)(self.space, self.impl.scal_copy(other, self.ind))
     raise NotImplementedError
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #be937a1f
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #3545c2d9
 def _reim(da:DataArray):
     return xr.concat([da.real, da.imag], dim=xr.Variable('Part', ['Re', 'Im'])).transpose(*da.dims, 'Part')
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #f2fecbf3
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #8da2ca1b
 @patch
 def real(self:XarrayVectorArrayImpl, ind):
     return XarrayVectorArrayImpl(self.copy(False, ind)._data.real, self._space, self._data_dims, self._extended_coord_data)
@@ -605,7 +605,7 @@ def reim(self:XarrayVectorArray):
     else:
         return type(self)(self.space, impl)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #330ce3f0
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #b06d477e
 plotly.io.templates.default = "plotly_white"
 plotly.io.templates['plotly_white'].layout.legend = plotly.graph_objects.layout.Legend(tracegroupgap=0)
 plotly.io.templates["plotly_white"].layout.width = 700
@@ -656,11 +656,11 @@ plotly.io.templates["plotly_white"].layout.colorway = array([
        '#c3c68e', '#df48d6', '#e6e864', '#e4c10a', '#00f4f0', '#9e5ba1',
        '#4b41b6', '#64338e', '#757e6b', '#a88936'])
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #238f8cb7
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #6c8899b3
 def _categorical_dims(array:DataArray): return [dim for dim in array.dims if not isinstance(array[dim][0].item(), Number)]
 def _numerical_dims(array:DataArray):   return [dim for dim in array.dims if     isinstance(array[dim][0].item(), Number)]
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #af4b8ec4
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #78675dd4
 def _numerical_dim_sort_order(da, dim):
     """Assign priority for each dimension to be put on the x axis.
     Lower number is higher priority. Time is preferred on a scrubber, velocity preferred on the x-axis.
@@ -670,18 +670,18 @@ def _numerical_dim_sort_order(da, dim):
     if isinstance(da[dim][0].item(), Real): return 1
     return 0
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #29270643
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #d15a62f3
 def _set_plotly_frame(fig, n):
     fig.update_layout(sliders=[dict(active=n)])
     for i in range(len(fig.data)):
         fig.data[i].y = fig.frames[n].data[i].y
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #92758b5c
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #59f2c63b
 def _format_slider_labels(fig, slider_label_precision=2):
     for step in fig.layout.sliders[0].steps:
         step.label = prefix_format(float(step.label), slider_label_precision)
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #359cd891
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #47d78ad4
 def plotly_dataarray(da:DataArray, slider_label_precision=2, **kwargs):
     """Visualize the data contained in the `XarrayVectorArray`.
     Put the first dimension with numerical coordinates on the x axis, and include a scrubber if there is a second numerical dimension. 
@@ -740,7 +740,7 @@ def plotly_dataarray(da:DataArray, slider_label_precision=2, **kwargs):
         except ValueError: pass
     return fig
 
-# %% ../../nbs/api/pymor/vectorarrays.ipynb #c9e1a075
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #0cdb885d
 ## Could put plotting hints in the attrs of the coordinates inside the model
 @patch
 @delegates(plotly_dataarray)
