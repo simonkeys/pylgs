@@ -7,26 +7,27 @@ __all__ = ['optree', 'ScipyGCROTMKSpILUSolver', 'LGSSystem']
 
 # %% ../nbs/api/lgssystem.ipynb #b2b6bdb7
 import importlib
+from pathlib import Path
+from typing import Iterable
 from IPython.display import SVG, Markdown
 
+from fastcore.basics import ifnone
+from fastcore.meta import patch, delegates
+import numpy as np
+import pymor
+from pymor.parameters.base import ParametricObject, Parameters
 from pymor.vectorarrays.interface import VectorArray
 from pymor.operators.interface import Operator
-from pymor.basic import IdentityOperator, VectorOperator
+from pymor.basic import Mu, IdentityOperator, NumpyMatrixOperator
+from pymor.algorithms.simplify import expand, contract
 
-from .imports import *
-from .utilities.nbdev import DictTbl, AttributeTbl
-from .utilities.testing import test_array
-from .utilities.sparse import sparse_kronecker_matrix, sparse_toeplitz, sparse_identity, sparse_diag, sparse
-from .utilities.numpy import sym_range
-from .pymor.parameters import *
-from .pymor.vectorarrays import *
-from .pymor.operators import *
-from .pymor.timestepping import *
-from .pymor.grids import *
-from .pymor.models import *
-from .velocitygroups import *
-from .dmelements import *
-from .pymor.timestepping import cvode
+from .pymor.operators import LincombOperator, ProductOperator, to_matrix, XarrayMatrixOperator
+from .pymor.timestepping import BDFTimeStepper, AdamsTimeStepper
+from .pymor.grids import OnedUnstructuredGrid
+from .pymor.models import StationaryModel, InstationaryModel, StationaryFloquetModel, floquet_reconstruction_operator
+from .velocitygroups import VelocityGroups, velocity_density_vector
+from .dmelements import population, total_population, level_population
+from .pymor.vectorarrays import Lbl
 
 # %% ../nbs/api/lgssystem.ipynb #700d10e7
 def optree(op):
@@ -43,6 +44,7 @@ def optree(op):
 # %% ../nbs/api/lgssystem.ipynb #dea22339
 from scipy.sparse.linalg import LinearOperator, gcrotmk, spilu
 from pymor.solvers.interface import Solver
+from pymor.core.exceptions import InversionError
 
 # %% ../nbs/api/lgssystem.ipynb #a1dd7fc3
 class ScipyGCROTMKSpILUSolver(Solver):
@@ -235,11 +237,13 @@ def stationary_model(
     self:LGSSystem, 
     vg:int|Iterable|VelocityGroups=6, # Specification of velocity groups 
     # output='total_flux' # Operator to be applied to solution to obtain the output
+    preconditioner=None,
+    **kwargs
 ) -> StationaryModel: # Model for the steady-state LGS system
     """Return a pyMOR `StationaryModel` for the steady state cw LGS system."""
     vg = VelocityGroups(vg)
     return StationaryModel(
-        self.operator(vg).with_(solver=ScipyGCROTMKSpILUSolver(spilu_fill_factor=40, preconditioner=-self._reaction(vg))),
+        self.operator(vg).with_(solver=ScipyGCROTMKSpILUSolver(preconditioner=preconditioner or -self._reaction(vg)), **kwargs),
         self.rhs(vg), 
         products=self._products(vg),
         data={
@@ -254,12 +258,13 @@ def adaptive_stationary_model(
     self:LGSSystem, 
     mu, # Parameter values to use during velocity-group refinement
     vg=6, # Initial velocity groups
-    max_weight=0.01 # Maximum fraction of the return flux from any one velocity group
+    max_weight=0.01, # Maximum fraction of the return flux from any one velocity group
+    **kwargs
 )->StationaryModel: # Steady-state LGS model with more velocity groups in regions that produce more return flux
     """Create a `StationaryModel` with narrower velocity bins in velocity regions with higher flux."""
     vg = VelocityGroups(vg)
     while True:
-        m = self.stationary_model(vg)
+        m = self.stationary_model(vg, **kwargs)
         u = m.solve(mu)
         o = m.flux(u).array.sum('Transition').squeeze().data
         o /= np.sum(o)
@@ -267,7 +272,7 @@ def adaptive_stationary_model(
         if not np.sum(mask):
             break
         vg = vg.subdivide(mask)
-    return self.stationary_model(vg)
+    return self.stationary_model(vg, **kwargs)
 
 # %% ../nbs/api/lgssystem.ipynb #5ef2cef7
 @patch
@@ -278,7 +283,9 @@ def instationary_model(
     T=1.e-6, # Final time (seconds)
     num_values=100, # Number of time step values to return
     initial_rho=None, # Initial density matrix. `None` means to use the thermal distribution
-    time_stepper=None # Solver to use. `None` means to use the default `BDFTimeStepper`
+    time_stepper=None, # Solver to use. `None` means to use the default `BDFTimeStepper`
+    preconditioner=None,
+    **kwargs
 ) -> InstationaryModel: # Model for the LGS system dynamics
     """Create an `InstationaryModel` for the LGS system dynamics."""
     vg = VelocityGroups(vg)
@@ -288,7 +295,7 @@ def instationary_model(
         self.operator(vg), 
         self.rhs(vg), 
         mass=None,
-        time_stepper=ifnone(time_stepper, BDFTimeStepper()),
+        time_stepper=ifnone(time_stepper, BDFTimeStepper(preconditioner=preconditioner or self._reaction(vg), **kwargs)),
         num_values=num_values,
         # output_functional=self._products(vg)[output],
         products=self._products(vg),
@@ -357,6 +364,8 @@ def stationary_floquet_model(
     n_operator=None, # Number of terms in the operator Fourier series. `None` defaults to `n_vector` - 1
     vg:int|Iterable|VelocityGroups=6, # Specification of velocity groups
     solver=None,
+    preconditioner=None,
+    **kwargs
 ) -> StationaryFloquetModel: # Model for the Fourier coefficients of the periodic LGS system
     """Return a `StationaryFloquetModel` for the Fourier coefficients of the periodic state of a modulated LGS system."""
     vg = VelocityGroups(vg)
@@ -373,8 +382,8 @@ def stationary_floquet_model(
             'velocity_groups': vg,
             'grid': OnedUnstructuredGrid(vg.edges)
         },
-        solver=solver or ScipyGCROTMKSpILUSolver(spilu_fill_factor=40),
-        preconditioner=-self._reaction(vg)
+        solver=solver or ScipyGCROTMKSpILUSolver(**kwargs),
+        preconditioner=preconditioner or -self._reaction(vg),
     )
 
 # %% ../nbs/api/lgssystem.ipynb #753fad8e
@@ -387,22 +396,22 @@ def adaptive_stationary_floquet_model(
     n_vector, # Number of terms in the system Fourier series
     nu:str='nu', # Name of the frequency variable
     n_operator=None, # Number of terms in the operator Fourier series. `None` defaults to `n_vector` - 1
-    vg=6, # Initial velocity groups
+    vg=6, # Initial (number of) velocity groups
     solver=None,
     max_weight=0.01, # Maximum fraction of the return flux from any one velocity group
-    subdivisions=4,
+    subdivisions=4, # Number of subdivisions to use when refining velocity groups
+    **kwargs
 )->StationaryFloquetModel: # Steady-state LGS model with more velocity groups in regions that produce more return flux
     """Create a `StationaryModel` with narrower velocity bins in velocity regions with higher flux."""
     vg = VelocityGroups(vg)
     while True:
-        print(f'Creating model with {vg['VGNumber']} velocity groups')
-        m = self.stationary_floquet_model(mu, time, n_vector, nu, n_operator, vg, solver)
+        print(f'Creating model with {vg["VGNumber"]} velocity groups')
+        m = self.stationary_floquet_model(mu, time, n_vector, nu, n_operator, vg, solver, **kwargs)
         print('Solving model')
         u = m.solve(mu_refine)
         o = m.reconstructed_flux_distribution(u, mu_refine).real.array.sum(['Time', 'Transition']).squeeze().data
         o /= np.sum(o)
-        mask = o > max_weight
-        if not np.sum(mask):
-            break
-        vg = vg.subdivide(mask, subdivisions)
-    return self.stationary_floquet_model(mu, time, n_vector, nu, n_operator, vg, solver), u
+        overweight = o > max_weight
+        if not np.any(overweight): break
+        vg = vg.subdivide(overweight, subdivisions)
+    return m, u
