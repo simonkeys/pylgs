@@ -751,4 +751,4 @@ def visualize(self:XarrayVectorArray, **kwargs):
     Put categorical dimensions in the legend. If the data are complex, add the real and imaginary parts as a categorical dimension.
     If there are no numerical dimensions, plot the categorical dimension(s) as a horizontal bar plot.
     """
-    return plotly_dataarray(self.array, **kwargs)
+    return plotly_dataarray(self.array.squeeze(), **kwargs)
