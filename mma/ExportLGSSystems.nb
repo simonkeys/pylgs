@@ -1,0 +1,352 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     12749,        344]
+NotebookOptionsPosition[     10985,        304]
+NotebookOutlinePosition[     11377,        320]
+CellTagsIndexPosition[     11334,        317]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "PacletManager`PacletDirectoryAdd", "[", 
+   "\"\<~/Development/AtomicDensityMatrix/AtomicDensityMatrix\>\"", "]"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"PrependTo", "[", 
+   RowBox[{
+   "$Path", ",", 
+    "\"\<~/Development/AtomicDensityMatrix/AtomicDensityMatrix\>\""}], "]"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Get", "[", "\"\<AtomicDensityMatrix/Kernel/init.m\>\"", "]"}], 
+   "*)"}]}]}], "Code",
+ InitializationCell->False,
+ CellLabel->"In[1]:=",ExpressionUUID->"d8343d23-5f66-4ada-9684-1230fdcbbeb4"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "PacletManager`PacletDirectoryAdd", "[", 
+   "\"\<~/Development/pyLGS/pylgs/mma\>\"", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"PrependTo", "[", 
+   RowBox[{"$Path", ",", "\"\<~/Development/pyLGS/pylgs/mma\>\""}], "]"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+  "Get", "[", "\"\<~/Development/pyLGS/pylgs/mma/LGSBloch.m\>\"", "]"}], 
+  ";"}]}], "Input",
+ CellLabel->"In[3]:=",ExpressionUUID->"280815c2-c6ef-45c7-a437-70b68445536c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SetDirectory", "[", 
+  "\"\<~/Development/pyLGS/pylgs/pylgs/systems/\>\"", "]"}]], "Input",
+ CellLabel->"In[6]:=",ExpressionUUID->"4db6725e-2e85-4e81-bef0-1ba624a3d983"],
+
+Cell[BoxData["\<\"/Users/simon/Development/pyLGS/pylgs/pylgs/systems\"\>"], \
+"Output",
+ CellLabel->"Out[6]=",ExpressionUUID->"1d86d3cc-8450-4f99-84b7-d9beca727737"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lgs", "=", 
+   RowBox[{"LGSGenerateSystem", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "\"\<D1\>\""}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Subscript", "[", 
+        RowBox[{"\"\<3S\>\"", ",", " ", 
+         RowBox[{"1", "/", "2"}]}], "]"}], " ", "->", " ", 
+       RowBox[{"Subscript", "[", 
+        RowBox[{"\"\<3P\>\"", ",", " ", 
+         RowBox[{"1", "/", "2"}]}], "]"}]}], "}"}], ",", " ", 
+     RowBox[{"QuantumNumbers", "->", 
+      RowBox[{"{", "}"}]}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[7]:=",ExpressionUUID->"4ddff61c-f539-4549-98cd-979db1b0c2d2"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ExportLGSSystem", "[", 
+  RowBox[{"\"\<NaD1_Toy\>\"", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"\"\<Na\>\"", ",", " ", "\"\<D1\>\""}], "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Subscript", "[", 
+      RowBox[{"\"\<3S\>\"", ",", " ", 
+       RowBox[{"1", "/", "2"}]}], "]"}], " ", "->", " ", 
+     RowBox[{"Subscript", "[", 
+      RowBox[{"\"\<3P\>\"", ",", " ", 
+       RowBox[{"1", "/", "2"}]}], "]"}]}], "}"}], ",", " ", 
+   RowBox[{"QuantumNumbers", " ", "->", " ", 
+    RowBox[{"{", "}"}]}]}], "]"}]], "Code",
+ InitializationCell->False,
+ CellLabel->"In[8]:=",ExpressionUUID->"214c8010-0096-4f55-a302-9befc181e43e"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"NaD1_Toy/A_ind.mtxn\"\>", ",", "\<\"NaD1_Toy/A_dop.mtxn\"\>", 
+   ",", "\<\"NaD1_Toy/A_rec.mtxn\"\>", ",", "\<\"NaD1_Toy/A_vcc.mtxn\"\>", 
+   ",", "\<\"NaD1_Toy/b.mtxn\"\>", ",", "\<\"NaD1_Toy/Flux.mtxn\"\>", 
+   ",", "\<\"NaD1_Toy/LevelDiagramToy.svg\"\>", 
+   ",", "\<\"NaD1_Toy/LevelDiagramToScale.svg\"\>", ",", 
+   RowBox[{"\<\"NaD1_Toy/info.md\"\>", 
+    " ", "\<\"NaD1_Toy/LevelDiagramNotToScale.svg\"\>"}]}], "}"}]], "Output",
+ CellLabel->"Out[8]=",ExpressionUUID->"f2e829de-0929-4568-94d4-5121eac12009"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ExportLGSSystem", "[", 
+  RowBox[{"\"\<NaD1\>\"", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"\"\<Na\>\"", ",", " ", "\"\<D1\>\""}], "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Subscript", "[", 
+      RowBox[{"\"\<3S\>\"", ",", " ", 
+       RowBox[{"1", "/", "2"}]}], "]"}], " ", "->", " ", 
+     RowBox[{"Subscript", "[", 
+      RowBox[{"\"\<3P\>\"", ",", " ", 
+       RowBox[{"1", "/", "2"}]}], "]"}]}], "}"}], ",", " ", 
+   RowBox[{"QuantumNumbers", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"J", ",", " ", "L", ",", " ", "S", ",", " ", "NuclearSpin"}], 
+     "}"}]}]}], "]"}]], "Code",
+ InitializationCell->False,
+ CellLabel->"In[10]:=",ExpressionUUID->"0e93a413-8843-44a3-801b-1b92f4a312af"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"NaD1/A_ind.mtxn\"\>", ",", "\<\"NaD1/A_dop.mtxn\"\>", 
+   ",", "\<\"NaD1/A_rec.mtxn\"\>", ",", "\<\"NaD1/A_vcc.mtxn\"\>", 
+   ",", "\<\"NaD1/b.mtxn\"\>", ",", "\<\"NaD1/Flux.mtxn\"\>", 
+   ",", "\<\"NaD1/LevelDiagramToy.svg\"\>", 
+   ",", "\<\"NaD1/LevelDiagramToScale.svg\"\>", ",", 
+   RowBox[{"\<\"NaD1/info.md\"\>", 
+    " ", "\<\"NaD1/LevelDiagramNotToScale.svg\"\>"}]}], "}"}]], "Output",
+ CellLabel->"Out[10]=",ExpressionUUID->"aa42124c-45df-4f09-8b85-668d7a7c1fd0"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ExportLGSSystem", "[", 
+   RowBox[{"\"\<NaD2\>\"", ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Na\>\"", ",", " ", "\"\<D2\>\""}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Subscript", "[", 
+       RowBox[{"\"\<3S\>\"", ",", " ", 
+        RowBox[{"1", "/", "2"}]}], "]"}], " ", "->", " ", 
+      RowBox[{"Subscript", "[", 
+       RowBox[{"\"\<3P\>\"", ",", " ", 
+        RowBox[{"3", "/", "2"}]}], "]"}]}], "}"}], ",", " ", 
+    RowBox[{"QuantumNumbers", " ", "->", " ", 
+     RowBox[{"{", 
+      RowBox[{"J", ",", " ", "L", ",", " ", "S", ",", " ", "NuclearSpin"}], 
+      "}"}]}]}], "]"}], ";"}]], "Code",
+ InitializationCell->False,
+ CellLabel->
+  "In[933]:=",ExpressionUUID->"0a814bdd-cfee-4985-a7d3-8f96370be11c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ExportLGSSystem", "[", 
+   RowBox[{"\"\<NaD2_Repump\>\"", ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Na\>\"", ",", " ", "\"\<D2\>\""}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"Subscript", "[", 
+         RowBox[{"\"\<3S\>\"", ",", " ", 
+          RowBox[{"1", "/", "2"}]}], "]"}], " ", "&&", " ", 
+        RowBox[{"F", "==", "1"}]}], " ", "->", " ", 
+       RowBox[{"Subscript", "[", 
+        RowBox[{"\"\<3P\>\"", ",", " ", 
+         RowBox[{"3", "/", "2"}]}], "]"}]}], ",", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Subscript", "[", 
+         RowBox[{"\"\<3S\>\"", ",", " ", 
+          RowBox[{"1", "/", "2"}]}], "]"}], " ", "&&", " ", 
+        RowBox[{"F", "==", "2"}]}], " ", "->", " ", 
+       RowBox[{"Subscript", "[", 
+        RowBox[{"\"\<3P\>\"", ",", " ", 
+         RowBox[{"3", "/", "2"}]}], "]"}]}]}], "}"}]}], "]"}], ";"}]], "Code",\
+
+ InitializationCell->False,
+ CellLabel->
+  "In[934]:=",ExpressionUUID->"fe0e38e7-1d19-46ec-bbb9-a422208fc3fc"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"states", " ", "=", " ", 
+   RowBox[{"{", "\n", "\t", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "23", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Ne\>\"", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"3", ",", " ", "\"\<s\>\""}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "\"\<S\>\"", ",", " ", 
+         RowBox[{"1", "/", "2"}]}], "}"}]}], "}"}], ",", "\n", "\t", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "23", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Ne\>\"", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"3", ",", " ", "\"\<p\>\""}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "\"\<P\>\"", ",", " ", 
+         RowBox[{"1", "/", "2"}]}], "}"}]}], "}"}], ",", "\n", "\t", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "23", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Ne\>\"", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"3", ",", " ", "\"\<p\>\""}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "\"\<P\>\"", ",", " ", 
+         RowBox[{"3", "/", "2"}]}], "}"}]}], "}"}], ",", "\n", "\t", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "23", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Ne\>\"", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"4", ",", " ", "\"\<s\>\""}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "\"\<S\>\"", ",", " ", 
+         RowBox[{"1", "/", "2"}]}], "}"}]}], "}"}], ",", "\n", "\t", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "23", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Ne\>\"", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"3", ",", " ", "\"\<d\>\""}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "\"\<D\>\"", ",", " ", 
+         RowBox[{"3", "/", "2"}]}], "}"}]}], "}"}], ",", "\n", "\t", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "23", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Ne\>\"", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"3", ",", " ", "\"\<d\>\""}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "\"\<D\>\"", ",", " ", 
+         RowBox[{"5", "/", "2"}]}], "}"}]}], "}"}], ",", "\n", "\t", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Na\>\"", ",", " ", "23", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Ne\>\"", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"4", ",", " ", "\"\<p\>\""}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "\"\<P\>\"", ",", " ", 
+         RowBox[{"3", "/", "2"}]}], "}"}]}], "}"}]}], "\n", "}"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"pump", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"Subscript", "[", 
+     RowBox[{"\"\<3S\>\"", ",", " ", 
+      RowBox[{"1", "/", "2"}]}], "]"}], " ", "->", " ", 
+    RowBox[{"Subscript", "[", 
+     RowBox[{"\"\<4P\>\"", ",", " ", 
+      RowBox[{"3", "/", "2"}]}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{"ExportLGSSystem", "[", 
+  RowBox[{"\"\<Na330\>\"", ",", " ", "states", ",", " ", 
+   RowBox[{"{", "pump", "}"}]}], "]"}]}], "Code",
+ InitializationCell->False,
+ CellLabel->
+  "In[935]:=",ExpressionUUID->"d2f94d8c-139e-49cc-a20f-aa32de370811"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Na330/A_ind.mtxn\"\>", ",", "\<\"Na330/A_dop.mtxn\"\>", 
+   ",", "\<\"Na330/A_rec.mtxn\"\>", ",", "\<\"Na330/A_vcc.mtxn\"\>", 
+   ",", "\<\"Na330/b.mtxn\"\>", ",", "\<\"Na330/Flux.mtxn\"\>", 
+   ",", "\<\"Na330/LevelDiagramToy.svg\"\>", 
+   ",", "\<\"Na330/LevelDiagramToScale.svg\"\>", ",", 
+   RowBox[{"\<\"Na330/info.md\"\>", 
+    " ", "\<\"Na330/LevelDiagramNotToScale.svg\"\>"}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[937]=",ExpressionUUID->"c60e4252-f668-48e0-b433-18f08efbd64c"]
+}, Open  ]]
+},
+WindowSize->{864, 1051},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"13.3 for Mac OS X x86 (64-bit) (July 24, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a49449be-efba-4a73-8ec8-20553e47e71a"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 567, 17, 75, "Code",ExpressionUUID->"d8343d23-5f66-4ada-9684-1230fdcbbeb4",
+ InitializationCell->False],
+Cell[1128, 39, 468, 13, 73, "Input",ExpressionUUID->"280815c2-c6ef-45c7-a437-70b68445536c"],
+Cell[CellGroupData[{
+Cell[1621, 56, 193, 3, 30, "Input",ExpressionUUID->"4db6725e-2e85-4e81-bef0-1ba624a3d983"],
+Cell[1817, 61, 165, 2, 34, "Output",ExpressionUUID->"1d86d3cc-8450-4f99-84b7-d9beca727737"]
+}, Open  ]],
+Cell[1997, 66, 667, 17, 52, "Input",ExpressionUUID->"4ddff61c-f539-4549-98cd-979db1b0c2d2"],
+Cell[CellGroupData[{
+Cell[2689, 87, 662, 16, 36, "Code",ExpressionUUID->"214c8010-0096-4f55-a302-9befc181e43e",
+ InitializationCell->False],
+Cell[3354, 105, 556, 9, 77, "Output",ExpressionUUID->"f2e829de-0929-4568-94d4-5121eac12009"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3947, 119, 741, 18, 36, "Code",ExpressionUUID->"0e93a413-8843-44a3-801b-1b92f4a312af",
+ InitializationCell->False],
+Cell[4691, 139, 517, 9, 77, "Output",ExpressionUUID->"aa42124c-45df-4f09-8b85-668d7a7c1fd0"]
+}, Open  ]],
+Cell[5223, 151, 778, 20, 36, "Code",ExpressionUUID->"0a814bdd-cfee-4985-a7d3-8f96370be11c",
+ InitializationCell->False],
+Cell[6004, 173, 1066, 29, 36, "Code",ExpressionUUID->"fe0e38e7-1d19-46ec-bbb9-a422208fc3fc",
+ InitializationCell->False],
+Cell[CellGroupData[{
+Cell[7095, 206, 3340, 83, 227, "Code",ExpressionUUID->"d2f94d8c-139e-49cc-a20f-aa32de370811",
+ InitializationCell->False],
+Cell[10438, 291, 531, 10, 77, "Output",ExpressionUUID->"c60e4252-f668-48e0-b433-18f08efbd64c"]
+}, Open  ]]
+}
+]
+*)
+
