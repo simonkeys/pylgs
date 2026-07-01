@@ -1,0 +1,11 @@
+%Op
+%
+%1	2	4
+%coefficients
+%1
+%Optical field (range)
+%E0SI11Re	E0SI11Im
+%Density matrix (source)
+%ρ<sub>Re, 3S<sub>1/2</sub>, 3S<sub>1/2</sub></sub>	ρ<sub>Re, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Im, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Re, 3P<sub>1/2</sub>, 3P<sub>1/2</sub></sub>
+0	0	2	826172.7433464959
+0	1	1	826172.7433464959

@@ -1,0 +1,10 @@
+%Flux
+%
+%1	1	4
+%coefficients
+%1
+%Transition
+%3P<sub>1/2</sub>→3S<sub>1/2</sub>
+%Density matrix (source)
+%ρ<sub>Re, 3S<sub>1/2</sub>, 3S<sub>1/2</sub></sub>	ρ<sub>Re, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Im, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Re, 3P<sub>1/2</sub>, 3P<sub>1/2</sub></sub>
+0	0	3	4.886056752921187e6

@@ -1,0 +1,25 @@
+%A_ind
+%BeamTransitRatePerS	DetuningHz1	E0SI11Im	E0SI11Re	LaserWidthHz1	VccRatePerS
+%7	4	4
+%coefficients
+%1	BeamTransitRatePerS	VccRatePerS	6.283185307179586 * DetuningHz1	E0SI11Im	E0SI11Re	6.283185307179586 * LaserWidthHz1
+%Density matrix (range)
+%ρ<sub>Re, 3S<sub>1/2</sub>, 3S<sub>1/2</sub></sub>	ρ<sub>Re, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Im, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Re, 3P<sub>1/2</sub>, 3P<sub>1/2</sub></sub>
+%Density matrix (source)
+%ρ<sub>Re, 3S<sub>1/2</sub>, 3S<sub>1/2</sub></sub>	ρ<sub>Re, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Im, 3S<sub>1/2</sub>, 3P<sub>1/2</sub></sub>	ρ<sub>Re, 3P<sub>1/2</sub>, 3P<sub>1/2</sub></sub>
+0	0	3	6.14e7
+0	1	1	-3.07e7
+0	2	2	-3.07e7
+0	3	3	-6.14e7
+1	0	0	-1.
+1	1	1	-1.
+1	2	2	-1.
+1	3	3	-1.
+2	0	0	-1.
+2	1	1	-1.
+2	2	2	-1.
+2	3	3	-1.
+3	1	2	1.
+3	2	1	-1.
+6	1	1	-0.5
+6	2	2	-0.5
