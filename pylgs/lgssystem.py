@@ -19,6 +19,7 @@ from fastcore.meta import patch, delegates
 import numpy as np
 import xrscipy.integrate as xsi
 from xarray import DataArray
+import scipy.sparse as sps
 import pymor
 from pymor.parameters.base import ParametricObject, Parameters
 from pymor.vectorarrays.interface import VectorArray
@@ -55,13 +56,20 @@ from scipy.sparse.linalg import LinearOperator, gcrotmk, spilu
 from pymor.solvers.interface import Solver
 from pymor.core.exceptions import InversionError
 
-# %% ../nbs/api/lgssystem.ipynb #a1dd7fc3
+# %% ../nbs/api/lgssystem.ipynb #8a9b5959
+import os
+from concurrent.futures import ThreadPoolExecutor
+
+def _factor_block(args):
+    block, drop_tol, fill_factor, drop_rule, permc_spec = args
+    return spilu(block, drop_tol=drop_tol, fill_factor=fill_factor,
+                 drop_rule=drop_rule, permc_spec=permc_spec)
+
 class ScipyGCROTMKSpILUSolver(Solver):
 
-    # @defaults('tol', 'maxiter', 'spilu_drop_tol', 'spilu_fill_factor', 'spilu_drop_rule', 'spilu_permc_spec')
-    # @defaults('check_finite')
     def __init__(self, check_finite=None, atol=0., rtol=1e-5, maxiter=1000, gcrotmk_m=20,
-                 spilu_drop_tol=1e-4, spilu_fill_factor=20, spilu_drop_rule=None, spilu_permc_spec='COLAMD', preconditioner=None, preconditioner_block_size=None):
+                 spilu_drop_tol=1e-4, spilu_fill_factor=20, spilu_drop_rule=None, spilu_permc_spec='COLAMD',
+                 preconditioner=None, preconditioner_block_size=None, n_workers=None):
         super().__init__()
         self.__auto_init(locals())
 
@@ -71,18 +79,27 @@ class ScipyGCROTMKSpILUSolver(Solver):
         precond = to_matrix(self.preconditioner.assemble(mu)).tocsc() if self.preconditioner else matrix
         block_size = self.preconditioner_block_size or precond.shape[0]
         n_blocks = precond.shape[0] // block_size
-            
+
         V = V.to_numpy()
         initial_guess = initial_guess.to_numpy() if initial_guess is not None else None
         promoted_type = np.promote_types(matrix.dtype, V.dtype)
+        tic = clock()
+        blocks = [precond[i:i+block_size, i:i+block_size] for i in range(0, precond.shape[0], block_size)]
+        logger.info(f'{n_blocks} preconditioner blocks of size {block_size} and type {blocks[0].dtype} created in {clock() - tic:.2f} seconds')
 
-        logger.info(f'Solving {V.shape[1]} linear systems of size {matrix.shape[0]} with block size {block_size} and {n_blocks} blocks using gcrotmk (m={self.gcrotmk_m}) with spilu (drop_tol={self.spilu_drop_tol}, fill_factor={self.spilu_fill_factor}) preconditioner')
+        logger.info(f'Solving {V.shape[1]} linear systems of size {matrix.shape[0]} using gcrotmk (m={self.gcrotmk_m}) with spilu (drop_tol={self.spilu_drop_tol}, fill_factor={self.spilu_fill_factor}) preconditioner')
 
         tic = clock()
         R = np.empty((matrix.shape[1], V.shape[1]), dtype=promoted_type, order='F')
-        ilu = [spilu(precond[i:i+block_size, i:i+block_size], drop_tol=self.spilu_drop_tol, fill_factor=self.spilu_fill_factor,
-            drop_rule=self.spilu_drop_rule, permc_spec=self.spilu_permc_spec) for i in range(0, precond.shape[0], block_size)]
-        
+
+        n_workers = self.n_workers or os.cpu_count()
+        with ThreadPoolExecutor(max_workers=n_workers) as ex:
+            ilu = list(ex.map(
+                _factor_block,
+                [(b, self.spilu_drop_tol, self.spilu_fill_factor, self.spilu_drop_rule, self.spilu_permc_spec)
+                 for b in blocks]
+            ))
+
         logger.info(f'Preconditioner setup completed in {clock() - tic:.2f} seconds')
 
         n_solves = 0
@@ -96,8 +113,8 @@ class ScipyGCROTMKSpILUSolver(Solver):
             nonlocal n_solves
             n_solves += 1
             return result.reshape(-1)
-        
-        precond = LinearOperator(matrix.shape, ilu_block_solve)
+
+        precond_op = LinearOperator(matrix.shape, ilu_block_solve)
 
         def callback(xk):
             nonlocal n_iterations
@@ -108,7 +125,7 @@ class ScipyGCROTMKSpILUSolver(Solver):
             n_iterations = 0
             n_solves = 0
             R[:, i], info = gcrotmk(matrix, V[:, i], initial_guess[:, i] if initial_guess is not None else None,
-                                     atol=self.atol, rtol=self.rtol, maxiter=self.maxiter, M=precond, m=self.gcrotmk_m, callback=callback)
+                                     atol=self.atol, rtol=self.rtol, maxiter=self.maxiter, M=precond_op, m=self.gcrotmk_m, callback=callback)
             if info != 0:
                 if info > 0:
                     raise InversionError(f'gcrotmk failed to converge after {info} iterations')
