@@ -116,11 +116,19 @@ def _operator_html_node(op:Operator, level:int=0, opened:bool=False) -> str:
 def operator_html_tree(op:Operator, opened:bool=False) -> str:
     style = """
     <style>
+        .operator-group,
+        .operator {
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
         .operator-group summary {
-            list-style: none;
+            list-style: none !important;
             display: flex;
             gap: 0.25em;
             align-items: start;
+            margin: 0 !important;
+            padding: 0 !important;
             cursor: pointer;
         }
         .operator-group summary::before {
@@ -145,9 +153,7 @@ def operator_html_tree(op:Operator, opened:bool=False) -> str:
             display: flex;
             gap: .4em;
             align-items: center;
-            padding: 0px;
-            margin-left: -2em;
-            margin-top: .25em;
+            margin-top: .25em !important;
         }
         .operator-group > li {
             list-style-type: none;
@@ -156,10 +162,7 @@ def operator_html_tree(op:Operator, opened:bool=False) -> str:
             padding: .25em;
         }
         .operator {
-            margin: 0;
-            padding: 0;
-            margin-top: -.2em;
-            margin-left: -2em;
+            margin-top: -.2em !important;
         }
         .operator > li {
             list-style-type: none;
@@ -170,6 +173,7 @@ def operator_html_tree(op:Operator, opened:bool=False) -> str:
     </style>
     """
     return style + f'<ul class="operator-group operator-group-odd">{_operator_html_node(op, opened=opened)}</ul>'
+
 
 # %% ../../nbs/api/pymor/operators.ipynb #e4efa573-d6f2-4b01-bbcd-581d850fe9f0
 @patch
