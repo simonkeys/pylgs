@@ -255,6 +255,7 @@ populationOperator[atomicSystem_, crits_] := DMVariables[atomicSystem] /. ({Alte
 (* ::Input::Initialization:: *)
 generateAtomicSystem[states_, pumpTransitions_, stateLabelFunction_,quantumNumbers_,neglectedElements_]:= Module[{dataSI, stateLabels, interactionStates, systemParameters,toyAtomicSystem,groundStateLabels,excitedStateLabels,atomicSystem,pumpTransitionsNoHF,nonPumpCoherences},
 dataSI = atomicData[states, stateLabelFunction] /. SIUnits;
+dataSI=Append[dataSI,_HyperfineB->0];
 stateLabels = stateLabelFunction /@ states;
 interactionStates = Or @@ Union@Flatten[List @@@ pumpTransitions, 1] /. Thread[stateLabels -> Thread[StateLabel == stateLabels]];systemParameters = Flatten@{quantumNumbers, Parity, Energy, NaturalWidth, BranchingRatio};toyAtomicSystem = DeleteCases[AtomicSystem[states, systemParameters, StateLabels -> stateLabelFunction, DropInexactValues -> True], BranchingRatio[_]->1, \[Infinity]];groundStateLabels = StateLabel@GroundStates@toyAtomicSystem;excitedStateLabels = StateLabel@ExcitedStates@toyAtomicSystem;atomicSystem = Sublevels[toyAtomicSystem];pumpTransitionsNoHF = Map[Prepend[StateLabel@SelectState[atomicSystem, #] /. Thread[stateLabels -> Transpose@{stateLabels, states}], #]&, pumpTransitions, {2}];nonPumpCoherences = !interactionStates && StateLabel != StateLabel';
     SetOptions[DensityMatrix, TimeDependence -> False, ComplexExpandVariables -> Subscript, NeglectedElements -> nonPumpCoherences || neglectedElements];
@@ -438,9 +439,10 @@ generateMatrices[atomicSystem_, experimentalSystem_, stateLabels_, groundStateLa
         Append[B1, {dmRange, {"none", {"none"}}}], 
         Append[Fl1, {{"Transition",  decays[states, stateLabelFunction]},  dmSource}],
         fluorescenceTensorMatrix, 
-        resonanceDetunings[atomicSystem, pumpTransitions] /. dataSI /. SIUnits,
-        naturalWidths[pumpTransitionsNoHF], substituteNumericalParameters@dopplerWidths[pumpTransitionsNoHF], 
-        substituteNumericalParameters@shiftedTransitionFrequencies[atomicSystem, pumpTransitionsNoHF], 
+        (*resonanceDetunings[atomicSystem, pumpTransitions] /. dataSI /. SIUnits,*)
+        naturalWidths[pumpTransitionsNoHF], 
+        substituteNumericalParameters@dopplerWidths[pumpTransitionsNoHF], 
+        (*substituteNumericalParameters@shiftedTransitionFrequencies[atomicSystem, pumpTransitionsNoHF], *)
         vars, 
         dataSI, 
         pumpTransitions, 
@@ -463,7 +465,7 @@ generateMatrices[atomicSystem_, experimentalSystem_, stateLabels_, groundStateLa
 $LGSSystemFields = {"DecayTransitions", "TransitionWavelengths", "NVariables", 
 	"A_ind", "A_dop", "A_rec", 
 	"A_vcc", "A21Recoil", "b", "Flux",
-    "FluorescenceTensorMatrix", "ResonanceDetunings", "NaturalWidths", "DopplerWidths", "ShiftedTransitionFrequencies", "DMVariables", "AtomicData", "PumpTransitions",
+    "FluorescenceTensorMatrix", (*"ResonanceDetunings",*) "NaturalWidths", "DopplerWidths", (*"ShiftedTransitionFrequencies",*) "DMVariables", "AtomicData", "PumpTransitions",
     "StateLabels", "AtomicSystem", 
     "LevelDiagramToy", "LevelDiagramToScale", "LevelDiagramNotToScale",
     "LevelPopulations", "HFStatePopulations", "InputParameters", "TotalPopulationOperator", "LevelPopulationOperator", 
