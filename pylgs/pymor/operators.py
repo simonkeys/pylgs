@@ -620,19 +620,20 @@ def _read_sparse_dataarray(
 )->DataArray:
     if not Path(file_name).suffix: file_name = Path(file_name).with_suffix('.mtxn')
     header = []
-    with open(file_name, "r") as reader:
+    with open(file_name, "r", encoding="utf-8-sig") as reader:
         while True:
             line = next(reader)
             if line[0] != "%": break
             header.append(line.strip('%\n '))
     matrix = pd.read_csv(
         file_name,
-        sep=r'\s+',
+        sep=r"\s+",
         header=None,
         skiprows=len(header),
         index_col=None,
         engine="c",
-        comment='%'
+        comment="%",
+        encoding="utf-8-sig",
     )
     name = header[0]
     parameters = header[1].split('\t')
