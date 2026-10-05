@@ -278,15 +278,18 @@ class StationaryFloquetModel(StationaryModel):
         products=None,
         name=None,
         data=None,
-        solver=None,
-        preconditioner=None,
+        # solver=None,
+        # preconditioner=None,
     ):
         if n_operator is None: n_operator = n_vector - 1
+        solver = operator.solver
         operator = floquet_expand(expand(operator), n_operator, n_vector, mu=mu, t=t, nu=nu)
         if solver is not None:
-            if preconditioner is not None:
-                preconditioner = floquet_expand(expand(preconditioner), n_operator, n_vector, mu=mu, t=t, nu=nu)
-                solver = solver.with_(preconditioner=preconditioner)
+            if solver.preconditioner is not None:
+                prec_mat = solver.preconditioner.matrix
+                if prec_mat is not None:
+                    prec_mat = floquet_expand(expand(prec_mat), n_operator, n_vector, mu=mu, t=t, nu=nu)
+                    solver = solver.with_(preconditioner=solver.preconditioner.with_(matrix=prec_mat))
             operator = operator.with_(solver=solver)
         rhs = _kron_vector(fourier_space(n_vector)) * rhs
         super().__init__(
