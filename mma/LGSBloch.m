@@ -136,20 +136,6 @@ SelectDirectedTransitions[sys_, crit_] := Flatten@Pick[DirectSelfProduct[Rule, s
 transitionFrequency[state1_, state2_] := -Subtract@@Diagonal@WignerEckart[{state1, state2}, {Energy, 0, 0}] / (2\[Pi])
 
 
-resonanceDetunings[atomicSystem_, pumpTransitions_] := Module[{hfStateLabel, stretchedState, stretchedAtomicSystem, pumpSubsystems, transitionFrequencies, fLabels},
-	hfStateLabel = Row[{StateLabel@#, "(", F == F@#, ")"}]&;
-    stretchedState = If[AtomicSystemType@atomicSystem == "Toy", True, M == F];
-    stretchedAtomicSystem = SelectStates[atomicSystem, stretchedState];
-    pumpSubsystems = SelectDirectedTransitions[stretchedAtomicSystem, # && Abs[F - F'] <= 1]& /@ pumpTransitions;
-    transitionFrequencies = Apply[transitionFrequency, pumpSubsystems, {2}];
-    fLabels = Map[hfStateLabel, pumpSubsystems, {3}];
-    Thread[pumpTransitions -> MapThread[Rule, {fLabels, transitionFrequencies}, 2]] /. _Energy -> 0
-]
-
-
-shiftedTransitionFrequencies[atomicSystem_, pumpTransitionsNoHF_]  := -2 Pi (Flatten /@ (pumpTransitionsNoHF[[All, All, 1]] /. resonanceDetunings[atomicSystem, pumpTransitionsNoHF[[All, All, 1]]])[[All, All, 2]] - (DetuningHz /@ pumpTransitionsNoHF[[All, All, 1]]))/dopplerWidths[pumpTransitionsNoHF][[All, 2]] // Flatten;
-
-
 naturalWidths[pumpTransitionsNoHF_] := Thread[pumpTransitionsNoHF[[All, 2, 2]] -> (NaturalWidth /@ pumpTransitionsNoHF[[All, 2, 3]])] /. SIUnits
 
 
@@ -261,6 +247,20 @@ interactionStates = Or @@ Union@Flatten[List @@@ pumpTransitions, 1] /. Thread[s
     SetOptions[DensityMatrix, TimeDependence -> False, ComplexExpandVariables -> Subscript, NeglectedElements -> nonPumpCoherences || neglectedElements];
 {dataSI, stateLabels,toyAtomicSystem,groundStateLabels,excitedStateLabels,atomicSystem,pumpTransitionsNoHF}
 ]
+
+
+resonanceDetunings[atomicSystem_, pumpTransitions_] := Module[{(*hfStateLabel, stretchedState, stretchedAtomicSystem, pumpSubsystems, detunings, fLabels*)},
+	hfStateLabel = Row[{StateLabel@#, "(", F == F@#, ")"}]&;
+    stretchedState = If[AtomicSystemType@atomicSystem == "Toy", True, M == F];
+    stretchedAtomicSystem = SelectStates[atomicSystem, stretchedState];
+    pumpSubsystems = SelectDirectedTransitions[stretchedAtomicSystem, # && Abs[F - F'] <= 1]& /@ pumpTransitions;
+    detunings = Apply[transitionFrequency, pumpSubsystems, {2}] /. _Energy -> 0;
+    fLabels = Map[hfStateLabel, pumpSubsystems, {3}];
+    Thread[pumpTransitions -> Thread /@ MapThread[Rule, {fLabels, detunings}]]
+]
+
+
+shiftedTransitionFrequencies[atomicSystem_, pumpTransitionsNoHF_]  := -2 Pi (Flatten /@ (pumpTransitionsNoHF[[All, All, 1]] /. resonanceDetunings[atomicSystem, pumpTransitionsNoHF[[All, All, 1]]])[[All, All, 2]] - (DetuningHz /@ pumpTransitionsNoHF[[All, All, 1]]))/dopplerWidths[pumpTransitionsNoHF][[All, 2]] // Flatten;
 
 
 generateExperimentalSystem[pumpTransitions_, pumpTransitionsNoHF_, atomicSystem_] := Module[{opticalParameters, experimentalSystem},
