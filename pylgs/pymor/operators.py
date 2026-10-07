@@ -14,6 +14,7 @@ import importlib
 from numbers import Number
 import math
 from functools import reduce
+import json
 
 from fastcore.basics import patch
 from fastcore.meta import delegates
@@ -403,7 +404,11 @@ def apply(
         out = U.space.range_under(self).from_numpy(out, extended_coord_data=U.extended_coord_data)
     else:
         out = U.space.range_under(self).from_xarray(unlabel_dims(self.matrix.dot(U.array_labeled_as_source())))
-    if self.name != self.__class__.__name__: out.name = self.name
+    out.array.attrs.update(U.array.attrs)
+    if self.name != self.__class__.__name__: 
+        out.name = self.name
+        out.array.name = self.name
+    out.array.attrs.update(self.matrix.attrs)
     return out
 
 # %% ../../nbs/api/pymor/operators.ipynb #dae0a068-c60d-47f0-874d-e204df93c08e
@@ -533,9 +538,10 @@ class SumOperator(Operator):
     def assemble(self, mu=None): return self
 
     def apply(self, U, mu=None):
-        U = U.space.range_under(self).from_xarray(U.array.sum(self.source.dims).expand_dims('Sum'))
-        if self.name != self.__class__.__name__: U.name = self.name
-        return U
+        out = U.space.range_under(self).from_xarray(U.array.sum(self.source.dims).expand_dims('Sum'))
+        out.array.attrs.update(U.array.attrs)
+        if self.name != self.__class__.__name__: out.name = self.name
+        return out
 
     def __mul__(self, other):
         if isinstance(other, Operator):
@@ -635,12 +641,13 @@ def _read_sparse_dataarray(
         comment="%",
         encoding="utf-8-sig",
     )
-    name = header[0]
+    name, *attrs = header[0].split('\t')
+    if attrs: attrs = json.loads(attrs[0])
     parameters = header[1].split('\t')
     shape = [int(s) for s in header[2].split()]
     coords = {dim: index.split('\t') for dim, index in zip(header[3::2], header[4::2])}
     matrix = sparse([matrix.iloc[:, :-1].T, matrix.iloc[:, -1]], shape=shape)
-    return DataArray(matrix, coords, name=name, attrs={'parameters': parameters})
+    return DataArray(matrix, coords, name=name, attrs={'parameters': parameters, **(attrs or {})})
 
 # %% ../../nbs/api/pymor/operators.ipynb #5bac8509-f0df-4626-8adf-4008fdd12f28
 @patch(cls_method=True)
@@ -800,7 +807,9 @@ def apply(self:ProductOperator, U, mu=None):
     U = U.copy()
     for op in self.operators[::-1]:
         U = op.assemble(mu).apply(U)
-    return U.space.range_under(self).from_xarray(U.array)
+    out =  U.space.range_under(self).from_xarray(U.array)
+    out.array.attrs = U.array.attrs.copy()
+    return out
 
 # %% ../../nbs/api/pymor/operators.ipynb #489f0dcc-43b9-4727-aadd-c41392c3835e
 @patch(as_prop=True)

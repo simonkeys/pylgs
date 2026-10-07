@@ -7,7 +7,7 @@ Docs: https://simonkeys.github.io/pylgsapi/pymor/vectorarrays.html.md"""
 # %% auto #0
 __all__ = ['Lbl', 'unlabel_dims', 'default_coordinate', 'dataarray_coordinate_data', 'validate_coord_data', 'coord_data_shape',
            'make_coordinates', 'XarrayVectorSpace', 'transpose_like', 'XarrayVectorArrayImpl', 'XarrayVectorArray',
-           'plotly_dataarray']
+           'get_axis_label', 'plotly_dataarray']
 
 # %% ../../nbs/api/pymor/vectorarrays.ipynb #7a186e46
 from numbers import Number, Real
@@ -561,12 +561,14 @@ def __mul__(self:XarrayVectorArray, other):
             if self.coords.contain(other.coords):
                 out = self.space.from_xarray(self.array * other)
                 out.name = self.name
+                out.array.attrs = self.array.attrs.copy()
                 return out
             else:
                 raise ValueError("DataArray coordinates are not a subset of VectorArray coordinates.")
         case XarrayVectorArray(): 
             out = (self.space * other.space).from_xarray(self.array * other.array)
             out.name = self.name
+            out.array.attrs = self.array.attrs.copy()
             return out
         case Number():
             return type(self)(self.space, self.impl.scal_copy(other, self.ind))
@@ -683,6 +685,12 @@ def _format_slider_labels(fig, slider_label_precision=2):
     for step in fig.layout.sliders[0].steps:
         step.label = prefix_format(float(step.label), slider_label_precision)
 
+# %% ../../nbs/api/pymor/vectorarrays.ipynb #ec4474be
+def get_axis_label(da:DataArray):
+    name = getattr(da, 'long_name', '') or da.name or ''
+    unit = getattr(da, 'units', '')
+    return name + ((unit or '') and f' ({unit})')
+
 # %% ../../nbs/api/pymor/vectorarrays.ipynb #47d78ad4
 def plotly_dataarray(da:DataArray, slider_label_precision=2, **kwargs):
     """Visualize the data contained in the `XarrayVectorArray`.
@@ -692,7 +700,7 @@ def plotly_dataarray(da:DataArray, slider_label_precision=2, **kwargs):
     """
     da = da.copy()
     if np.any(np.iscomplex(da)): da = _reim(da)
-    if da.name is None: da = da.rename('Value')
+    da.name = get_axis_label(da) or 'Value'
     df = da.to_dataframe().reset_index()
     num = _numerical_dims(da)
     cat = _categorical_dims(da)
