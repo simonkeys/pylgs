@@ -139,7 +139,7 @@ class ScipyGCROTMKSolver(Solver):
         initial_guess = initial_guess.to_numpy() if initial_guess is not None else None
         promoted_type = np.promote_types(matrix.dtype, V.dtype)
         logger.info(f'Operator setup completed in {clock() - tick:.2f} seconds')
-        logger.info(f'Solving {V.shape[1]} linear systems of size {matrix.shape[0]} using gcrotmk (m={self.gcrotmk_m})')
+        logger.info(f'Solving {V.shape[1]} linear systems of size {matrix.shape[0]} using gcrotmk (m={self.gcrotmk_m}, rtol={self.rtol}, atol={self.atol})')
 
         tic = clock()
         precond_op = self.preconditioner.operator(mu) if self.preconditioner is not None else None
@@ -333,7 +333,7 @@ def stationary_model(
         # solver = {'preconditioner': -self._reaction(vg), 'preconditioner_block_size': self.Flux.source.size} | solver
         default_preconditioner = dict(spilu_drop_tol=1e-3, spilu_fill_factor=20, spilu_permc_spec='COLAMD')
         preconditioner = BlockSpILUPreconditioner(-self._reaction(vg), self.Flux.source.size, **(default_preconditioner | solver.get('preconditioner', {})))
-        default_solver = dict(rtol=1e-6, atol=0)
+        default_solver = dict(rtol=1e-2, atol=0)
         solver = ScipyGCROTMKSolver(**(default_solver | solver | {'preconditioner': preconditioner}))
     return StationaryModel(
         self.operator(vg).with_(solver=solver),
@@ -546,7 +546,7 @@ def stationary_floquet_model(
     if solver is None: solver = {}
     if isinstance(solver, dict):
         default_solver = dict(
-            rtol=1e-6,
+            rtol=1e-2,
             atol=0,
             preconditioner=BlockSpILUPreconditioner(-self._reaction(vg), self.Flux.source.size, spilu_drop_tol=1e-3, spilu_fill_factor=20, spilu_permc_spec='COLAMD')
         )
