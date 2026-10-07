@@ -72,17 +72,10 @@ from concurrent.futures import ThreadPoolExecutor
 
 class BlockSpILUPreconditioner(Solver):
     def __init__(self, matrix=None, block_size=None, spilu_drop_tol=1e-4, spilu_fill_factor=20, spilu_drop_rule=None, spilu_permc_spec='COLAMD', n_workers=None, single_precision=False):
-        self.spilu_drop_tol = spilu_drop_tol
-        self.spilu_fill_factor = spilu_fill_factor
-        self.spilu_drop_rule = spilu_drop_rule
-        self.spilu_permc_spec = spilu_permc_spec
-        self.n_workers = n_workers
-        self.matrix = matrix
-        self.block_size = block_size
+        n_workers = ifnone(n_workers, 4)
         self._ilu = None
-        self.single_precision = single_precision
-        if self.n_workers is None:
-            self.n_workers = 4
+        self.spilu = partial(spilu, drop_tol=spilu_drop_tol, fill_factor=spilu_fill_factor, drop_rule=spilu_drop_rule, permc_spec=spilu_permc_spec)
+        self.__auto_init(locals())
 
     def factorize(self, mu):
         if self.matrix is None or self.block_size is None:
@@ -98,20 +91,16 @@ class BlockSpILUPreconditioner(Solver):
         new_blocks = [i for i in range(len(blocks)) if self._ilu[i] is None]
         tick = clock()
         if self.n_workers == 1:
-            new_ilus = [spilu(blocks[i], drop_tol=self.spilu_drop_tol, fill_factor=self.spilu_fill_factor, drop_rule=self.spilu_drop_rule, permc_spec=self.spilu_permc_spec) for i in new_blocks]
+            new_ilus = [self.spilu(blocks[i]) for i in new_blocks]
         else:
             with ThreadPoolExecutor(max_workers=self.n_workers) as ex:
-                new_ilus = list(ex.map(
-                    partial(spilu, drop_tol=self.spilu_drop_tol, fill_factor=self.spilu_fill_factor, drop_rule=self.spilu_drop_rule, permc_spec=self.spilu_permc_spec),
-                    [blocks[i] for i in new_blocks]
-                ))
+                new_ilus = list(ex.map(self.spilu, [blocks[i] for i in new_blocks]))
         logger.info(f'Factoring {len(new_blocks)} new blocks out of {len(blocks)} took {clock()-tick:.2f} seconds')
         for idx, ilu in zip(new_blocks, new_ilus):
             self._ilu[idx] = ilu
 
     def operator(self, mu):
         self.factorize(mu)
-        ilu = self._ilu
         self._n_solves = 0
 
         def ilu_block_solve(v):
@@ -120,12 +109,12 @@ class BlockSpILUPreconditioner(Solver):
                 single_type = np.complex64 if np.iscomplexobj(v) else np.float32
                 v = v.astype(single_type, casting='unsafe')
             if self.n_workers == 1:
-                result = np.array([ilu[i].solve(v[i]) for i in range(self._n_blocks)])
+                result = np.array([self._ilu[i].solve(v[i]) for i in range(self._n_blocks)])
             else:
                 with ThreadPoolExecutor(max_workers=self.n_workers) as ex:
-                    result = np.array(list(ex.map(lambda i: ilu[i].solve(v[i]), range(self._n_blocks))))
+                    result = np.array(list(ex.map(lambda i: self._ilu[i].solve(v[i]), range(self._n_blocks))))
             self._n_solves += 1
-            return result.reshape(-1)
+            return result
         
         logger.info(f'{self._n_blocks} preconditioner blocks of size {self.block_size}, type {self._ilu[0].L.dtype}, and density {self._blocks[0].nnz / (self.block_size**2):.2e}')
         return LinearOperator((self._n_blocks*self.block_size, self._n_blocks*self.block_size), ilu_block_solve)
