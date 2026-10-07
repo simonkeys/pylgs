@@ -515,8 +515,8 @@ ExportLGSSystem[dir_, system_, pumpTransitions_, opts : OptionsPattern[]] := Mod
 	lgs = lgs /.{VGCenter[1] -> 1, VGInverseWidth[1]->1, VGDensity[1] -> 1};
 	(*lgs = Append[Most@lgs /. VGWidth[1] -> 1/VGInverseWidth[1], Last@lgs /. VGWidth[1] -> VGInverseWidth[1]];*)
 	Join[
-		ExportDecomposedMatrix[dir, #, standardizeNotation[lgs, lgs@#]]& /@ {
-			"A_ind", "A_dop", "A_rec", "A_vcc", "b", "Flux"
+		ExportDecomposedMatrix[dir, #, standardizeNotation[lgs, lgs@#[[1]]]]& /@ {
+			{"A_ind"}, {"A_dop"}, {"A_rec"}, {"A_vcc"}, {"b"}, {"Flux", "{\"long_name\": \"Flux\", \"units\": \"photon/atom/s/sr\"}"}
 		},
 		{
 			Export[FileNameJoin[{dir, "LevelDiagramToy.svg"}], lgs["LevelDiagramToy"]], 
