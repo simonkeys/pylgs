@@ -487,23 +487,23 @@ texNumberedList[expr_] := StringRiffle["1. $"<>ToString@#<>"$"&/@TeXForm/@expr, 
 
 LGSSystemInfo[lgs_] := StringRiffle[
 	{
-		"#### Atomic levels",
+		"**Atomic levels**\n",
 		texList@lgs["StateLabels"],
-		"#### Pump transitions",
+		"\n**Pump transitions**\n",
 		texNumberedList@lgs["PumpTransitions"],
-		"#### Transition wavelengths",
+		"\n**Transition wavelengths**\n",
 		StringRiffle["- $"<>ToString@TeXForm@#1<>"$: " <> ToString@#2 <> " nm"& @@@lgs["TransitionWavelengths"], "\n"],
-		"#### Substructure",
+		"\n**Substructure**\n",
 		"- Hyperfine structure " <> If[hasHyperfineStructure@lgs["AtomicSystem"], "included", "neglected"],
 		"- Zeeman structure " <> If[hasZeemanStructure@lgs["AtomicSystem"], "included", "neglected"],
 		"- " <> ToString[Length@lgs["AtomicSystem"]] <> " total sublevels",
-		"#### Density matrix elements",
+		"\n**Density matrix elements**\n",
 		"- All populations included\n" <>
 		If[hasZeemanStructure@lgs["AtomicSystem"], "- All Zeeman coherences (between same level and same F) included\n", ""] <>
 		If[hasHyperfineStructure@lgs["AtomicSystem"], "- All hyperfine coherences (between same level and different F) neglected\n", ""] <>
 		"- Optical coherences (between different levels) included for pump transitions only",
 		"- " <> ToString@lgs["NVariables"] <> " total density matrix elements",
-		"#### Input parameters",
+		"\n**Input parameters**\n",
 		StringRiffle["- " <> ToString@# &/@ DeleteCases[standardizeNotation[lgs, lgs["InputParameters"]], 1], "\n"]
 	},
 	"\n"
