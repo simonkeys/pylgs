@@ -1,5 +1,6 @@
 from .imports import *
 from .utilities import *
+from .pymor.solvers import *
 from .pymor.timestepping import *
 from .pymor.operators import *
 from .pymor.vectorarrays import *
