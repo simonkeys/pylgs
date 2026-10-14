@@ -441,7 +441,7 @@ generateMatrices[atomicSystem_, experimentalSystem_, stateLabels_, groundStateLa
         fluorescenceTensorMatrix, 
         (*resonanceDetunings[atomicSystem, pumpTransitions] /. dataSI /. SIUnits,*)
         naturalWidths[pumpTransitionsNoHF], 
-        substituteNumericalParameters@dopplerWidths[pumpTransitionsNoHF], 
+        dopplerWidths[pumpTransitionsNoHF], 
         (*substituteNumericalParameters@shiftedTransitionFrequencies[atomicSystem, pumpTransitionsNoHF], *)
         vars, 
         dataSI, 
