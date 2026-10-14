@@ -9,3 +9,5 @@ pylgs/
 pylgs.egg-info/
 .gitattributes
 .gitconfig
+.vscode/
+.ipynb_checkpoints/
