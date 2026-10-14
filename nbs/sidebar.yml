@@ -6,6 +6,7 @@ website:
         contents:
           - tutorials/sodium_lgs.ipynb
           - tutorials/polychromatic_lgs.ipynb
+          - tutorials/Na589+569_lgs.ipynb
           - tutorials/chirped_lgs.ipynb
           - tutorials/technical_background.ipynb
         href: tutorials/index.qmd
