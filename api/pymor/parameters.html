@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,10 +10,16 @@
 
 <title>pymor.parameters – pylgs</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -68,15 +74,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-f245066ca199b7326ac6b360085ddf3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6191c8c4c757b97205a8995aa6c30869.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -122,8 +127,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">pylgs</span>
     </a>
@@ -148,10 +151,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="../../index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -172,13 +171,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../tutorials/sodium_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sodium LGS</span></a>
+ <span class="menu-text">Sodium D2 LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../tutorials/polychromatic_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Polychromatic LGS</span></a>
+ <span class="menu-text">Sodium 330 nm LGS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/na589+569_lgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sodium 589/569 nm LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -334,13 +339,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#expressionparameterfunctional.__eq__" id="toc-expressionparameterfunctional.__eq__" class="nav-link active" data-scroll-target="#expressionparameterfunctional.__eq__">ExpressionParameterFunctional.__eq__</a></li>
-  <li><a href="#parameterfunctional.__str__" id="toc-parameterfunctional.__str__" class="nav-link" data-scroll-target="#parameterfunctional.__str__">ParameterFunctional.__str__</a></li>
-  <li><a href="#simplify-functionals" id="toc-simplify-functionals" class="nav-link" data-scroll-target="#simplify-functionals">Simplify functionals</a>
-  <ul class="collapse">
-  <li><a href="#simplifyfunctionalrules" id="toc-simplifyfunctionalrules" class="nav-link" data-scroll-target="#simplifyfunctionalrules">SimplifyFunctionalRules</a></li>
-  <li><a href="#simplify_functionals" id="toc-simplify_functionals" class="nav-link" data-scroll-target="#simplify_functionals">simplify_functionals</a></li>
-  </ul></li>
+  <li><a href="#simplify-functionals" id="toc-simplify-functionals" class="nav-link active" data-scroll-target="#simplify-functionals">Simplify functionals</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/simonkeys/pylgs/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -372,15 +371,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div id="f04f67a6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.843176+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.880827+00:00&quot;,&quot;total&quot;:0.037659666006220505}}" data-execution_count="4">
 <hr>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/pymor/parameters.py#L23" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="expressionparameterfunctional.__eq__" class="level3">
 <h3 class="anchored" data-anchor-id="expressionparameterfunctional.__eq__">ExpressionParameterFunctional.__eq__</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__eq__</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    other</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__eq__</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    other</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Return self==value.</em></p>
+</section>
+</div>
 <div id="ea580b96-6f85-42da-ac3f-75958925cb55" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>functional <span class="op">=</span> ProductParameterFunctional((ExpressionParameterFunctional(<span class="st">'3890540.14*sqrt(IntensitySI1)'</span>, {<span class="st">'IntensitySI1'</span>: <span class="dv">1</span>}), <span class="op">-</span><span class="fl">1.0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -390,43 +391,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>True</code></pre>
 </div>
 </div>
+<div id="00adb007" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.883326+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.885546+00:00&quot;,&quot;total&quot;:0.00222245798795484}}" data-execution_count="6">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/pymor/parameters.py#L32" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="parameterfunctional.__str__" class="level3">
 <h3 class="anchored" data-anchor-id="parameterfunctional.__str__">ParameterFunctional.__str__</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__str__</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__str__</span>():</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Return str(self).</em></p>
+</section>
+</div>
 <div id="b5c750fe-c062-4d78-9d59-0e173f2eee57" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(functional)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>'f(IntensitySI1)'</code></pre>
 </div>
 </div>
-</section>
 <section id="simplify-functionals" class="level2">
 <h2 class="anchored" data-anchor-id="simplify-functionals">Simplify functionals</h2>
+<div id="f9074f34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.890273+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.894683+00:00&quot;,&quot;total&quot;:0.004410416993778199}}" data-execution_count="8">
 <hr>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/pymor/parameters.py#L36" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="simplifyfunctionalrules" class="level3">
 <h3 class="anchored" data-anchor-id="simplifyfunctionalrules">SimplifyFunctionalRules</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SimplifyFunctionalRules(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SimplifyFunctionalRules():</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>|RuleTable| for the :func:<code>expand</code> algorithm.</em></p>
-<hr>
 </section>
+</div>
+<div id="24c3cdbe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.911968+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.918433+00:00&quot;,&quot;total&quot;:0.006468500010669231}}" data-execution_count="10">
+<hr>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/pymor/parameters.py#L80" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="simplify_functionals" class="level3">
 <h3 class="anchored" data-anchor-id="simplify_functionals">simplify_functionals</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simplify_functionals(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    obj</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simplify_functionals(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    obj</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
 <div id="94a0406b-c387-4e69-8572-9e52ad564208" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>simplify_functionals(functional)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -435,7 +435,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

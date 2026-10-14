@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,10 +10,16 @@
 
 <title>pyLGS – pylgs</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -68,15 +74,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f245066ca199b7326ac6b360085ddf3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6191c8c4c757b97205a8995aa6c30869.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,8 +110,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -153,8 +172,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">pylgs</span>
     </a>
@@ -179,10 +196,6 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -203,13 +216,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tutorials/sodium_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sodium LGS</span></a>
+ <span class="menu-text">Sodium D2 LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tutorials/polychromatic_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Polychromatic LGS</span></a>
+ <span class="menu-text">Sodium 330 nm LGS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/na589+569_lgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sodium 589/569 nm LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -404,32 +423,32 @@ window.Quarto = {
 <p>pyLGS performs simulations of the atomic physics of cw, modulated, and pulsed laser guide stars. The effects of the full atomic structure, atomic velocity distribution, one or multiple pump fields, the geomagnetic field, velocity-changing and spin-randomizing collisions, and atomic recoil are all taken into account.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>pyLGS uses the CVODE library from the <a href="https://computing.llnl.gov/projects/sundials">SUNDIALS package</a>, with <a href="https://scikits-odes.readthedocs.io/en/latest/installation.html">scikits.odes</a> as the Python interface. Before installing pyLGS you may need to install SUNDIALS and the scikits.odes dependencies. On Ubuntu/Debian-based distributions (or on Windows using WSL) this can be done with <code>apt-get</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install python3-dev gcc gfortran libsundials-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(Note that SUNDIALS version 6 or later is required – this is supplied by Ubuntu 24.04/Debian 12 and later.)</p>
-<p>On macOS SUNDIALS can be installed using conda:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install conda-forge::sundials</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(Note that homebrew also has a SUNDIALS package, but it doesn’t install the header files that scikits.odes requires.)</p>
-<p>Once the above dependencies are installed, pyLGS can be installed with <code>pip</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pylgs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>pyLGS can be installed with <code>pip</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pylgs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="how-to-use" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use">How to use</h2>
 <p>Import the package:</p>
-<div id="cell-14" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylgs.lgssystem <span class="im">import</span> LGSSystem</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f2b9bb04" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylgs.lgssystem <span class="im">import</span> LGSSystem</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>List available atomic systems for an LGS model:</p>
-<div id="cell-16" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.builtins()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>['Na330', 'NaD1', 'NaD1_Toy', 'NaD2', 'NaD2_Repump']</code></pre>
+<div id="589df486" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.builtins()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>['Na330',
+ 'Na589+569',
+ 'Na589+569+repump',
+ 'NaD1',
+ 'NaD1_Toy',
+ 'NaD2',
+ 'NaD2_Repump']</code></pre>
 </div>
 </div>
 <p>Show a level diagram for one of the atomic systems:</p>
-<div id="cell-18" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.diagram(<span class="st">"NaD2_Repump"</span>, <span class="st">"ToScale"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div id="be8a4882" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.diagram(<span class="st">"NaD2_Repump"</span>, <span class="st">"ToScale"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img"></p>
@@ -438,114 +457,65 @@ window.Quarto = {
 </div>
 </div>
 <p>Print some information about the system:</p>
-<div id="cell-20" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.info(<span class="st">"NaD2_Repump"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="6">
-<section id="atomic-levels" class="level4">
+<div id="9f4e445f" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>LGSSystem.info(<span class="st">"NaD2_Repump"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="atomic-levels" class="level4 cell-output cell-output-display cell-output-markdown">
 <h4 class="anchored" data-anchor-id="atomic-levels">Atomic levels</h4>
-<p><span class="math inline">\(\text{3S} _{1/2}\)</span>, <span class="math inline">\(\text{3P} _{3/2}\)</span></p>
+<p><span class="math inline">\text{3S}_{\frac{1}{2}}</span>, <span class="math inline">\text{3P}_{\frac{3}{2}}</span> #### Pump transitions 1. <span class="math inline">\text{3S}_{\frac{1}{2}}\land F=1\to \text{3P}_{\frac{3}{2}}</span> 1. <span class="math inline">\text{3S}_{\frac{1}{2}}\land F=2\to \text{3P}_{\frac{3}{2}}</span> #### Transition wavelengths - <span class="math inline">\text{3P}_{\frac{3}{2}}\to \text{3S}_{\frac{1}{2}}</span>: 589.158 nm #### Substructure - Hyperfine structure included - Zeeman structure included - 24 total sublevels #### Density matrix elements - All populations included - All Zeeman coherences (between same level and same F) included - All hyperfine coherences (between same level and different F) neglected - Optical coherences (between different levels) included for pump transitions only - 374 total density matrix elements #### Input parameters - BeamTransitRatePerS - BFieldG - MagneticAzimuthDegrees - MagneticZenithDegrees - RecoilParameter - SDampingCollisionRatePerS - TemperatureK - VccRatePerS - DetuningHz1 - DetuningHz2 - EllipticityDegrees1 - EllipticityDegrees2 - IntensitySI1 - IntensitySI2 - LaserWidthHz1 - LaserWidthHz2 - PolarizationAngleDegrees1 - PolarizationAngleDegrees2</p>
 </section>
-<section id="pump-transitions" class="level4">
-<h4 class="anchored" data-anchor-id="pump-transitions">Pump transitions</h4>
-<ol type="1">
-<li><span class="math inline">\(\text{3S} _{1/2}\land F=1\to \text{3P} _{3/2}\)</span></li>
-<li><span class="math inline">\(\text{3S} _{1/2}\land F=2\to \text{3P} _{3/2}\)</span></li>
-</ol>
-</section>
-<section id="transition-wavelengths" class="level4">
-<h4 class="anchored" data-anchor-id="transition-wavelengths">Transition wavelengths</h4>
-<ul>
-<li><span class="math inline">\(\text{3P} _{3/2}\to \text{3S} _{1/2}\)</span>: 589.158 nm</li>
-</ul>
-</section>
-<section id="substructure" class="level4">
-<h4 class="anchored" data-anchor-id="substructure">Substructure</h4>
-<ul>
-<li>Hyperfine structure included</li>
-<li>Zeeman structure included</li>
-<li>24 total sublevels</li>
-</ul>
-</section>
-<section id="density-matrix-elements" class="level4">
-<h4 class="anchored" data-anchor-id="density-matrix-elements">Density matrix elements</h4>
-<ul>
-<li>All populations included</li>
-<li>All Zeeman coherences (between same level and same F) included</li>
-<li>All hyperfine coherences (between same level and different F) neglected</li>
-<li>Optical coherences (between different levels) included for pump transitions only</li>
-<li>374 total density matrix elements</li>
-</ul>
-</section>
-<section id="input-parameters" class="level4">
-<h4 class="anchored" data-anchor-id="input-parameters">Input parameters</h4>
-<ul>
-<li>BeamTransitRatePerS</li>
-<li>BFieldG</li>
-<li>MagneticAzimuthDegrees</li>
-<li>MagneticZenithDegrees</li>
-<li>RecoilParameter</li>
-<li>SDampingCollisionRatePerS</li>
-<li>TemperatureK</li>
-<li>VccRatePerS</li>
-<li>DetuningHz1</li>
-<li>DetuningHz2</li>
-<li>EllipticityDegrees1</li>
-<li>EllipticityDegrees2</li>
-<li>IntensitySI1</li>
-<li>IntensitySI2</li>
-<li>LaserWidthHz1</li>
-<li>LaserWidthHz2</li>
-<li>PolarizationAngleDegrees1</li>
-<li>PolarizationAngleDegrees2</li>
-</ul>
-</section>
-</div>
 </div>
 <p>Load the atomic system and set values for parameters that will not be varied:</p>
-<div id="cell-22" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lgs <span class="op">=</span> LGSSystem(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NaD2_Repump'</span>, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'EllipticityDegrees1'</span>: <span class="fl">45.</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'PolarizationAngleDegrees1'</span>: <span class="dv">0</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'DetuningHz1'</span>: <span class="fl">1.0832e9</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'LaserWidthHz1'</span>: <span class="fl">10.0e6</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'EllipticityDegrees2'</span>: <span class="fl">45.</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'PolarizationAngleDegrees2'</span>: <span class="dv">0</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'DetuningHz2'</span>: <span class="op">-</span><span class="fl">6.268e8</span> <span class="op">+</span> <span class="fl">1.e8</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'LaserWidthHz2'</span>: <span class="fl">10.0e6</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'MagneticZenithDegrees'</span>: <span class="fl">45.</span>,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'MagneticAzimuthDegrees'</span>: <span class="fl">45.</span>,</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'SDampingCollisionRatePerS'</span>: <span class="fl">4081.63</span>,</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'BeamTransitRatePerS'</span>: <span class="fl">131.944</span>,</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'VccRatePerS'</span>: <span class="fl">28571.</span>,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'TemperatureK'</span>: <span class="fl">185.</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'RecoilParameter'</span>: <span class="dv">1</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="925ff8ef" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lgs <span class="op">=</span> LGSSystem(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NaD2_Repump'</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'EllipticityDegrees1'</span>: <span class="fl">45.</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'PolarizationAngleDegrees1'</span>: <span class="dv">0</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'DetuningHz1'</span>: <span class="fl">1.0832e9</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'LaserWidthHz1'</span>: <span class="fl">10.0e6</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'EllipticityDegrees2'</span>: <span class="fl">45.</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'PolarizationAngleDegrees2'</span>: <span class="dv">0</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'DetuningHz2'</span>: <span class="op">-</span><span class="fl">6.268e8</span> <span class="op">+</span> <span class="fl">1.e8</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'LaserWidthHz2'</span>: <span class="fl">10.0e6</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'MagneticZenithDegrees'</span>: <span class="fl">45.</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'MagneticAzimuthDegrees'</span>: <span class="fl">45.</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'SDampingCollisionRatePerS'</span>: <span class="fl">4081.63</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'BeamTransitRatePerS'</span>: <span class="fl">131.944</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'VccRatePerS'</span>: <span class="fl">28571.</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'TemperatureK'</span>: <span class="fl">185.</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'RecoilParameter'</span>: <span class="dv">1</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Define sample values for the varying parameters:</p>
-<div id="cell-24" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">'IntensitySI1'</span>: <span class="fl">5.</span>, <span class="st">'IntensitySI2'</span>: <span class="fl">46.</span>, <span class="st">'BFieldG'</span>: <span class="fl">0.5</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="55d90ae5" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">'IntensitySI1'</span>: <span class="fl">5.</span>, <span class="st">'IntensitySI2'</span>: <span class="fl">46.</span>, <span class="st">'BFieldG'</span>: <span class="fl">0.5</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Build a steady-state model with adaptively refined velocity groups based on the sample parameters:</p>
-<div id="cell-26" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> lgs.adaptive_stationary_model(params)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Solve the model for the steady state using the sample parameters:</p>
-<div id="cell-28" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> model.solve(params)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="07ec1a8a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model, sol <span class="op">=</span> lgs.adaptive_stationary_model(params, rtol<span class="op">=</span><span class="fl">.002</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Find the total return flux:</p>
-<div id="cell-30" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model.total_flux(sol).item()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>7709.055503256246</code></pre>
+<div id="9ae3b85f" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.total_flux(sol).item()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>7728.733460031644</code></pre>
 </div>
 </div>
 <p>Plot the return flux as a function of atomic velocity:</p>
-<div id="cell-32" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model.flux_distribution(sol).visualize()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e456b181" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model.flux_distribution(sol).visualize(markers<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Plot the ground and excited state populations as a function of atomic velocity:</p>
+<div id="52292673" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model.level_population_distribution(sol).visualize()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -554,24 +524,13 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Plot the ground and excited state populations as a function of atomic velocity:</p>
-<div id="cell-34" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model.level_population_distribution(sol).visualize()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Plot the real and imaginary parts of all density-matrix elements:</p>
+<div id="3a794940" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model.velocity_normalize(sol).visualize(line_width<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-12-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Plot the real and imaginary parts of all density-matrix elements:</p>
-<div id="cell-36" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model.velocity_normalize(sol).visualize(line_width<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-13-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>

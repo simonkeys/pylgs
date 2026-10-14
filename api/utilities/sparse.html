@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,10 +10,16 @@
 
 <title>utilities.sparse – pylgs</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -68,15 +74,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-f245066ca199b7326ac6b360085ddf3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6191c8c4c757b97205a8995aa6c30869.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,8 +130,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">pylgs</span>
     </a>
@@ -151,10 +154,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="../../index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -175,13 +174,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../tutorials/sodium_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sodium LGS</span></a>
+ <span class="menu-text">Sodium D2 LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../tutorials/polychromatic_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Polychromatic LGS</span></a>
+ <span class="menu-text">Sodium 330 nm LGS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/na589+569_lgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sodium 589/569 nm LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -332,25 +337,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#sparse2d" id="toc-sparse2d" class="nav-link active" data-scroll-target="#sparse2d">sparse2d</a></li>
-  <li><a href="#sparse" id="toc-sparse" class="nav-link" data-scroll-target="#sparse">sparse</a></li>
-  <li><a href="#sparse2d_identity" id="toc-sparse2d_identity" class="nav-link" data-scroll-target="#sparse2d_identity">sparse2d_identity</a></li>
-  <li><a href="#sparse_identity" id="toc-sparse_identity" class="nav-link" data-scroll-target="#sparse_identity">sparse_identity</a></li>
-  <li><a href="#sparse2d_diag" id="toc-sparse2d_diag" class="nav-link" data-scroll-target="#sparse2d_diag">sparse2d_diag</a></li>
-  <li><a href="#sparse_diag" id="toc-sparse_diag" class="nav-link" data-scroll-target="#sparse_diag">sparse_diag</a></li>
-  <li><a href="#dense_toeplitz" id="toc-dense_toeplitz" class="nav-link" data-scroll-target="#dense_toeplitz">dense_toeplitz</a></li>
-  <li><a href="#sparse_toeplitz" id="toc-sparse_toeplitz" class="nav-link" data-scroll-target="#sparse_toeplitz">sparse_toeplitz</a></li>
-  <li><a href="#sparse2d_kronecker_matrix" id="toc-sparse2d_kronecker_matrix" class="nav-link" data-scroll-target="#sparse2d_kronecker_matrix">sparse2d_kronecker_matrix</a></li>
-  <li><a href="#sparse_kronecker_matrix" id="toc-sparse_kronecker_matrix" class="nav-link" data-scroll-target="#sparse_kronecker_matrix">sparse_kronecker_matrix</a></li>
-  <li><a href="#kron" id="toc-kron" class="nav-link" data-scroll-target="#kron">kron</a></li>
-  <li><a href="#restrict_bandwidth" id="toc-restrict_bandwidth" class="nav-link" data-scroll-target="#restrict_bandwidth">restrict_bandwidth</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/simonkeys/pylgs/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -380,19 +368,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div id="2cecd8a4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.933816+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.938019+00:00&quot;,&quot;total&quot;:0.004206083016470075}}" data-execution_count="4">
 <hr>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L27" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse2d" class="level3">
 <h3 class="anchored" data-anchor-id="sparse2d">sparse2d</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    a</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    a</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Create a 2D sparse array in specified format.</em></p>
-<div id="ff901617-7bf5-4ef9-b610-8a35b266509d" class="cell" data-execution_count="52">
+</section>
+</div>
+<div id="ff901617-7bf5-4ef9-b610-8a35b266509d" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>arrays <span class="op">=</span> [np.identity(<span class="dv">2</span>), sps.eye(<span class="dv">2</span>), ss.eye(<span class="dv">2</span>), ss.eye(<span class="dv">2</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'gcxs'</span>)]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>[sparse2d(args) <span class="cf">for</span> args <span class="kw">in</span> arrays]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div class="cell-output cell-output-display">
 <pre><code>[&lt;Compressed Sparse Row sparse array of dtype 'float64'
     with 2 stored elements and shape (2, 2)&gt;,
  &lt;Compressed Sparse Row sparse array of dtype 'float64'
@@ -403,21 +393,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     with 2 stored elements and shape (2, 2)&gt;]</code></pre>
 </div>
 </div>
+<div id="d6b08595" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.939721+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.945258+00:00&quot;,&quot;total&quot;:0.00553958400269039}}" data-execution_count="6">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L34" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse" class="level3">
 <h3 class="anchored" data-anchor-id="sparse">sparse</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    a, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span>, shape:NoneType<span class="op">=</span><span class="va">None</span>, has_duplicates:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, <span class="bu">sorted</span>:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, prune:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    cache:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, fill_value:NoneType<span class="op">=</span><span class="va">None</span>, idx_dtype:NoneType<span class="op">=</span><span class="va">None</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SparseArray:</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    a, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span>, shape:NoneType<span class="op">=</span><span class="va">None</span>, <span class="op">*</span>, has_duplicates:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, <span class="bu">sorted</span>:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, prune:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    cache:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, fill_value:NoneType<span class="op">=</span><span class="va">None</span>, idx_dtype:NoneType<span class="op">=</span><span class="va">None</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>sparse.numba_backend._sparse_array.SparseArray:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Create an N-D sparse array in specified format.</em></p>
-<div id="60ada4e3-f825-42f5-bbf3-227128b7d5f4" class="cell" data-execution_count="55">
+</section>
+</div>
+<div id="60ada4e3-f825-42f5-bbf3-227128b7d5f4" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>arrays <span class="op">=</span> [np.identity(<span class="dv">2</span>), sps.eye(<span class="dv">2</span>), ss.eye(<span class="dv">2</span>), [[[<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>]], [<span class="fl">1.</span>, <span class="fl">1.</span>]]]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>[sparse(<span class="op">*</span>args) <span class="cf">for</span> args <span class="kw">in</span> it.product(arrays, [<span class="st">'coo'</span>, <span class="st">'gcxs'</span>])]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="55">
+<div class="cell-output cell-output-display">
 <pre><code>[&lt;COO: shape=(2, 2), dtype=float64, nnz=2, fill_value=0.0&gt;,
  &lt;GCXS: shape=(2, 2), dtype=float64, nnz=2, fill_value=0.0, compressed_axes=(np.int64(0),)&gt;,
  &lt;COO: shape=(2, 2), dtype=float64, nnz=2, fill_value=0.0&gt;,
@@ -428,66 +419,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  &lt;GCXS: shape=(2, 2), dtype=float64, nnz=2, fill_value=0.0, compressed_axes=(np.int64(0),)&gt;]</code></pre>
 </div>
 </div>
+<div id="05f2f630" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.946574+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.948861+00:00&quot;,&quot;total&quot;:0.0022910829866304994}}" data-execution_count="8">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L46" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse2d_identity" class="level3">
 <h3 class="anchored" data-anchor-id="sparse2d_identity">sparse2d_identity</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d_identity(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    n</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="429d0fd0-ad69-414e-854b-e9b372fdd220" class="cell" data-execution_count="58">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d_identity(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    n</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="429d0fd0-ad69-414e-854b-e9b372fdd220" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sparse2d_identity(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="58">
+<div class="cell-output cell-output-display">
 <pre><code>&lt;DIAgonal sparse array of dtype 'float64'
     with 2 stored elements (1 diagonals) and shape (2, 2)&gt;</code></pre>
 </div>
 </div>
+<div id="647458fd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.949878+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.954220+00:00&quot;,&quot;total&quot;:0.0043493330013006926}}" data-execution_count="10">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L50" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse_identity" class="level3">
 <h3 class="anchored" data-anchor-id="sparse_identity">sparse_identity</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_identity(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    n, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SparseArray:</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="80db0e92-977a-4291-8927-cd47b000fcb2" class="cell" data-execution_count="60">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_identity(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    n, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>sparse.numba_backend._sparse_array.SparseArray:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="80db0e92-977a-4291-8927-cd47b000fcb2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>[sparse_identity(<span class="dv">2</span>, <span class="bu">format</span><span class="op">=</span>fmt) <span class="cf">for</span> fmt <span class="kw">in</span> [<span class="st">'coo'</span>, <span class="st">'gcxs'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="60">
+<div class="cell-output cell-output-display">
 <pre><code>[&lt;COO: shape=(2, 2), dtype=float64, nnz=2, fill_value=0.0&gt;,
  &lt;GCXS: shape=(2, 2), dtype=float64, nnz=2, fill_value=0.0, compressed_axes=(np.int64(0),)&gt;]</code></pre>
 </div>
 </div>
+<div id="11637bce" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.956732+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.960003+00:00&quot;,&quot;total&quot;:0.003274958988185972}}" data-execution_count="12">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L54" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse2d_diag" class="level3">
 <h3 class="anchored" data-anchor-id="sparse2d_diag">sparse2d_diag</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d_diag(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    diags, offsets:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="e52a1575-da6a-498e-8922-beb1d3ac56b9" class="cell" data-execution_count="62">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d_diag(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    diags, offsets:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="e52a1575-da6a-498e-8922-beb1d3ac56b9" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sparse2d_diag([<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="62">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/zd/dnb1yww92mn4qyg7_lww7g9m0000gn/T/ipykernel_33348/2086511523.py:3: FutureWarning: Input has data type int64, but the output has been cast to float64.  In the future, the output data type will match the input. To avoid this warning, set the `dtype` parameter to `None` to have the output dtype match the input, or set it to the desired output data type.
+  return sps.diags_array(diags, offsets=offsets)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
 <pre><code>&lt;DIAgonal sparse array of dtype 'float64'
     with 2 stored elements (1 diagonals) and shape (2, 2)&gt;</code></pre>
 </div>
 </div>
+<div id="7e4dcddf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.962168+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.966697+00:00&quot;,&quot;total&quot;:0.004532833001576364}}" data-execution_count="14">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L58" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse_diag" class="level3">
 <h3 class="anchored" data-anchor-id="sparse_diag">sparse_diag</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_diag(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    diag, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SparseArray:</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="6461a4f7-9da7-410d-b519-cdfd53a4097a" class="cell" data-execution_count="64">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sparse_diag([<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="64">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_diag(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    diag, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>sparse.numba_backend._sparse_array.SparseArray:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="6461a4f7-9da7-410d-b519-cdfd53a4097a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sparse_diag([<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/zd/dnb1yww92mn4qyg7_lww7g9m0000gn/T/ipykernel_33348/2086511523.py:3: FutureWarning: Input has data type int64, but the output has been cast to float64.  In the future, the output data type will match the input. To avoid this warning, set the `dtype` parameter to `None` to have the output dtype match the input, or set it to the desired output data type.
+  return sps.diags_array(diags, offsets=offsets)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
@@ -526,37 +529,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+<div id="447fce12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.968804+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.973009+00:00&quot;,&quot;total&quot;:0.0042067079921253026}}" data-execution_count="16">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L62" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="dense_toeplitz" class="level3">
 <h3 class="anchored" data-anchor-id="dense_toeplitz">dense_toeplitz</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dense_toeplitz(</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    diags:ndarray, <span class="co"># Value on each diagonal, starting at lower left.</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dense_toeplitz(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    diags:numpy.ndarray, <span class="co"># Value on each diagonal, starting at lower left.</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Return a toeplitz array given the value on each diagonal (starting at lower left).</em></p>
-<div id="720e0798-c784-4258-b313-84ce54e375f2" class="cell" data-execution_count="66">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dense_toeplitz([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="66">
+</section>
+</div>
+<div id="720e0798-c784-4258-b313-84ce54e375f2" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dense_toeplitz([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>array([[2, 3],
        [1, 2]])</code></pre>
 </div>
 </div>
+<div id="da1b5212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.975808+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.979897+00:00&quot;,&quot;total&quot;:0.004093249997822568}}" data-execution_count="18">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L70" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse_toeplitz" class="level3">
 <h3 class="anchored" data-anchor-id="sparse_toeplitz">sparse_toeplitz</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_toeplitz(</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    diags:ndarray, <span class="co"># Value on each diagonal, starting at lower left.</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SparseArray:</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_toeplitz(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    diags:numpy.ndarray, <span class="co"># Value on each diagonal, starting at lower left.</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>sparse.numba_backend._sparse_array.SparseArray:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Return a toeplitz sparse array in specified format given the value on each diagonal (starting at lower left).</em></p>
-<div id="75efe708-2c78-4aea-87d5-f0cb65f2bac0" class="cell" data-execution_count="68">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sparse_toeplitz([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="68">
+</section>
+</div>
+<div id="75efe708-2c78-4aea-87d5-f0cb65f2bac0" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sparse_toeplitz([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
@@ -595,52 +600,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<div id="93218677-c7e6-49df-8bad-eef59c7b99d5" class="cell" data-execution_count="69">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>_.todense()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="69">
+<div id="93218677-c7e6-49df-8bad-eef59c7b99d5" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>_.todense()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>array([[3, 4, 5],
        [2, 3, 4],
        [1, 2, 3]])</code></pre>
 </div>
 </div>
+<div id="4b540c54" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.982241+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.985204+00:00&quot;,&quot;total&quot;:0.002966917003504932}}" data-execution_count="20">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L78" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse2d_kronecker_matrix" class="level3">
 <h3 class="anchored" data-anchor-id="sparse2d_kronecker_matrix">sparse2d_kronecker_matrix</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d_kronecker_matrix(</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    n, k:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse2d_kronecker_matrix(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    n, k:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>The nxn sparse kronecker matrix delta_(i,j-k) in specified format.</em></p>
-<div id="3db8f6a5-b52d-43c4-91e1-8d4e65040e07" class="cell" data-execution_count="72">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sparse2d_kronecker_matrix(<span class="dv">3</span>, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="72">
+</section>
+</div>
+<div id="3db8f6a5-b52d-43c4-91e1-8d4e65040e07" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sparse2d_kronecker_matrix(<span class="dv">3</span>, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>&lt;DIAgonal sparse array of dtype 'float64'
     with 1 stored elements (1 diagonals) and shape (3, 3)&gt;</code></pre>
 </div>
 </div>
-<div id="22d264f4-32e4-47a5-aa78-63967f4eb873" class="cell" data-execution_count="73">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>_.todense()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="73">
+<div id="22d264f4-32e4-47a5-aa78-63967f4eb873" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>_.todense()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>array([[0., 0., 1.],
        [0., 0., 0.],
        [0., 0., 0.]])</code></pre>
 </div>
 </div>
+<div id="14b9c669" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.987704+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.990413+00:00&quot;,&quot;total&quot;:0.002712916990276426}}" data-execution_count="22">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L83" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sparse_kronecker_matrix" class="level3">
 <h3 class="anchored" data-anchor-id="sparse_kronecker_matrix">sparse_kronecker_matrix</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_kronecker_matrix(</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    n, k:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SparseArray:</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sparse_kronecker_matrix(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    n, k:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">format</span>:<span class="bu">str</span><span class="op">=</span><span class="st">'coo'</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>sparse.numba_backend._sparse_array.SparseArray:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>The nxn sparse kronecker matrix delta_(i,j-k) in specified format.</em></p>
-<div id="fce29241-111b-44c4-b3fe-6f2a79d652a7" class="cell" data-execution_count="75">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sparse_kronecker_matrix(<span class="dv">3</span>, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="75">
+</section>
+</div>
+<div id="fce29241-111b-44c4-b3fe-6f2a79d652a7" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sparse_kronecker_matrix(<span class="dv">3</span>, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
@@ -679,18 +686,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+<div id="a3b6182e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:31.992221+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:31.995460+00:00&quot;,&quot;total&quot;:0.003241750004235655}}" data-execution_count="24">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L88" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="kron" class="level3">
 <h3 class="anchored" data-anchor-id="kron">kron</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kron(</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    a, b, rest:VAR_POSITIONAL</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="2eecee79-353f-46f9-8420-8176fa13a5d6" class="cell" data-execution_count="78">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>kron(np.eye(<span class="dv">2</span>), np.eye(<span class="dv">2</span>), np.eye(<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="78">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kron(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    a, b, <span class="op">*</span>rest</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="2eecee79-353f-46f9-8420-8176fa13a5d6" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>kron(np.eye(<span class="dv">2</span>), np.eye(<span class="dv">2</span>), np.eye(<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>array([[1., 0., 0., 0., 0., 0., 0., 0.],
        [0., 1., 0., 0., 0., 0., 0., 0.],
        [0., 0., 1., 0., 0., 0., 0., 0.],
@@ -701,47 +709,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
        [0., 0., 0., 0., 0., 0., 0., 1.]])</code></pre>
 </div>
 </div>
-<div id="4ad5453f-3af6-4fdd-9e8f-d91373294413" class="cell" data-execution_count="80">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>kron(<span class="op">*</span>[sparse2d_identity(<span class="dv">2</span>)] <span class="op">*</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="80">
+<div id="4ad5453f-3af6-4fdd-9e8f-d91373294413" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>kron(<span class="op">*</span>[sparse2d_identity(<span class="dv">2</span>)] <span class="op">*</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>&lt;Compressed Sparse Row sparse array of dtype 'float64'
     with 8 stored elements and shape (8, 8)&gt;</code></pre>
 </div>
 </div>
-<div id="7a809ae2-50f9-4d6a-bd8d-dee28d43651c" class="cell" data-execution_count="82">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>kron(sparse2d_identity(<span class="dv">2</span>), np.identity(<span class="dv">2</span>), sparse2d_identity(<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="82">
+<div id="7a809ae2-50f9-4d6a-bd8d-dee28d43651c" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>kron(sparse2d_identity(<span class="dv">2</span>), np.identity(<span class="dv">2</span>), sparse2d_identity(<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>&lt;Compressed Sparse Row sparse array of dtype 'float64'
     with 8 stored elements and shape (8, 8)&gt;</code></pre>
 </div>
 </div>
-<div id="65e53af1-1497-43b9-8926-7302283797d3" class="cell" data-execution_count="85">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>sparse2d_rand([<span class="dv">2</span>, <span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="85">
+<div id="65e53af1-1497-43b9-8926-7302283797d3" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sparse2d_rand([<span class="dv">2</span>, <span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>&lt;COOrdinate sparse array of dtype 'float64'
     with 0 stored elements and shape (2, 3)&gt;</code></pre>
 </div>
 </div>
+<div id="190d44d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T10:34:32.000638+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T10:34:32.006692+00:00&quot;,&quot;total&quot;:0.006056540994904935}}" data-execution_count="28">
 <hr>
-</section>
+<p><a href="https://github.com/simonkeys/pylgs/blob/main/pylgs/utilities/sparse.py#L101" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="restrict_bandwidth" class="level3">
 <h3 class="anchored" data-anchor-id="restrict_bandwidth">restrict_bandwidth</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> restrict_bandwidth(</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    a_sparray:sparray, width</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> restrict_bandwidth(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    a_sparray:scipy.sparse._base.sparray, width</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Make a scipy sparse array banded by setting all elements outside the bandwidth to zero.</em></p>
-<div id="682ea929-f24c-4b8f-b39c-7fafd3cb2fe9" class="cell" data-execution_count="88">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>restrict_bandwidth(sps.csr_array(np.ones((<span class="dv">5</span>, <span class="dv">5</span>))), <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="88">
+</section>
+</div>
+<div id="682ea929-f24c-4b8f-b39c-7fafd3cb2fe9" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>restrict_bandwidth(sps.csr_array(np.ones((<span class="dv">5</span>, <span class="dv">5</span>))), <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>&lt;Compressed Sparse Row sparse array of dtype 'float64'
     with 13 stored elements and shape (5, 5)&gt;</code></pre>
 </div>
 </div>
-<div id="b92f8c6c-9b09-4a25-a48d-b9c4d2bd2c8d" class="cell" data-execution_count="89">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>_.toarray()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="89">
+<div id="b92f8c6c-9b09-4a25-a48d-b9c4d2bd2c8d" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>_.toarray()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
 <pre><code>array([[1., 1., 0., 0., 0.],
        [1., 1., 1., 0., 0.],
        [0., 1., 1., 1., 0.],
@@ -751,7 +760,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1159,4 +1167,4 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/simonkeys/pylgs/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/simonkeys/pylgs/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

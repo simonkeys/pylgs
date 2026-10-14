@@ -1,48 +1,5 @@
 [
   {
-    "listing": "/tutorials/index.html",
-    "items": [
-      "/tutorials/chirped_lgs.html",
-      "/tutorials/polychromatic_lgs.html",
-      "/tutorials/sodium_lgs.html",
-      "/tutorials/technical_background.html"
-    ]
-  },
-  {
-    "listing": "/api/pymor/index.html",
-    "items": [
-      "/api/pymor/grids.html",
-      "/api/pymor/models.html",
-      "/api/pymor/operators.html",
-      "/api/pymor/parameters.html",
-      "/api/pymor/timestepping.html",
-      "/api/pymor/vectorarrays.html"
-    ]
-  },
-  {
-    "listing": "/api/index.html",
-    "items": [
-      "/api/dmelements.html",
-      "/api/lgssystem.html",
-      "/api/pymor/index.html",
-      "/api/pymor/grids.html",
-      "/api/pymor/models.html",
-      "/api/pymor/operators.html",
-      "/api/pymor/parameters.html",
-      "/api/pymor/timestepping.html",
-      "/api/pymor/vectorarrays.html",
-      "/api/utilities/index.html",
-      "/api/utilities/basic.html",
-      "/api/utilities/formatting.html",
-      "/api/utilities/nbdev.html",
-      "/api/utilities/numpy.html",
-      "/api/utilities/sparse.html",
-      "/api/utilities/testing.html",
-      "/api/utilities/xarray.html",
-      "/api/velocitygroups.html"
-    ]
-  },
-  {
     "listing": "/api/utilities/index.html",
     "items": [
       "/api/utilities/basic.html",
@@ -52,6 +9,18 @@
       "/api/utilities/sparse.html",
       "/api/utilities/testing.html",
       "/api/utilities/xarray.html"
+    ]
+  },
+  {
+    "listing": "/api/pymor/index.html",
+    "items": [
+      "/api/pymor/grids.html",
+      "/api/pymor/models.html",
+      "/api/pymor/operators.html",
+      "/api/pymor/parameters.html",
+      "/api/pymor/solvers.html",
+      "/api/pymor/timestepping.html",
+      "/api/pymor/vectorarrays.html"
     ]
   }
 ]

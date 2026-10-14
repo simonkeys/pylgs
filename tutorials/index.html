@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Tutorials – pylgs</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -34,15 +40,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f245066ca199b7326ac6b360085ddf3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6191c8c4c757b97205a8995aa6c30869.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -100,8 +105,22 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -146,8 +165,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">pylgs</span>
     </a>
@@ -172,10 +189,6 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="../index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -196,13 +209,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tutorials/sodium_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sodium LGS</span></a>
+ <span class="menu-text">Sodium D2 LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tutorials/polychromatic_lgs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Polychromatic LGS</span></a>
+ <span class="menu-text">Sodium 330 nm LGS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/na589+569_lgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sodium 589/569 nm LGS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -400,29 +419,39 @@ Description
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-file-modified-sort="1773226511938" data-listing-reading-time-sort="1" data-listing-word-count-sort="10" data-listing-title-sort="Chirped LGS" data-listing-filename-sort="chirped_lgs.ipynb">
+<tr data-index="0" data-listing-file-modified-sort="1791974072477" data-listing-reading-time-sort="1" data-listing-word-count-sort="143" data-listing-title-sort="Chirped LGS" data-listing-filename-sort="chirped_lgs.ipynb">
 <td>
 <a href="../tutorials/chirped_lgs.html" class="title listing-title">Chirped LGS</a>
 </td>
 <td>
-<span class="listing-description">Simulate a chirped sodium LGS beacon</span>
+<span class="listing-description">An LGS with chirped pump light</span>
 </td>
 
 </tr>
 
-<tr data-index="1" data-listing-file-modified-sort="1773226511862" data-listing-reading-time-sort="1" data-listing-word-count-sort="110" data-listing-title-sort="Polychromatic LGS" data-listing-filename-sort="polychromatic_lgs.ipynb">
+<tr data-index="1" data-listing-file-modified-sort="1791974072438" data-listing-reading-time-sort="1" data-listing-word-count-sort="110" data-listing-title-sort="Sodium 330 nm LGS" data-listing-filename-sort="polychromatic_lgs.ipynb">
 <td>
-<a href="../tutorials/polychromatic_lgs.html" class="title listing-title">Polychromatic LGS</a>
+<a href="../tutorials/polychromatic_lgs.html" class="title listing-title">Sodium 330 nm LGS</a>
 </td>
 <td>
-<span class="listing-description">A multi-level sodium system excited by 330 nm light</span>
+<span class="listing-description">A polychromatic sodium LGS excited by 330 nm light</span>
 </td>
 
 </tr>
 
-<tr data-index="2" data-listing-file-modified-sort="1773226511930" data-listing-reading-time-sort="3" data-listing-word-count-sort="522" data-listing-title-sort="Sodium LGS" data-listing-filename-sort="sodium_lgs.ipynb">
+<tr data-index="2" data-listing-file-modified-sort="1791974072297" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="Sodium 589/569 nm LGS" data-listing-filename-sort="Na589+569_lgs.ipynb">
 <td>
-<a href="../tutorials/sodium_lgs.html" class="title listing-title">Sodium LGS</a>
+<a href="../tutorials/na589+569_lgs.html" class="title listing-title">Sodium 589/569 nm LGS</a>
+</td>
+<td>
+<span class="listing-description">A polychromatic sodium LGS excited by 589 nm and 569 nm light</span>
+</td>
+
+</tr>
+
+<tr data-index="3" data-listing-file-modified-sort="1791974072585" data-listing-reading-time-sort="3" data-listing-word-count-sort="528" data-listing-title-sort="Sodium D2 LGS" data-listing-filename-sort="sodium_lgs.ipynb">
+<td>
+<a href="../tutorials/sodium_lgs.html" class="title listing-title">Sodium D2 LGS</a>
 </td>
 <td>
 <span class="listing-description">Simulate a sodium LGS beacon</span>
@@ -430,12 +459,12 @@ Description
 
 </tr>
 
-<tr data-index="3" data-listing-file-modified-sort="1773226511902" data-listing-reading-time-sort="6" data-listing-word-count-sort="1161" data-listing-title-sort="Technical background" data-listing-filename-sort="technical_background.ipynb">
+<tr data-index="4" data-listing-file-modified-sort="1791974072533" data-listing-reading-time-sort="6" data-listing-word-count-sort="1161" data-listing-title-sort="Technical background" data-listing-filename-sort="technical_background.ipynb">
 <td>
 <a href="../tutorials/technical_background.html" class="title listing-title">Technical background</a>
 </td>
 <td>
-<span class="listing-description">The state of an atomic ensemble is described by the density matrix <span class="math inline">\(\rho_{nm}\)</span>, where the indices <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> represent attainable eigenstates of the atomic system.…<span id="eq-liouville"><span class="math display"></span></span></span>
+<span class="listing-description"></span>
 </td>
 
 </tr>
