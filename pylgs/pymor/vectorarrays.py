@@ -238,11 +238,13 @@ class XarrayVectorArrayImpl(VectorArrayImpl):
         _data:ndarray|DataArray, 
         _space, 
         _data_dims=None, 
-        _extended_coord_data:Coordinates|dict|None=None
+        _extended_coord_data:Coordinates|dict|None=None,
+        _attrs=None
     ):
         if isinstance(_data, DataArray):
             _data_dims = _data.dims
             _extended_coord_data = _data
+            _attrs = _data.attrs
             _data = _data.data
         if isinstance(_data, SparseArray): 
             _data = _data.todense()
@@ -266,7 +268,7 @@ class XarrayVectorArrayImpl(VectorArrayImpl):
     @property
     def array(self): 
         if self._array is None:
-            self._array = DataArray(self._data, dims=self._data_dims, coords=make_coordinates(self._extended_coord_data | self._space.coord_data))
+            self._array = DataArray(self._data, dims=self._data_dims, coords=make_coordinates(self._extended_coord_data | self._space.coord_data), attrs=self._attrs)
         return self._array
 
     @property
@@ -581,24 +583,25 @@ def _reim(da:DataArray):
 # %% ../../nbs/api/pymor/vectorarrays.ipynb #8da2ca1b
 @patch
 def real(self:XarrayVectorArrayImpl, ind):
-    return XarrayVectorArrayImpl(self.copy(False, ind)._data.real, self._space, self._data_dims, self._extended_coord_data)
+    return XarrayVectorArrayImpl(self.copy(False, ind)._data.real, self._space, self._data_dims, self._extended_coord_data, self._attrs)
     
 @patch
 def imag(self:XarrayVectorArrayImpl, ind):
-    return XarrayVectorArrayImpl(self.copy(False, ind)._data.imag, self._space, self._data_dims, self._extended_coord_data)
+    return XarrayVectorArrayImpl(self.copy(False, ind)._data.imag, self._space, self._data_dims, self._extended_coord_data, self._attrs)
     
 @patch
 def conj(self:XarrayVectorArrayImpl, ind):
     if np.isrealobj(self._data):
         return self.copy(False, ind)
-    return XarrayVectorArrayImpl(np.conj(self.copy(False, ind)._data), self._space, self._data_dims, self._extended_coord_data)
+    return XarrayVectorArrayImpl(np.conj(self.copy(False, ind)._data), self._space, self._data_dims, self._extended_coord_data, self._attrs)
     
 @patch
 def reim(self:XarrayVectorArrayImpl):
     return XarrayVectorArrayImpl(
         np.array([self._data.real, self._data.imag]), 
         self._space, ['Part'] + self._data_dims, 
-        {'Part': (['Re', 'Im'], {})} | self._extended_coord_data
+        {'Part': (['Re', 'Im'], {})} | self._extended_coord_data,
+        self._attrs
     )
     
 @patch(as_prop=True)
